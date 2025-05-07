@@ -19,11 +19,9 @@ dependencies:
   permission_handler: ^12.0.0+1
   google_fonts: ^6.2.1
   flutter_bloc: ^9.1.1
-  flutter_card_swiper: 
-    path: "packages/card_swiper"
-  flutter_cache_manager: ^3.4.1
-  octo_image: ^2.1.0
   appinio_swiper: ^2.1.1
+  photo_manager_image_provider: ^2.2.0
+  flutter_animate: ^4.5.2
 
 dev_dependencies:
   flutter_test:

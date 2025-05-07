@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_delete_demo/asset_loader_repository.dart';
-import 'package:image_delete_demo/image_card/image_card.dart';
+import 'package:image_delete_demo/image_card/asset_entity_image.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_manager/photo_manager.dart';
 
@@ -47,12 +45,12 @@ class PhotoGalleryScreen extends StatefulWidget {
 
 class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
   List<AssetEntity> _assets = [];
-  List<File> _files = [];
   final Set<String> _selectedAssetIds = {}; // Use Set for efficient lookup
   bool _isLoading = true;
   bool _isDeleting = false;
   PermissionState _permissionStatus = PermissionState.denied; // Initial state
   final assetRepository = AssetLoaderRepository();
+  final controller = AppinioSwiperController();
 
   @override
   void initState() {
@@ -138,20 +136,14 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
       if (paths.isNotEmpty) {
         // Load a reasonable number of assets initially for quicker display
         // You could implement pagination/infinite scrolling for larger galleries
-        const int loadCount = 10; // Adjust as needed
+        const int loadCount = 1000; // Adjust as needed
         final List<AssetEntity> loadedAssets = await paths[0].getAssetListPaged(
           page: 0, // Start from the first page
           size: loadCount,
         );
-        final __files = await Future.wait(
-          loadedAssets.map((asset) async {
-            final file = await asset.file;
-            return file!;
-          }),
-        );
+
         setState(() {
           _assets = loadedAssets;
-          _files = __files;
           _isLoading = false;
         });
       } else {
@@ -258,31 +250,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   actions: [
-      //     // Show delete button only if photos are selected and not currently deleting
-      //     if (_selectedAssetIds.isNotEmpty && !_isDeleting)
-      //       IconButton(
-      //         icon: const Icon(Icons.delete_outline),
-      //         tooltip: 'Delete Selected',
-      //         onPressed: _deleteSelectedAssets,
-      //       ),
-      //     // Show progress indicator during deletion in the AppBar
-      //     if (_isDeleting)
-      //       const Padding(
-      //         padding: EdgeInsets.only(right: 16.0),
-      //         child: Center(
-      //           child: SizedBox(
-      //             width: 20,
-      //             height: 20,
-      //             child: CircularProgressIndicator(color: Colors.white),
-      //           ),
-      //         ),
-      //       ),
-      //   ],
-      // ),
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Builder(
           builder: (context) {
@@ -326,13 +294,35 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
             if (_assets.isEmpty) {
               return const Center(child: Text('No photos found.'));
             }
-            return AppinioSwiper(
-              loop: true,
-              cardBuilder: (BuildContext context, int index) {
-                final file = _files[index % _files.length];
-                return ImageCard(file: file, index: index);
-              },
-              cardCount: _assets.length,
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Stack(
+                  children: [
+                    AppinioSwiper(
+                      controller: controller,
+                      loop: true,
+                      swipeOptions: SwipeOptions.symmetric(
+                        horizontal: true,
+                        vertical: false,
+                      ),
+                      backgroundCardCount: 2,
+                      cardBuilder: (BuildContext context, int index) {
+                        final asset = _assets[index % _assets.length];
+                        return ImageItemWidget(
+                          entity: asset,
+                          index: index,
+                          option: ThumbnailOption.ios(
+                            size: ThumbnailSize(720, 1560),
+                          ),
+                          controller: controller,
+                        );
+                      },
+                      cardCount: _assets.length,
+                    ),
+                  ],
+                ),
+              ),
             );
             // return PageView.builder(
             //   scrollDirection: Axis.vertical,
