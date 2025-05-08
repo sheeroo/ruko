@@ -2,11 +2,17 @@ import 'dart:async';
 
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_delete_demo/asset_loader_repository.dart';
+import 'package:image_delete_demo/cubit/image_delete_cubit.dart';
 import 'package:image_delete_demo/image_card/asset_entity_image.dart';
+import 'package:image_delete_demo/text_swapper.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:pixelarticons/pixel.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,14 +30,17 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         brightness: Brightness.dark,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        textTheme: GoogleFonts.ibmPlexMonoTextTheme(
+        textTheme: GoogleFonts.pressStart2pTextTheme(
           Theme.of(context).textTheme.apply(
             bodyColor: Colors.white,
             displayColor: Colors.white,
           ),
         ),
       ),
-      home: const PhotoGalleryScreen(),
+      home: BlocProvider(
+        create: (context) => ImageDeleteCubit(),
+        child: const PhotoGalleryScreen(),
+      ),
     );
   }
 }
@@ -47,15 +56,22 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
   List<AssetEntity> _assets = [];
   final Set<String> _selectedAssetIds = {}; // Use Set for efficient lookup
   bool _isLoading = true;
-  bool _isDeleting = false;
   PermissionState _permissionStatus = PermissionState.denied; // Initial state
   final assetRepository = AssetLoaderRepository();
   final controller = AppinioSwiperController();
+
+  int? currentIndex;
 
   @override
   void initState() {
     super.initState();
     _checkAndRequestPermission();
+    controller.addListener(() {
+      print("Current index: ${controller.cardIndex}");
+      setState(() {
+        currentIndex = controller.cardIndex ?? 0;
+      });
+    });
   }
 
   // --- Permission Handling ---
@@ -163,94 +179,51 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
     }
   }
 
-  // --- Deletion ---
-  // ignore: unused_element
-  Future<void> _deleteSelectedAssets() async {
-    if (_selectedAssetIds.isEmpty || _isDeleting) {
-      return; // Nothing to delete or already deleting
-    }
-
-    // --- Confirmation Dialog ---
-    final bool? confirm = await showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Confirm Deletion'),
-          content: Text(
-            'Are you sure you want to permanently delete ${_selectedAssetIds.length} selected photo(s)? This cannot be undone.',
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel'),
-              onPressed: () => Navigator.of(context).pop(false), // Return false
-            ),
-            TextButton(
-              style: TextButton.styleFrom(foregroundColor: Colors.red),
-              child: const Text('Delete'),
-              onPressed: () => Navigator.of(context).pop(true), // Return true
-            ),
-          ],
-        );
-      },
-    );
-
-    // --- Proceed if confirmed ---
-    if (confirm == true) {
-      setState(() {
-        _isDeleting = true; // Show deleting indicator
-      });
-
-      try {
-        final List<String> result = await PhotoManager.editor.deleteWithIds(
-          _selectedAssetIds.toList(), // Convert Set to List for the API
-        );
-
-        // Check if deletion was successful (result often contains the IDs successfully deleted)
-        // A more robust check might be needed depending on package behavior updates
-        if (result.isNotEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('${result.length} photo(s) deleted successfully.'),
-            ),
-          );
-          // Refresh the asset list after deletion
-          _loadAssets(); // This implicitly clears selection and reloads
-        } else if (_selectedAssetIds.isNotEmpty && result.isEmpty) {
-          // This case might indicate a failure or that the API returns empty on success
-          // Let's assume for now if no error is thrown, it worked, and reload
-          debugPrint(
-            "Deletion API returned empty list, assuming success/partial success and reloading.",
-          );
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Deletion request sent. Refreshing list...'),
-            ),
-          );
-          _loadAssets(); // Reload anyway
-        }
-      } catch (e, st) {
-        debugPrint("Error deleting assets: $e\n$st");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error deleting photos: ${e.toString()}')),
-        );
-      } finally {
-        // Ensure the deleting state is reset even if there's an error
-        // Selection is cleared by _loadAssets() if successful
-        setState(() {
-          _isDeleting = false;
-          // Keep selection if deletion failed? Maybe clear it anyway.
-          // _selectedAssetIds.clear(); // Decide if you want to clear selection on failure
-        });
-      }
-    }
-  }
-
   // --- Build UI ---
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.transparent,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TrashButton(
+              onDelete: (ids) {
+                setState(() {
+                  _assets.removeWhere((asset) => ids.contains(asset.id));
+                });
+                controller.setCardIndex(controller.cardIndex! - ids.length);
+              },
+            ),
+            Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    border: Border.all(color: Colors.white, width: 1),
+                    boxShadow: [
+                      BoxShadow(color: Colors.white, offset: Offset(2, 2)),
+                    ],
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Pixel.arrowleft, color: Colors.white),
+                    onPressed: () async {
+                      HapticFeedback.lightImpact();
+                      if (controller.cardIndex == null) return;
+                      if (controller.cardIndex! == 0) return;
+                      await controller.unswipe();
+                      context.read<ImageDeleteCubit>().remove(
+                        _assets[controller.cardIndex!],
+                      );
+                    },
+                  ),
+                )
+                .animate(target: currentIndex == null ? 0 : 1)
+                .fadeIn(curve: Curves.fastOutSlowIn, duration: 350.ms),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: Builder(
           builder: (context) {
@@ -288,70 +261,125 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
             }
 
             if (_isLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const SizedBox.shrink();
             }
 
             if (_assets.isEmpty) {
               return const Center(child: Text('No photos found.'));
             }
-            return SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Stack(
-                  children: [
-                    AppinioSwiper(
-                      controller: controller,
-                      loop: true,
-                      swipeOptions: SwipeOptions.symmetric(
-                        horizontal: true,
-                        vertical: false,
-                      ),
-                      backgroundCardCount: 2,
-                      cardBuilder: (BuildContext context, int index) {
-                        final asset = _assets[index % _assets.length];
-                        return ImageItemWidget(
-                          entity: asset,
-                          index: index,
-                          option: ThumbnailOption.ios(
-                            size: ThumbnailSize(720, 1560),
-                          ),
+            return Padding(
+              padding: const EdgeInsets.all(12),
+              child: Stack(
+                children: [
+                  Column(
+                    spacing: 8,
+                    children: [
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 8),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [Text("< delete"), Text("keep >")],
+                      //   ),
+                      // ),
+                      Flexible(
+                        child: AppinioSwiper(
+                          key: ValueKey(_assets),
                           controller: controller,
-                        );
-                      },
-                      cardCount: _assets.length,
-                    ),
-                  ],
-                ),
+                          loop: true,
+                          swipeOptions: SwipeOptions.symmetric(
+                            horizontal: true,
+                            vertical: false,
+                          ),
+                          onSwipeEnd: (targetIndex, nextIndex, activity) {
+                            if (activity.end != null && activity.end!.dx != 0) {
+                              if (activity.direction == AxisDirection.left) {
+                                HapticFeedback.selectionClick();
+                                context.read<ImageDeleteCubit>().add(
+                                  _assets[targetIndex],
+                                );
+                              }
+                            }
+                          },
+                          backgroundCardCount: 4,
+                          backgroundCardOffset: Offset(25, 25),
+                          cardBuilder: (BuildContext context, int index) {
+                            final asset = _assets[index % _assets.length];
+                            return ImageItemWidget(
+                              entity: asset,
+                              index: index,
+                              option: ThumbnailOption.ios(
+                                size: ThumbnailSize(720, 1560),
+                              ),
+                              controller: controller,
+                            );
+                          },
+                          cardCount: _assets.length,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             );
-            // return PageView.builder(
-            //   scrollDirection: Axis.vertical,
-            //   itemBuilder: (context, index) {
-            //     final file = _files[index % _files.length];
-            //     return ImageCard(file: file, index: index);
-            //   },
-            // );
-            // return CardSwiper(
-            //   key: const ValueKey('card_swiper'),
-            //   padding: const EdgeInsets.all(12),
-            //   cardBuilder: (
-            //     BuildContext context,
-            //     int index,
-            //     int horizontalOffsetPercentage,
-            //     int verticalOffsetPercentage,
-            //   ) {
-            //     final file = _files[index % _files.length];
-            //     // scheduleMicrotask(() {
-            //     //   assetRepository.addAndLoadAsset(asset);
-            //     //   assetRepository.addAndLoadAsset(_assets[index + 1]);
-            //     // });
-            //     return ImageCard(file: file, index: index);
-            //   },
-            //   cardsCount: _assets.length,
-            // );
           },
         ),
       ),
+    );
+  }
+}
+
+class TrashButton extends StatelessWidget {
+  const TrashButton({super.key, this.onDelete});
+
+  final Function(List<String>)? onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    final selectedAssets = context.watch<ImageDeleteCubit>().state.entities;
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.black,
+            border: Border.all(color: Colors.white, width: 1),
+            boxShadow: [BoxShadow(color: Colors.white, offset: Offset(2, 2))],
+          ),
+          child: IconButton(
+            icon: const Icon(Pixel.trash, color: Colors.white),
+            iconSize: 28,
+            // onPressed: _deleteSelectedAssets,
+            onPressed: () async {
+              HapticFeedback.lightImpact();
+              final List<String> result = await PhotoManager.editor
+                  .deleteWithIds(selectedAssets.map((e) => e.id).toList());
+              onDelete?.call(result);
+              if (result.isNotEmpty && context.mounted) {
+                context.read<ImageDeleteCubit>().reset();
+              }
+            },
+          ),
+        ),
+        if (selectedAssets.isNotEmpty)
+          Positioned(
+                right: 6,
+                top: 6,
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    border: Border.all(color: Colors.white, width: 1),
+                  ),
+                  child: TextSwapper(
+                    "${selectedAssets.length}",
+                    style: TextStyle(fontSize: 8),
+                  ),
+                ),
+              )
+              .animate(target: selectedAssets.isNotEmpty ? 1 : 0)
+              .moveY(curve: Curves.fastOutSlowIn, begin: -20, end: 0),
+      ],
     );
   }
 }

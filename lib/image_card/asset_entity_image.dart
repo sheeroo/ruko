@@ -1,10 +1,11 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:image_delete_demo/utils.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 
-class ImageItemWidget extends StatefulWidget {
+class ImageItemWidget extends StatelessWidget {
   const ImageItemWidget({
     super.key,
     required this.entity,
@@ -17,22 +18,6 @@ class ImageItemWidget extends StatefulWidget {
   final int index;
   final AssetEntity entity;
   final ThumbnailOption option;
-
-  @override
-  State<ImageItemWidget> createState() => _ImageItemWidgetState();
-}
-
-class _ImageItemWidgetState extends State<ImageItemWidget> {
-  @override
-  void initState() {
-    super.initState();
-    widget.controller.addListener(() {
-      if (widget.index == widget.controller.cardIndex) {
-        // swiped left
-        print(widget.controller.position?.offset.dx);
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,66 +34,124 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
         child: Stack(
           fit: StackFit.expand,
           children: [
+            Container(color: Colors.black),
             AssetEntityImage(
-              widget.entity,
+              entity,
               isOriginal: false,
-              thumbnailSize: widget.option.size,
-              thumbnailFormat: widget.option.format,
+              thumbnailSize: option.size,
+              thumbnailFormat: option.format,
               fit: BoxFit.cover,
             ),
-
             Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    color: Colors.black.withValues(alpha: 0.5),
-                    padding: const EdgeInsets.all(8),
-                    child: Text(
-                      "swiping left",
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 325,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.black.withValues(alpha: 0),
+                      Colors.black.withValues(alpha: 1),
+                    ],
+                    begin: Alignment.center,
+                    end: Alignment.bottomCenter,
                   ),
-                )
-                .animate(
-                  adapter: ChangeNotifierAdapter(widget.controller, () {
-                    if (widget.controller.cardIndex == widget.index) {
-                      if ((widget.controller.position?.offset.dx ?? 0) < 0) {
-                        return widget.controller.position!.progress;
-                      }
-                    }
-                    return 0;
-                  }),
-                )
-                .fadeIn(),
+                ),
+              ),
+            ),
             Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    color: Colors.black.withValues(alpha: 0.5),
-                    padding: const EdgeInsets.all(8),
-                    child: Text(
-                      "swiping right",
-                      style: const TextStyle(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 8,
+                  children: [
+                    Text(
+                          "delete",
+                          style: TextTheme.of(
+                            context,
+                          ).displaySmall?.copyWith(fontSize: 18),
+                        )
+                        .animate(
+                          adapter: ChangeNotifierAdapter(controller, () {
+                            if (controller.cardIndex == index) {
+                              if ((controller.position?.offset.dx ?? 0) < 0) {
+                                return controller.position!.progress * 6;
+                              }
+                            }
+                            return 0;
+                          }),
+                        )
+                        .fadeIn(),
+                  ],
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 8,
+                  children: [
+                    Text(
+                          "keep",
+                          style: TextTheme.of(
+                            context,
+                          ).displaySmall?.copyWith(fontSize: 18),
+                        )
+                        .animate(
+                          adapter: ChangeNotifierAdapter(controller, () {
+                            if (controller.cardIndex == index) {
+                              if ((controller.position?.offset.dx ?? 0) > 0) {
+                                return controller.position!.progress * 6;
+                              }
+                            }
+                            return 0;
+                          }),
+                        )
+                        .fadeIn(),
+                  ],
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  padding: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
                         color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
+                        blurRadius: 0,
+                        offset: Offset(3, 3),
                       ),
-                    ),
+                    ],
+                    color: Colors.black,
                   ),
-                )
-                .animate(
-                  adapter: ChangeNotifierAdapter(widget.controller, () {
-                    if (widget.controller.cardIndex == widget.index) {
-                      if ((widget.controller.position?.offset.dx ?? 0) > 0) {
-                        return widget.controller.position!.progress;
-                      }
-                    }
-                    return 0;
-                  }),
-                )
-                .fadeIn(),
+                  child: Text(entity.createDateTime.format("dd/MM/yyyy")),
+                ),
+              ),
+            ),
+            // Align(
+            //   alignment: Alignment.topRight,
+            //   child: Padding(
+            //     padding: const EdgeInsets.all(16.0),
+            //     child: GestureDetector(
+            //       onTap: () {
+            //         // todo add auto router and open image with photo view
+            //       },
+            //       child: Container(
+            //         padding: EdgeInsets.all(4),
+            //         child: Icon(FeatherIcons.maximize),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
