@@ -2,20 +2,20 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "drift (development)",
+      "name": "image_delete_demo (development)",
       "request": "launch",
       "program": "lib/main_development.dart",
       "type": "dart"
     },
     {
-      "name": "drift (staging)",
+      "name": "image_delete_demo (staging)",
       "request": "launch",
       "program": "lib/main_production.dart",
       "type": "dart",
       "flutterMode": "profile"
     },
     {
-      "name": "drift (production)",
+      "name": "image_delete_demo (production)",
       "request": "launch",
       "type": "dart",
       "program": "lib/main_production.dart",
