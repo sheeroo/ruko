@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_delete_demo/app/gallery_assets/cubit/gallery_assets_cubit.dart';
+import 'package:image_delete_demo/app/gallery_assets/cubit/image_delete_cubit.dart';
 import 'package:image_delete_demo/core/limiters/throttler.dart';
-import 'package:image_delete_demo/cubit/image_delete_cubit.dart';
 
 @RoutePage()
 class AppRootPage extends StatelessWidget {

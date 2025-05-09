@@ -1,8 +1,8 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:image_delete_demo/core/extensions/core_extensions.dart';
 import 'package:image_delete_demo/core/theme/text_extension.dart';
-import 'package:image_delete_demo/utils.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 

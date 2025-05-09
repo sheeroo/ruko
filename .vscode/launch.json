@@ -2,20 +2,20 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "image_delete_demo (development)",
+      "name": "(development)",
       "request": "launch",
       "program": "lib/main_development.dart",
       "type": "dart"
     },
     {
-      "name": "image_delete_demo (staging)",
+      "name": "(staging)",
       "request": "launch",
       "program": "lib/main_production.dart",
       "type": "dart",
       "flutterMode": "profile"
     },
     {
-      "name": "image_delete_demo (production)",
+      "name": "(production)",
       "request": "launch",
       "type": "dart",
       "program": "lib/main_production.dart",

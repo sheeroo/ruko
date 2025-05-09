@@ -40,7 +40,7 @@ dependencies:
   app_links: "^6.3.3"
   mailto: "^2.0.0"
   url_launcher: "^6.3.1"
-  flutter_native_splash: "^2.4.4"
+  flutter_native_splash: "2.4.4"
   collection: "^1.19.0"
   auto_size_text_field: "^2.2.4"
   fading_edge_scrollview: "^4.1.1"

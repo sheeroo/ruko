@@ -6,9 +6,9 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_delete_demo/app/gallery_assets/asset_entity_image.dart';
 import 'package:image_delete_demo/app/gallery_assets/cubit/gallery_assets_cubit.dart';
+import 'package:image_delete_demo/app/gallery_assets/cubit/image_delete_cubit.dart';
 import 'package:image_delete_demo/app/home/trash_button.dart';
 import 'package:image_delete_demo/core/theme/button.dart';
-import 'package:image_delete_demo/cubit/image_delete_cubit.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:pixelarticons/pixel.dart';
 
@@ -62,6 +62,9 @@ class _HomePageState extends State<HomePage> {
                   if (controller.cardIndex == null) return;
                   if (controller.cardIndex! == 0) return;
                   await controller.unswipe();
+                  if (!context.mounted) {
+                    return;
+                  }
                   context.read<ImageDeleteCubit>().remove(
                     assets[controller.cardIndex!],
                   );
