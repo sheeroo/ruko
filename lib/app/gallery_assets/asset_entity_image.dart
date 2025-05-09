@@ -1,6 +1,7 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:image_delete_demo/core/theme/text_extension.dart';
 import 'package:image_delete_demo/utils.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
@@ -23,14 +24,12 @@ class ImageItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(33),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.25),
-          width: 0.5,
-        ),
+        borderRadius: BorderRadius.circular(0),
+        border: Border.all(color: Colors.white, width: 1),
+        boxShadow: [BoxShadow(color: Colors.white, offset: Offset(3, 3))],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(32),
+        borderRadius: BorderRadius.circular(0),
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -51,7 +50,7 @@ class ImageItemWidget extends StatelessWidget {
                   gradient: LinearGradient(
                     colors: [
                       Colors.black.withValues(alpha: 0),
-                      Colors.black.withValues(alpha: 1),
+                      Colors.black.withValues(alpha: 0.65),
                     ],
                     begin: Alignment.center,
                     end: Alignment.bottomCenter,
@@ -68,7 +67,7 @@ class ImageItemWidget extends StatelessWidget {
                   spacing: 8,
                   children: [
                     Text(
-                          "delete",
+                          "delete!!",
                           style: TextTheme.of(
                             context,
                           ).displaySmall?.copyWith(fontSize: 18),
@@ -120,7 +119,7 @@ class ImageItemWidget extends StatelessWidget {
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Container(
                   padding: EdgeInsets.all(4),
                   decoration: BoxDecoration(
@@ -133,25 +132,13 @@ class ImageItemWidget extends StatelessWidget {
                     ],
                     color: Colors.black,
                   ),
-                  child: Text(entity.createDateTime.format("dd/MM/yyyy")),
+                  child:
+                      Text(
+                        entity.createDateTime.format("dd/MM/yyyy"),
+                      ).bodySmall(),
                 ),
               ),
             ),
-            // Align(
-            //   alignment: Alignment.topRight,
-            //   child: Padding(
-            //     padding: const EdgeInsets.all(16.0),
-            //     child: GestureDetector(
-            //       onTap: () {
-            //         // todo add auto router and open image with photo view
-            //       },
-            //       child: Container(
-            //         padding: EdgeInsets.all(4),
-            //         child: Icon(FeatherIcons.maximize),
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),

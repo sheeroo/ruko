@@ -1,0 +1,43 @@
+{
+  "Flutter Page Class": {
+    "prefix": "page",
+    "body": [
+      "import 'package:auto_route/auto_route.dart';",
+      "import 'package:flutter/material.dart';",
+      "",
+      "@RoutePage()",
+      "class $1Page extends StatelessWidget {",
+      "  const $1Page({super.key});",
+      "",
+      "  @override",
+      "  Widget build(BuildContext context) {",
+      "    return  const Scaffold(""      body: SizedBox.shrink()\t$0,""    );",
+      "  }",
+      "}"""
+    ],
+    "description": "Create a Flutter screen class with dynamic AppBar title."
+  },
+  "Flutter Bottom Sheet Page Class": {
+    "prefix": "bottomsheet",
+    "body": [
+      "import 'package:auto_route/auto_route.dart';",
+      "import 'package:flutter/material.dart';",
+      "import 'package:image_delete_demo/core/modals/scrollable_sheet_page.dart';",
+      "",
+      "@RoutePage()",
+      "class $1Page extends StatelessWidget {",
+      "  const $1Page({super.key});",
+      "",
+      "  @override",
+      "  Widget build(BuildContext context) {",
+      "    return const ScrollableSheetPage(",
+      "      child: SingleChildScrollView(",
+      "        child: SizedBox.shrink(),",
+      "      ),",
+      "    );",
+      "  }",
+      "}"
+    ],
+    "description": "Create a Flutter screen class with dynamic AppBar title."
+  },
+}

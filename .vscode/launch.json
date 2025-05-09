@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "drift (development)",
+      "request": "launch",
+      "program": "lib/main_development.dart",
+      "type": "dart"
+    },
+    {
+      "name": "drift (staging)",
+      "request": "launch",
+      "program": "lib/main_production.dart",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "drift (production)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_production.dart",
+      "flutterMode": "release"
+    }
+  ]
+}
