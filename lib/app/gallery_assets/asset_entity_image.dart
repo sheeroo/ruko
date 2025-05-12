@@ -34,7 +34,7 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
       if (widget.controller.cardIndex == widget.index) {
         if ((widget.controller.position?.progress ?? 0) > 0.15) {
           if (!hapticDispatched) {
-            HapticFeedback.lightImpact();
+            HapticFeedback.selectionClick();
             hapticDispatched = true;
           }
         } else {
