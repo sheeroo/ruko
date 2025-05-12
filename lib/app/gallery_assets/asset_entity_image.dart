@@ -1,12 +1,13 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:image_delete_demo/core/extensions/core_extensions.dart';
 import 'package:image_delete_demo/core/theme/text_extension.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 
-class ImageItemWidget extends StatelessWidget {
+class ImageItemWidget extends StatefulWidget {
   const ImageItemWidget({
     super.key,
     required this.entity,
@@ -19,6 +20,29 @@ class ImageItemWidget extends StatelessWidget {
   final int index;
   final AssetEntity entity;
   final ThumbnailOption option;
+
+  @override
+  State<ImageItemWidget> createState() => _ImageItemWidgetState();
+}
+
+class _ImageItemWidgetState extends State<ImageItemWidget> {
+  bool hapticDispatched = false;
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(() {
+      if (widget.controller.cardIndex == widget.index) {
+        if ((widget.controller.position?.progress ?? 0) > 0.15) {
+          if (!hapticDispatched) {
+            HapticFeedback.lightImpact();
+            hapticDispatched = true;
+          }
+        } else {
+          hapticDispatched = false;
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +59,10 @@ class ImageItemWidget extends StatelessWidget {
           children: [
             Container(color: Colors.black),
             AssetEntityImage(
-              entity,
+              widget.entity,
               isOriginal: false,
-              thumbnailSize: option.size,
-              thumbnailFormat: option.format,
+              thumbnailSize: widget.option.size,
+              thumbnailFormat: widget.option.format,
               fit: BoxFit.cover,
             ),
             Align(
@@ -73,10 +97,11 @@ class ImageItemWidget extends StatelessWidget {
                           ).displaySmall?.copyWith(fontSize: 18),
                         )
                         .animate(
-                          adapter: ChangeNotifierAdapter(controller, () {
-                            if (controller.cardIndex == index) {
-                              if ((controller.position?.offset.dx ?? 0) < 0) {
-                                return controller.position!.progress * 6;
+                          adapter: ChangeNotifierAdapter(widget.controller, () {
+                            if (widget.controller.cardIndex == widget.index) {
+                              if ((widget.controller.position?.offset.dx ?? 0) <
+                                  0) {
+                                return widget.controller.position!.progress * 6;
                               }
                             }
                             return 0;
@@ -102,10 +127,11 @@ class ImageItemWidget extends StatelessWidget {
                           ).displaySmall?.copyWith(fontSize: 18),
                         )
                         .animate(
-                          adapter: ChangeNotifierAdapter(controller, () {
-                            if (controller.cardIndex == index) {
-                              if ((controller.position?.offset.dx ?? 0) > 0) {
-                                return controller.position!.progress * 6;
+                          adapter: ChangeNotifierAdapter(widget.controller, () {
+                            if (widget.controller.cardIndex == widget.index) {
+                              if ((widget.controller.position?.offset.dx ?? 0) >
+                                  0) {
+                                return widget.controller.position!.progress * 6;
                               }
                             }
                             return 0;
@@ -122,20 +148,10 @@ class ImageItemWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white,
-                        blurRadius: 0,
-                        offset: Offset(3, 3),
-                      ),
-                    ],
-                    color: Colors.black,
-                  ),
-                  child:
-                      Text(
-                        entity.createDateTime.format("dd/MM/yyyy"),
-                      ).bodySmall(),
+                  decoration: BoxDecoration(color: Colors.black),
+                  child: Text(
+                    widget.entity.createDateTime.format("dd/MM/yyyy"),
+                  ).bodySmall(fontSize: 10),
                 ),
               ),
             ),

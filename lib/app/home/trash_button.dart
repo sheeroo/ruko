@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_delete_demo/app/gallery_assets/cubit/gallery_assets_cubit.dart';
 import 'package:image_delete_demo/app/gallery_assets/cubit/image_delete_cubit.dart';
+import 'package:image_delete_demo/core/theme/button.dart';
 import 'package:image_delete_demo/core/widgets/common/widgets/text_swapper.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:pixelarticons/pixel.dart';
@@ -19,27 +21,24 @@ class TrashButton extends StatelessWidget {
       alignment: Alignment.center,
       clipBehavior: Clip.none,
       children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.black,
-            border: Border.all(color: Colors.white, width: 1),
-            boxShadow: [BoxShadow(color: Colors.white, offset: Offset(2, 2))],
-          ),
-          child: IconButton(
-            icon: const Icon(Pixel.trash, color: Colors.white),
-            iconSize: 28,
-            // onPressed: _deleteSelectedAssets,
-            onPressed: () async {
-              HapticFeedback.lightImpact();
-              final List<String> result = await PhotoManager.editor
-                  .deleteWithIds(selectedAssets.map((e) => e.id).toList());
-              onDelete?.call(result);
-              if (result.isNotEmpty && context.mounted) {
-                context.read<ImageDeleteCubit>().reset();
-              }
-            },
-          ),
+        StyledButton.icon(
+          icon: Pixel.trash,
+          onPressed: () async {
+            HapticFeedback.lightImpact();
+            final List<String> result = await PhotoManager.editor.deleteWithIds(
+              selectedAssets.map((e) => e.id).toList(),
+            );
+            if (!context.mounted) return;
+            context.read<GalleryAssetsCubit>().removeAssets(
+              selectedAssets.map((e) => e.id).toList(),
+            );
+            // onDelete?.call(result);
+            if (result.isNotEmpty && context.mounted) {
+              context.read<ImageDeleteCubit>().reset();
+            }
+          },
         ),
+
         Positioned(
               right: -6,
               top: -6,

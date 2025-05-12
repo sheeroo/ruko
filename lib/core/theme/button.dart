@@ -1,7 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_delete_demo/core/theme/text_extension.dart';
 
 class StyledButton extends StatefulWidget {
   const StyledButton._({
@@ -11,6 +11,7 @@ class StyledButton extends StatefulWidget {
     this.isLoading = false,
     this.isDisabled = false,
     this.fullWidth = true,
+    this.iconButton = false,
     this.onPressed,
     this.leading,
     this.trailing,
@@ -18,6 +19,7 @@ class StyledButton extends StatefulWidget {
     this.borderRadius,
     this.backgroundColor,
     this.fontSize,
+    this.icon,
   });
 
   final void Function()? onPressed;
@@ -28,6 +30,8 @@ class StyledButton extends StatefulWidget {
   final bool isDisabled;
   final bool fullWidth;
   final bool filled;
+  final bool iconButton;
+  final IconData? icon;
   final Color fontColor;
   final Color? borderColor;
   final BorderRadius? borderRadius;
@@ -90,6 +94,31 @@ class StyledButton extends StatefulWidget {
     );
   }
 
+  factory StyledButton.icon({
+    required IconData icon,
+    required void Function()? onPressed,
+    bool isLoading = false,
+    bool isDisabled = false,
+    bool fullWidth = false,
+    Widget? leading,
+    Widget? trailing,
+    Color fontColor = Colors.white,
+  }) {
+    return StyledButton._(
+      title: '',
+      filled: false,
+      onPressed: onPressed,
+      isLoading: isLoading,
+      isDisabled: isDisabled,
+      fullWidth: fullWidth,
+      leading: leading,
+      trailing: trailing,
+      fontColor: fontColor,
+      iconButton: true,
+      icon: icon,
+    );
+  }
+
   @override
   State<StyledButton> createState() => _StyledButtonState();
 }
@@ -120,11 +149,12 @@ class _StyledButtonState extends State<StyledButton> {
             Flexible(
               child: Opacity(
                 opacity: widget.isDisabled ? 0.7 : 1.0,
-                child:
-                    Text(
-                      widget.title,
-                      overflow: TextOverflow.ellipsis,
-                    ).bodySmall(),
+                child: AutoSizeText(
+                  widget.title,
+                  maxLines: 1,
+                  minFontSize: 4,
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
               ),
             ),
             widget.trailing ?? const SizedBox.shrink(),
@@ -132,6 +162,34 @@ class _StyledButtonState extends State<StyledButton> {
         );
       },
     );
+
+    if (widget.iconButton) {
+      return Container(
+        decoration: BoxDecoration(
+          color: Colors.black,
+          border: Border.all(color: Colors.white, width: 2),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white,
+              offset: const Offset(3, 3),
+              blurRadius: 0,
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: IconButton(
+          icon: Icon(widget.icon, color: Colors.white),
+          iconSize: 28,
+          onPressed:
+              widget.isDisabled
+                  ? null
+                  : () {
+                    HapticFeedback.selectionClick();
+                    widget.onPressed?.call();
+                  },
+        ),
+      );
+    }
 
     if (widget.filled) {
       return Container(
@@ -153,7 +211,11 @@ class _StyledButtonState extends State<StyledButton> {
                     HapticFeedback.selectionClick();
                     widget.onPressed?.call();
                   },
-          child: SizedBox(height: 55, width: double.infinity, child: child),
+          child: Container(
+            constraints: const BoxConstraints(minHeight: 52),
+            width: widget.fullWidth ? double.infinity : null,
+            child: child,
+          ),
         ),
       );
     }

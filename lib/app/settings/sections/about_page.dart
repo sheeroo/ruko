@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:image_delete_demo/core/app_info/app_info.dart';
-import 'package:image_delete_demo/core/extensions/core_extensions.dart';
-import 'package:image_delete_demo/core/theme/text_extension.dart';
-import 'package:image_delete_demo/core/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 // import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:gap/gap.dart';
+import 'package:image_delete_demo/core/app_info/app_info.dart';
+import 'package:image_delete_demo/core/extensions/core_extensions.dart';
+import 'package:image_delete_demo/core/theme/text_extension.dart';
+import 'package:image_delete_demo/core/widgets/custom_appbar.dart';
 // import 'package:mailto/mailto.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
@@ -17,7 +17,7 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppbar(title: 'about drift.', dissmissable: true),
+      appBar: const CustomAppbar(title: 'about drift.'),
       extendBodyBehindAppBar: true,
       extendBody: true,
       body: SingleChildScrollView(

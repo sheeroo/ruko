@@ -22,6 +22,14 @@ class AppRouter extends RootStackRouter {
           page: PermissionRequestRoute.page,
           transitionsBuilder: fadeTransition,
         ),
+        CustomRoute(
+          page: CalendarRoute.page,
+          transitionsBuilder: fadeTransition,
+        ),
+        CustomRoute(
+          page: MonthSwiperRoute.page,
+          transitionsBuilder: fadeTransition,
+        ),
       ],
     ),
   ];

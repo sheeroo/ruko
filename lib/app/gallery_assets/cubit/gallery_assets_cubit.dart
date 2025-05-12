@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_delete_demo/core/enums/status.dart';
+import 'package:image_delete_demo/core/extensions/core_extensions.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 part 'gallery_assets_cubit.freezed.dart';
@@ -29,5 +31,10 @@ class GalleryAssetsCubit extends Cubit<GalleryAssetsState> {
       final assets = await paths[0].getAssetListPaged(page: 0, size: loadCount);
       emit(state.copyWith(assets: assets, status: TaskStatus.success));
     }
+  }
+
+  void removeAssets(List<String> ids) {
+    final assets = state.assets.where((e) => !ids.contains(e.id)).toList();
+    emit(state.copyWith(assets: assets));
   }
 }

@@ -115,11 +115,12 @@ class __$$GalleryAssetsStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$GalleryAssetsStateImpl implements _GalleryAssetsState {
+class _$GalleryAssetsStateImpl extends _GalleryAssetsState {
   const _$GalleryAssetsStateImpl({
     final List<AssetEntity> assets = const [],
     this.status = TaskStatus.initial,
-  }) : _assets = assets;
+  }) : _assets = assets,
+       super._();
 
   final List<AssetEntity> _assets;
   @override
@@ -167,11 +168,12 @@ class _$GalleryAssetsStateImpl implements _GalleryAssetsState {
       );
 }
 
-abstract class _GalleryAssetsState implements GalleryAssetsState {
+abstract class _GalleryAssetsState extends GalleryAssetsState {
   const factory _GalleryAssetsState({
     final List<AssetEntity> assets,
     final TaskStatus status,
   }) = _$GalleryAssetsStateImpl;
+  const _GalleryAssetsState._() : super._();
 
   @override
   List<AssetEntity> get assets;

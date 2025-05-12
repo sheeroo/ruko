@@ -26,6 +26,9 @@ ThemeData theme(BuildContext context) {
       style: ButtonStyle(
         iconColor: WidgetStateProperty.all(Colors.black),
         backgroundColor: WidgetStateProperty.all(Colors.black),
+        padding: WidgetStateProperty.all(
+          EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        ),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(0),

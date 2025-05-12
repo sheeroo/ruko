@@ -9,41 +9,43 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i17;
+import 'dart:async' as _i19;
 
-import 'package:auto_route/auto_route.dart' as _i13;
-import 'package:flutter/cupertino.dart' as _i16;
-import 'package:flutter/material.dart' as _i14;
-import 'package:image_delete_demo/app/home/home_page.dart' as _i6;
+import 'package:auto_route/auto_route.dart' as _i15;
+import 'package:flutter/cupertino.dart' as _i18;
+import 'package:flutter/material.dart' as _i16;
+import 'package:image_delete_demo/app/calendar/calendar_page.dart' as _i4;
+import 'package:image_delete_demo/app/calendar/month_swiper.dart' as _i9;
+import 'package:image_delete_demo/app/home/home_page.dart' as _i7;
 import 'package:image_delete_demo/app/permission_request/permission_request_page.dart'
-    as _i8;
+    as _i10;
 import 'package:image_delete_demo/app/root/app_root.dart' as _i3;
-import 'package:image_delete_demo/app/settings/page/settings_page.dart' as _i10;
+import 'package:image_delete_demo/app/settings/page/settings_page.dart' as _i12;
 import 'package:image_delete_demo/app/settings/page/settings_shell_page.dart'
-    as _i11;
+    as _i13;
 import 'package:image_delete_demo/app/settings/sections/about_page.dart' as _i1;
 import 'package:image_delete_demo/app/settings/sections/privacy_policy_page.dart'
-    as _i9;
-import 'package:image_delete_demo/app/splash_screen/splash_screen.dart' as _i12;
-import 'package:image_delete_demo/core/widgets/alert_widget.dart' as _i15;
+    as _i11;
+import 'package:image_delete_demo/app/splash_screen/splash_screen.dart' as _i14;
+import 'package:image_delete_demo/core/widgets/alert_widget.dart' as _i17;
 import 'package:image_delete_demo/core/widgets/common/date_time_picker.dart'
-    as _i4;
+    as _i5;
 import 'package:image_delete_demo/core/widgets/common/widgets/styled_alert_dialog.dart'
     as _i2;
 import 'package:image_delete_demo/core/widgets/info_modals/error_modal.dart'
-    as _i5;
+    as _i6;
 import 'package:image_delete_demo/core/widgets/info_modals/info_modal.dart'
-    as _i7;
+    as _i8;
 
 /// generated route for
 /// [_i1.AboutPage]
-class AboutRoute extends _i13.PageRouteInfo<void> {
-  const AboutRoute({List<_i13.PageRouteInfo>? children})
+class AboutRoute extends _i15.PageRouteInfo<void> {
+  const AboutRoute({List<_i15.PageRouteInfo>? children})
     : super(AboutRoute.name, initialChildren: children);
 
   static const String name = 'AboutRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
       return const _i1.AboutPage();
@@ -53,19 +55,19 @@ class AboutRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.AlertDialogPage]
-class AlertDialogRoute extends _i13.PageRouteInfo<AlertDialogRouteArgs> {
+class AlertDialogRoute extends _i15.PageRouteInfo<AlertDialogRouteArgs> {
   AlertDialogRoute({
-    _i14.Key? key,
+    _i16.Key? key,
     required String title,
     String? subtitle,
-    _i14.Widget? leading,
-    _i14.Widget? trailing,
-    void Function(_i14.BuildContext)? onAccept,
-    void Function(_i14.BuildContext)? onCancel,
+    _i16.Widget? leading,
+    _i16.Widget? trailing,
+    void Function(_i16.BuildContext)? onAccept,
+    void Function(_i16.BuildContext)? onCancel,
     bool withEasterEgg = true,
-    _i15.AlertLevel level = _i15.AlertLevel.warning,
+    _i17.AlertLevel level = _i17.AlertLevel.warning,
     bool autoPop = false,
-    List<_i13.PageRouteInfo>? children,
+    List<_i15.PageRouteInfo>? children,
   }) : super(
          AlertDialogRoute.name,
          args: AlertDialogRouteArgs(
@@ -85,7 +87,7 @@ class AlertDialogRoute extends _i13.PageRouteInfo<AlertDialogRouteArgs> {
 
   static const String name = 'AlertDialogRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<AlertDialogRouteArgs>();
@@ -115,27 +117,27 @@ class AlertDialogRouteArgs {
     this.onAccept,
     this.onCancel,
     this.withEasterEgg = true,
-    this.level = _i15.AlertLevel.warning,
+    this.level = _i17.AlertLevel.warning,
     this.autoPop = false,
   });
 
-  final _i14.Key? key;
+  final _i16.Key? key;
 
   final String title;
 
   final String? subtitle;
 
-  final _i14.Widget? leading;
+  final _i16.Widget? leading;
 
-  final _i14.Widget? trailing;
+  final _i16.Widget? trailing;
 
-  final void Function(_i14.BuildContext)? onAccept;
+  final void Function(_i16.BuildContext)? onAccept;
 
-  final void Function(_i14.BuildContext)? onCancel;
+  final void Function(_i16.BuildContext)? onCancel;
 
   final bool withEasterEgg;
 
-  final _i15.AlertLevel level;
+  final _i17.AlertLevel level;
 
   final bool autoPop;
 
@@ -147,8 +149,8 @@ class AlertDialogRouteArgs {
 
 /// generated route for
 /// [_i3.AppRootPage]
-class AppRootRoute extends _i13.PageRouteInfo<AppRootRouteArgs> {
-  AppRootRoute({_i14.Key? key, List<_i13.PageRouteInfo>? children})
+class AppRootRoute extends _i15.PageRouteInfo<AppRootRouteArgs> {
+  AppRootRoute({_i16.Key? key, List<_i15.PageRouteInfo>? children})
     : super(
         AppRootRoute.name,
         args: AppRootRouteArgs(key: key),
@@ -157,7 +159,7 @@ class AppRootRoute extends _i13.PageRouteInfo<AppRootRouteArgs> {
 
   static const String name = 'AppRootRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<AppRootRouteArgs>(
@@ -171,7 +173,7 @@ class AppRootRoute extends _i13.PageRouteInfo<AppRootRouteArgs> {
 class AppRootRouteArgs {
   const AppRootRouteArgs({this.key});
 
-  final _i14.Key? key;
+  final _i16.Key? key;
 
   @override
   String toString() {
@@ -180,13 +182,29 @@ class AppRootRouteArgs {
 }
 
 /// generated route for
-/// [_i4.DateTimePickerBottomSheetPage]
+/// [_i4.CalendarPage]
+class CalendarRoute extends _i15.PageRouteInfo<void> {
+  const CalendarRoute({List<_i15.PageRouteInfo>? children})
+    : super(CalendarRoute.name, initialChildren: children);
+
+  static const String name = 'CalendarRoute';
+
+  static _i15.PageInfo page = _i15.PageInfo(
+    name,
+    builder: (data) {
+      return const _i4.CalendarPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i5.DateTimePickerBottomSheetPage]
 class DateTimePickerBottomSheetRoute
-    extends _i13.PageRouteInfo<DateTimePickerBottomSheetRouteArgs> {
+    extends _i15.PageRouteInfo<DateTimePickerBottomSheetRouteArgs> {
   DateTimePickerBottomSheetRoute({
-    _i16.Key? key,
+    _i18.Key? key,
     DateTime? initialDate,
-    List<_i13.PageRouteInfo>? children,
+    List<_i15.PageRouteInfo>? children,
   }) : super(
          DateTimePickerBottomSheetRoute.name,
          args: DateTimePickerBottomSheetRouteArgs(
@@ -198,13 +216,13 @@ class DateTimePickerBottomSheetRoute
 
   static const String name = 'DateTimePickerBottomSheetRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<DateTimePickerBottomSheetRouteArgs>(
         orElse: () => const DateTimePickerBottomSheetRouteArgs(),
       );
-      return _i4.DateTimePickerBottomSheetPage(
+      return _i5.DateTimePickerBottomSheetPage(
         key: args.key,
         initialDate: args.initialDate,
       );
@@ -215,7 +233,7 @@ class DateTimePickerBottomSheetRoute
 class DateTimePickerBottomSheetRouteArgs {
   const DateTimePickerBottomSheetRouteArgs({this.key, this.initialDate});
 
-  final _i16.Key? key;
+  final _i18.Key? key;
 
   final DateTime? initialDate;
 
@@ -226,12 +244,12 @@ class DateTimePickerBottomSheetRouteArgs {
 }
 
 /// generated route for
-/// [_i5.ErrorModalPage]
-class ErrorModalRoute extends _i13.PageRouteInfo<ErrorModalRouteArgs> {
+/// [_i6.ErrorModalPage]
+class ErrorModalRoute extends _i15.PageRouteInfo<ErrorModalRouteArgs> {
   ErrorModalRoute({
-    _i14.Key? key,
+    _i16.Key? key,
     required String message,
-    List<_i13.PageRouteInfo>? children,
+    List<_i15.PageRouteInfo>? children,
   }) : super(
          ErrorModalRoute.name,
          args: ErrorModalRouteArgs(key: key, message: message),
@@ -240,11 +258,11 @@ class ErrorModalRoute extends _i13.PageRouteInfo<ErrorModalRouteArgs> {
 
   static const String name = 'ErrorModalRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<ErrorModalRouteArgs>();
-      return _i5.ErrorModalPage(key: args.key, message: args.message);
+      return _i6.ErrorModalPage(key: args.key, message: args.message);
     },
   );
 }
@@ -252,7 +270,7 @@ class ErrorModalRoute extends _i13.PageRouteInfo<ErrorModalRouteArgs> {
 class ErrorModalRouteArgs {
   const ErrorModalRouteArgs({this.key, required this.message});
 
-  final _i14.Key? key;
+  final _i16.Key? key;
 
   final String message;
 
@@ -263,28 +281,28 @@ class ErrorModalRouteArgs {
 }
 
 /// generated route for
-/// [_i6.HomePage]
-class HomeRoute extends _i13.PageRouteInfo<void> {
-  const HomeRoute({List<_i13.PageRouteInfo>? children})
+/// [_i7.HomePage]
+class HomeRoute extends _i15.PageRouteInfo<void> {
+  const HomeRoute({List<_i15.PageRouteInfo>? children})
     : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
-      return const _i6.HomePage();
+      return const _i7.HomePage();
     },
   );
 }
 
 /// generated route for
-/// [_i7.InfoModalPage]
-class InfoModalRoute extends _i13.PageRouteInfo<InfoModalRouteArgs> {
+/// [_i8.InfoModalPage]
+class InfoModalRoute extends _i15.PageRouteInfo<InfoModalRouteArgs> {
   InfoModalRoute({
-    _i14.Key? key,
+    _i16.Key? key,
     required String message,
-    List<_i13.PageRouteInfo>? children,
+    List<_i15.PageRouteInfo>? children,
   }) : super(
          InfoModalRoute.name,
          args: InfoModalRouteArgs(key: key, message: message),
@@ -293,11 +311,11 @@ class InfoModalRoute extends _i13.PageRouteInfo<InfoModalRouteArgs> {
 
   static const String name = 'InfoModalRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<InfoModalRouteArgs>();
-      return _i7.InfoModalPage(key: args.key, message: args.message);
+      return _i8.InfoModalPage(key: args.key, message: args.message);
     },
   );
 }
@@ -305,7 +323,7 @@ class InfoModalRoute extends _i13.PageRouteInfo<InfoModalRouteArgs> {
 class InfoModalRouteArgs {
   const InfoModalRouteArgs({this.key, required this.message});
 
-  final _i14.Key? key;
+  final _i16.Key? key;
 
   final String message;
 
@@ -316,44 +334,81 @@ class InfoModalRouteArgs {
 }
 
 /// generated route for
-/// [_i8.PermissionRequestPage]
-class PermissionRequestRoute extends _i13.PageRouteInfo<void> {
-  const PermissionRequestRoute({List<_i13.PageRouteInfo>? children})
+/// [_i9.MonthSwiperPage]
+class MonthSwiperRoute extends _i15.PageRouteInfo<MonthSwiperRouteArgs> {
+  MonthSwiperRoute({
+    _i16.Key? key,
+    required String month,
+    List<_i15.PageRouteInfo>? children,
+  }) : super(
+         MonthSwiperRoute.name,
+         args: MonthSwiperRouteArgs(key: key, month: month),
+         initialChildren: children,
+       );
+
+  static const String name = 'MonthSwiperRoute';
+
+  static _i15.PageInfo page = _i15.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<MonthSwiperRouteArgs>();
+      return _i9.MonthSwiperPage(key: args.key, month: args.month);
+    },
+  );
+}
+
+class MonthSwiperRouteArgs {
+  const MonthSwiperRouteArgs({this.key, required this.month});
+
+  final _i16.Key? key;
+
+  final String month;
+
+  @override
+  String toString() {
+    return 'MonthSwiperRouteArgs{key: $key, month: $month}';
+  }
+}
+
+/// generated route for
+/// [_i10.PermissionRequestPage]
+class PermissionRequestRoute extends _i15.PageRouteInfo<void> {
+  const PermissionRequestRoute({List<_i15.PageRouteInfo>? children})
     : super(PermissionRequestRoute.name, initialChildren: children);
 
   static const String name = 'PermissionRequestRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
-      return const _i8.PermissionRequestPage();
+      return const _i10.PermissionRequestPage();
     },
   );
 }
 
 /// generated route for
-/// [_i9.PrivacyPolicyPage]
-class PrivacyPolicyRoute extends _i13.PageRouteInfo<void> {
-  const PrivacyPolicyRoute({List<_i13.PageRouteInfo>? children})
+/// [_i11.PrivacyPolicyPage]
+class PrivacyPolicyRoute extends _i15.PageRouteInfo<void> {
+  const PrivacyPolicyRoute({List<_i15.PageRouteInfo>? children})
     : super(PrivacyPolicyRoute.name, initialChildren: children);
 
   static const String name = 'PrivacyPolicyRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
-      return const _i9.PrivacyPolicyPage();
+      return const _i11.PrivacyPolicyPage();
     },
   );
 }
 
 /// generated route for
-/// [_i10.SettingsPage]
-class SettingsRoute extends _i13.PageRouteInfo<SettingsRouteArgs> {
+/// [_i12.SettingsPage]
+class SettingsRoute extends _i15.PageRouteInfo<SettingsRouteArgs> {
   SettingsRoute({
-    _i14.Key? key,
-    _i17.Future<void> Function()? onLogoutCallback,
-    List<_i13.PageRouteInfo>? children,
+    _i16.Key? key,
+    _i19.Future<void> Function()? onLogoutCallback,
+    List<_i15.PageRouteInfo>? children,
   }) : super(
          SettingsRoute.name,
          args: SettingsRouteArgs(key: key, onLogoutCallback: onLogoutCallback),
@@ -362,13 +417,13 @@ class SettingsRoute extends _i13.PageRouteInfo<SettingsRouteArgs> {
 
   static const String name = 'SettingsRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<SettingsRouteArgs>(
         orElse: () => const SettingsRouteArgs(),
       );
-      return _i10.SettingsPage(
+      return _i12.SettingsPage(
         key: args.key,
         onLogoutCallback: args.onLogoutCallback,
       );
@@ -379,9 +434,9 @@ class SettingsRoute extends _i13.PageRouteInfo<SettingsRouteArgs> {
 class SettingsRouteArgs {
   const SettingsRouteArgs({this.key, this.onLogoutCallback});
 
-  final _i14.Key? key;
+  final _i16.Key? key;
 
-  final _i17.Future<void> Function()? onLogoutCallback;
+  final _i19.Future<void> Function()? onLogoutCallback;
 
   @override
   String toString() {
@@ -390,33 +445,33 @@ class SettingsRouteArgs {
 }
 
 /// generated route for
-/// [_i11.SettingsShellPage]
-class SettingsShellRoute extends _i13.PageRouteInfo<void> {
-  const SettingsShellRoute({List<_i13.PageRouteInfo>? children})
+/// [_i13.SettingsShellPage]
+class SettingsShellRoute extends _i15.PageRouteInfo<void> {
+  const SettingsShellRoute({List<_i15.PageRouteInfo>? children})
     : super(SettingsShellRoute.name, initialChildren: children);
 
   static const String name = 'SettingsShellRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
-      return const _i11.SettingsShellPage();
+      return const _i13.SettingsShellPage();
     },
   );
 }
 
 /// generated route for
-/// [_i12.SplashScreenPage]
-class SplashRouteRoute extends _i13.PageRouteInfo<void> {
-  const SplashRouteRoute({List<_i13.PageRouteInfo>? children})
+/// [_i14.SplashScreenPage]
+class SplashRouteRoute extends _i15.PageRouteInfo<void> {
+  const SplashRouteRoute({List<_i15.PageRouteInfo>? children})
     : super(SplashRouteRoute.name, initialChildren: children);
 
   static const String name = 'SplashRouteRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
-      return const _i12.SplashScreenPage();
+      return const _i14.SplashScreenPage();
     },
   );
 }

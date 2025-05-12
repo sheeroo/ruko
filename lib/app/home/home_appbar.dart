@@ -1,14 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:image_delete_demo/app/home/trash_button.dart';
 import 'package:image_delete_demo/core/extensions/core_extensions.dart';
+import 'package:image_delete_demo/core/router/router.gr.dart';
 import 'package:image_delete_demo/core/theme/button.dart';
-import 'package:image_delete_demo/core/theme/text_extension.dart';
 import 'package:pixelarticons/pixel.dart';
 
-class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppbar({super.key, this.title});
+class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
+  const HomeAppbar({super.key, this.onDelete});
 
-  final String? title;
+  final Function(List<String>)? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +30,16 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
             child: Row(
               spacing: 12,
               children: [
-                if (title != null) Center(child: Text(title!).bodySmall()),
                 Spacer(),
                 StyledButton.icon(
-                  icon: Pixel.close,
+                  icon: Pixel.calendar,
                   onPressed: () {
-                    context.router.maybePop();
+                    context.router.push(const CalendarRoute());
                   },
                 ),
+                TrashButton(onDelete: onDelete).p(right: 12),
               ],
-            ).p(horizontal: 12),
+            ),
           ),
         ),
       ),
