@@ -7,13 +7,18 @@ import 'package:image_delete_demo/app/home/home_appbar.dart';
 import 'package:image_delete_demo/app/swiper/swiper.dart';
 
 @RoutePage()
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final controller = AppinioSwiperController();
+  @override
   Widget build(BuildContext context) {
     final assets = context.watch<GalleryAssetsCubit>().state.assets;
-    final controller = AppinioSwiperController();
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
@@ -22,7 +27,7 @@ class HomePage extends StatelessWidget {
           controller.setCardIndex(controller.cardIndex! - ids.length);
         },
       ),
-      body: AssetSwiper(assets: assets, controller: controller),
+      body: AssetSwiper(controller: controller, assets: assets),
     );
   }
 }

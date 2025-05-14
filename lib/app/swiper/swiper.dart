@@ -25,7 +25,6 @@ class AssetSwiper extends StatefulWidget {
 }
 
 class _AssetSwiperState extends State<AssetSwiper> {
-  late final controller = widget.controller;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -38,8 +37,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
               children: [
                 Flexible(
                   child: AppinioSwiper(
-                    key: ValueKey(widget.assets),
-                    controller: controller,
+                    controller: widget.controller,
                     swipeOptions: SwipeOptions.symmetric(
                       horizontal: true,
                       vertical: false,
@@ -64,7 +62,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
                         option: ThumbnailOption.ios(
                           size: ThumbnailSize(720, 1560),
                         ),
-                        controller: controller,
+                        controller: widget.controller,
                       );
                     },
                     cardCount: widget.assets.length,
@@ -82,7 +80,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
                         title: "delete",
                         fullWidth: true,
                         onPressed: () {
-                          controller.swipeLeft();
+                          widget.controller.swipeLeft();
                         },
                       ),
                     ),
@@ -101,14 +99,14 @@ class _AssetSwiperState extends State<AssetSwiper> {
                         ),
                         onPressed: () async {
                           HapticFeedback.lightImpact();
-                          if (controller.cardIndex == null) return;
-                          if (controller.cardIndex! == 0) return;
-                          await controller.unswipe();
+                          if (widget.controller.cardIndex == null) return;
+                          if (widget.controller.cardIndex! == 0) return;
+                          await widget.controller.unswipe();
                           if (!context.mounted) {
                             return;
                           }
                           context.read<ImageDeleteCubit>().remove(
-                            widget.assets[controller.cardIndex!],
+                            widget.assets[widget.controller.cardIndex!],
                           );
                         },
                       ),
@@ -119,7 +117,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
                         title: "keep",
                         fullWidth: true,
                         onPressed: () {
-                          controller.swipeRight();
+                          widget.controller.swipeRight();
                         },
                       ),
                     ),

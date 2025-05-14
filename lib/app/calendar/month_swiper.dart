@@ -32,11 +32,7 @@ class _MonthSwiperPageState extends State<MonthSwiperPage> {
           controller.setCardIndex(controller.cardIndex! - ids.length);
         },
       ),
-      body: AssetSwiper(
-        key: ValueKey(assets),
-        assets: assets,
-        controller: controller,
-      ),
+      body: AssetSwiper(controller: controller, assets: assets),
     );
   }
 }

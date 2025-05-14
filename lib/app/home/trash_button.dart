@@ -32,7 +32,7 @@ class TrashButton extends StatelessWidget {
             context.read<GalleryAssetsCubit>().removeAssets(
               selectedAssets.map((e) => e.id).toList(),
             );
-            // onDelete?.call(result);
+            onDelete?.call(result);
             if (result.isNotEmpty && context.mounted) {
               context.read<ImageDeleteCubit>().reset();
             }
