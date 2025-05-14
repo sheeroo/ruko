@@ -1,7 +1,7 @@
-import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:image_delete_demo/app/swiper/custom_controller.dart';
 import 'package:image_delete_demo/core/extensions/core_extensions.dart';
 import 'package:image_delete_demo/core/theme/text_extension.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -16,7 +16,7 @@ class ImageItemWidget extends StatefulWidget {
     required this.index,
   });
 
-  final AppinioSwiperController controller;
+  final CustomSwiperController controller;
   final int index;
   final AssetEntity entity;
   final ThumbnailOption option;
@@ -27,14 +27,23 @@ class ImageItemWidget extends StatefulWidget {
 
 class _ImageItemWidgetState extends State<ImageItemWidget> {
   bool hapticDispatched = false;
+  // bool unswipping = false;
   @override
   void initState() {
     super.initState();
     widget.controller.addListener(() {
+      // if (widget.controller.isUnswipping != unswipping) {
+      //   setState(() {
+      //     unswipping = widget.controller.isUnswipping;
+      //   });
+      // }
       if (widget.controller.cardIndex == widget.index) {
-        if ((widget.controller.position?.progress ?? 0) > 0.15) {
+        if ((widget.controller.position?.progress ?? 0) > 0.10) {
           if (!hapticDispatched) {
-            HapticFeedback.selectionClick();
+            if (!widget.controller.isControlledSwiping &&
+                !widget.controller.isUnswipping) {
+              HapticFeedback.selectionClick();
+            }
             hapticDispatched = true;
           }
         } else {
@@ -98,6 +107,12 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
                         )
                         .animate(
                           adapter: ChangeNotifierAdapter(widget.controller, () {
+                            if (widget.controller.isUnswipping) {
+                              return 0;
+                            }
+                            if (widget.controller.isControlledSwiping) {
+                              return 0;
+                            }
                             if (widget.controller.cardIndex == widget.index) {
                               if ((widget.controller.position?.offset.dx ?? 0) <
                                   0) {
@@ -128,6 +143,12 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
                         )
                         .animate(
                           adapter: ChangeNotifierAdapter(widget.controller, () {
+                            if (widget.controller.isUnswipping) {
+                              return 0;
+                            }
+                            if (widget.controller.isControlledSwiping) {
+                              return 0;
+                            }
                             if (widget.controller.cardIndex == widget.index) {
                               if ((widget.controller.position?.offset.dx ?? 0) >
                                   0) {

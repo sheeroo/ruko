@@ -5,6 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_delete_demo/app/gallery_assets/asset_entity_image.dart';
 import 'package:image_delete_demo/app/gallery_assets/cubit/image_delete_cubit.dart';
+import 'package:image_delete_demo/app/swiper/custom_controller.dart';
 import 'package:image_delete_demo/core/extensions/core_extensions.dart';
 import 'package:image_delete_demo/core/theme/button.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -18,7 +19,7 @@ class AssetSwiper extends StatefulWidget {
   });
 
   final List<AssetEntity> assets;
-  final AppinioSwiperController controller;
+  final CustomSwiperController controller;
 
   @override
   State<AssetSwiper> createState() => _AssetSwiperState();

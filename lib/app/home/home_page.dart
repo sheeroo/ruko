@@ -1,9 +1,9 @@
-import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_delete_demo/app/gallery_assets/cubit/gallery_assets_cubit.dart';
 import 'package:image_delete_demo/app/home/home_appbar.dart';
+import 'package:image_delete_demo/app/swiper/custom_controller.dart';
 import 'package:image_delete_demo/app/swiper/swiper.dart';
 
 @RoutePage()
@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final controller = AppinioSwiperController();
+  final controller = CustomSwiperController();
   @override
   Widget build(BuildContext context) {
     final assets = context.watch<GalleryAssetsCubit>().state.assets;
