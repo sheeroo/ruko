@@ -27,16 +27,11 @@ class ImageItemWidget extends StatefulWidget {
 
 class _ImageItemWidgetState extends State<ImageItemWidget> {
   bool hapticDispatched = false;
-  // bool unswipping = false;
+
   @override
   void initState() {
     super.initState();
     widget.controller.addListener(() {
-      // if (widget.controller.isUnswipping != unswipping) {
-      //   setState(() {
-      //     unswipping = widget.controller.isUnswipping;
-      //   });
-      // }
       if (widget.controller.cardIndex == widget.index) {
         if ((widget.controller.position?.progress ?? 0) > 0.10) {
           if (!hapticDispatched) {
