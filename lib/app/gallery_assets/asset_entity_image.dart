@@ -35,8 +35,7 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
       if (widget.controller.cardIndex == widget.index) {
         if ((widget.controller.position?.progress ?? 0) > 0.10) {
           if (!hapticDispatched) {
-            if (!widget.controller.isControlledSwiping &&
-                !widget.controller.isUnswipping) {
+            if (!widget.controller.isControlledSwiping) {
               HapticFeedback.selectionClick();
             }
             hapticDispatched = true;
@@ -102,9 +101,6 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
                         )
                         .animate(
                           adapter: ChangeNotifierAdapter(widget.controller, () {
-                            if (widget.controller.isUnswipping) {
-                              return 0;
-                            }
                             if (widget.controller.isControlledSwiping) {
                               return 0;
                             }
@@ -138,9 +134,6 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
                         )
                         .animate(
                           adapter: ChangeNotifierAdapter(widget.controller, () {
-                            if (widget.controller.isUnswipping) {
-                              return 0;
-                            }
                             if (widget.controller.isControlledSwiping) {
                               return 0;
                             }

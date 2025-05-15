@@ -2,37 +2,44 @@ import 'dart:async';
 
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:image_delete_demo/core/limiters/debouncer.dart';
 
 class CustomSwiperController extends AppinioSwiperController {
   CustomSwiperController() : super();
 
   bool _isControlledSwiping = false;
-  bool _unswipping = false;
 
   bool get isControlledSwiping => _isControlledSwiping;
-  bool get isUnswipping => _unswipping;
+  final debouncer = Debouncer(750.ms);
+
+  void setControlledSwiping(bool value) async {
+    if (value) {
+      _isControlledSwiping = true;
+      return;
+    }
+    debouncer.run(() {
+      _isControlledSwiping = false;
+    });
+  }
 
   @override
   Future<void> unswipe() async {
-    _unswipping = true;
+    setControlledSwiping(true);
     await super.unswipe();
-    await Future.delayed(1.seconds);
-    _unswipping = false;
+    setControlledSwiping(false);
   }
 
   @override
   Future<void> swipeLeft() async {
-    _isControlledSwiping = true;
+    setControlledSwiping(true);
     await super.swipeLeft();
-    await Future.delayed(1.seconds);
-    _isControlledSwiping = false;
+    setControlledSwiping(false);
   }
 
   @override
   Future<void> swipeRight() async {
-    _isControlledSwiping = true;
-    await super.swipeLeft();
-    await Future.delayed(1.seconds);
-    _isControlledSwiping = false;
+    setControlledSwiping(true);
+    await super.swipeRight();
+    setControlledSwiping(false);
   }
 }
