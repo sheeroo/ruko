@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_delete_demo/core/extensions/core_extensions.dart';
-import 'package:image_delete_demo/core/theme/button.dart';
 import 'package:image_delete_demo/core/theme/text_extension.dart';
 import 'package:pixelarticons/pixel.dart';
 
@@ -21,7 +21,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
       child: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        backgroundColor: Colors.black.withValues(alpha: 0.3),
+        backgroundColor: Colors.black.withValues(alpha: 0.65),
         flexibleSpace: SizedBox(
           width: double.infinity,
           height: double.infinity,
@@ -31,11 +31,12 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 if (title != null) Center(child: Text(title!).bodySmall()),
                 Spacer(),
-                StyledButton.icon(
-                  icon: Pixel.close,
+                IconButton(
                   onPressed: () {
+                    HapticFeedback.selectionClick();
                     context.router.maybePop();
                   },
+                  icon: Icon(Pixel.close),
                 ),
               ],
             ).p(horizontal: 12),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -9,16 +10,9 @@ class CustomSwiperController extends AppinioSwiperController {
   CustomSwiperController() : super();
 
   bool _isControlledSwiping = false;
-  int _deletedCount = 0;
-
-  int get deletedCount => _deletedCount;
-
-  void addDeleted(int value) {
-    _deletedCount += value;
-  }
 
   int get safeIndex {
-    return (cardIndex ?? 0) - _deletedCount;
+    return max(cardIndex ?? 0, 0);
   }
 
   bool get isControlledSwiping => _isControlledSwiping;

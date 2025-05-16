@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:image_delete_demo/app/home/trash_button.dart';
 import 'package:image_delete_demo/core/extensions/core_extensions.dart';
 import 'package:image_delete_demo/core/router/router.gr.dart';
 import 'package:image_delete_demo/core/theme/button.dart';
@@ -32,14 +31,19 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 Spacer(),
                 StyledButton.icon(
+                  icon: Pixel.wind,
+                  onPressed: () {
+                    context.router.push(const CategoriesRoute());
+                  },
+                ),
+                StyledButton.icon(
                   icon: Pixel.calendar,
                   onPressed: () {
                     context.router.push(const CalendarRoute());
                   },
                 ),
-                TrashButton(onDelete: onDelete).p(right: 12),
               ],
-            ),
+            ).p(right: 12),
           ),
         ),
       ),

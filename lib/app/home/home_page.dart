@@ -23,12 +23,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
-      appBar: HomeAppbar(
-        onDelete: (ids) {
-          controller.setCardIndex(controller.cardIndex! - ids.length);
-          controller.addDeleted(ids.length);
-        },
-      ),
+      appBar: HomeAppbar(),
       body: AssetSwiper(controller: controller, assets: assets),
     );
   }

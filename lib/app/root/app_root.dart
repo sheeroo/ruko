@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_delete_demo/app/gallery_assets/cubit/gallery_assets_cubit.dart';
-import 'package:image_delete_demo/app/gallery_assets/cubit/image_delete_cubit.dart';
 import 'package:image_delete_demo/core/limiters/throttler.dart';
 
 @RoutePage()
@@ -14,10 +13,7 @@ class AppRootPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => GalleryAssetsCubit()),
-        BlocProvider(create: (context) => ImageDeleteCubit()),
-      ],
+      providers: [BlocProvider(create: (context) => GalleryAssetsCubit())],
       child: const AutoRouter(),
     );
   }

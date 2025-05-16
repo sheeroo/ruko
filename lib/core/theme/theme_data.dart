@@ -24,7 +24,8 @@ ThemeData theme(BuildContext context) {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        iconColor: WidgetStateProperty.all(Colors.black),
+        iconColor: WidgetStateProperty.all(Colors.white),
+        iconSize: WidgetStateProperty.all(24),
         backgroundColor: WidgetStateProperty.all(Colors.black),
         padding: WidgetStateProperty.all(
           EdgeInsets.symmetric(horizontal: 12, vertical: 8),

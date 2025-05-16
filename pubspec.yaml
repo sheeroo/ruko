@@ -54,6 +54,7 @@ dependencies:
   toastification: "^2.3.0"
   get_it: "^8.0.3"
   flutter_markdown: ^0.7.7+1
+  widget_zoom: ^0.0.4
 
 dev_dependencies:
   flutter_test:

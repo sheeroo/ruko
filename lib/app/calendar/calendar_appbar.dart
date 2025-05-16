@@ -1,15 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:image_delete_demo/app/home/trash_button.dart';
+import 'package:flutter/services.dart';
 import 'package:image_delete_demo/core/extensions/core_extensions.dart';
-import 'package:image_delete_demo/core/theme/button.dart';
 import 'package:pixelarticons/pixel.dart';
 
 class CalendarAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const CalendarAppbar({super.key, this.title, this.onDelete});
+  const CalendarAppbar({super.key, this.title});
 
-  final Function(List<String>)? onDelete;
   final String? title;
 
   @override
@@ -36,12 +34,12 @@ class CalendarAppbar extends StatelessWidget implements PreferredSizeWidget {
                   Expanded(
                     child: AutoSizeText(title!, maxLines: 1, minFontSize: 4),
                   ),
-                TrashButton(onDelete: onDelete),
-                StyledButton.icon(
-                  icon: Pixel.close,
+                IconButton(
                   onPressed: () {
+                    HapticFeedback.selectionClick();
                     context.router.maybePop();
                   },
+                  icon: Icon(Pixel.close),
                 ),
               ],
             ).p(horizontal: 12),

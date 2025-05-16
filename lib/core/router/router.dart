@@ -30,6 +30,20 @@ class AppRouter extends RootStackRouter {
           page: MonthSwiperRoute.page,
           transitionsBuilder: fadeTransition,
         ),
+        CustomRoute(
+          page: CategoriesSwiperRoute.page,
+          transitionsBuilder: fadeTransition,
+        ),
+        CustomRoute(
+          page: CategoriesRoute.page,
+          transitionsBuilder: fadeTransition,
+        ),
+        CustomRoute(
+          page: ImageFullRoute.page,
+          fullscreenDialog: true,
+          opaque: false,
+          transitionsBuilder: fadeTransition,
+        ),
       ],
     ),
   ];
