@@ -8,7 +8,6 @@ import 'package:image_delete_demo/core/router/router.gr.dart';
 import 'package:image_delete_demo/core/theme/text_extension.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
-import 'package:pixelarticons/pixelarticons.dart';
 
 class ImageItemWidget extends StatefulWidget {
   const ImageItemWidget({
@@ -213,29 +212,12 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(4),
-                          decoration: BoxDecoration(color: Colors.black),
-                          child: Text(
-                            widget.entity.createDateTime.format("dd/MM/yyyy"),
-                          ).bodySmall(fontSize: 10),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            HapticFeedback.selectionClick();
-                            context.router.push(
-                              ImageFullRoute(
-                                entity: widget.entity,
-                                option: widget.option,
-                              ),
-                            );
-                          },
-                          icon: Icon(Pixel.aspectratio, size: 32),
-                        ),
-                      ],
+                    child: Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(color: Colors.black),
+                      child: Text(
+                        widget.entity.createDateTime.format("dd/MM/yyyy"),
+                      ).bodySmall(fontSize: 10),
                     ),
                   ),
                 ),
