@@ -11,7 +11,7 @@ import 'package:image_delete_demo/core/theme/button.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:pixelarticons/pixel.dart';
 
-class AssetSwiper extends StatefulWidget {
+class AssetSwiper extends StatelessWidget {
   const AssetSwiper({
     super.key,
     required this.assets,
@@ -21,11 +21,6 @@ class AssetSwiper extends StatefulWidget {
   final List<AssetEntity> assets;
   final CustomSwiperController controller;
 
-  @override
-  State<AssetSwiper> createState() => _AssetSwiperState();
-}
-
-class _AssetSwiperState extends State<AssetSwiper> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -38,7 +33,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
               children: [
                 Flexible(
                   child: AppinioSwiper(
-                    controller: widget.controller,
+                    controller: controller,
                     swipeOptions: SwipeOptions.symmetric(
                       horizontal: true,
                       vertical: false,
@@ -48,7 +43,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
                       if (activity.end != null && activity.end!.dx != 0) {
                         if (activity.direction == AxisDirection.left) {
                           context.read<ImageDeleteCubit>().add(
-                            widget.assets[targetIndex],
+                            assets[targetIndex],
                           );
                         }
                       }
@@ -56,20 +51,20 @@ class _AssetSwiperState extends State<AssetSwiper> {
                     backgroundCardCount: 4,
                     backgroundCardOffset: Offset(25, 25),
                     cardBuilder: (BuildContext context, int index) {
-                      final asset = widget.assets[index % widget.assets.length];
+                      final asset = assets[index % assets.length];
                       return ImageItemWidget(
                         entity: asset,
                         index: index,
                         option: ThumbnailOption.ios(
                           size: ThumbnailSize(720, 1560),
                         ),
-                        controller: widget.controller,
+                        controller: controller,
                       );
                     },
-                    cardCount: widget.assets.length,
+                    cardCount: assets.length,
                   ).animate().fadeIn(
                     curve: Curves.fastOutSlowIn,
-                    duration: 650.ms,
+                    duration: 850.ms,
                   ),
                 ),
                 Row(
@@ -81,7 +76,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
                         title: "delete",
                         fullWidth: true,
                         onPressed: () {
-                          widget.controller.swipeLeft();
+                          controller.swipeLeft();
                         },
                       ),
                     ),
@@ -100,15 +95,15 @@ class _AssetSwiperState extends State<AssetSwiper> {
                         ),
                         onPressed: () async {
                           HapticFeedback.lightImpact();
-                          if (widget.controller.cardIndex == null) return;
-                          if (widget.controller.cardIndex! == 0) return;
-                          await widget.controller.unswipe();
+                          final index = controller.safeIndex;
+                          if (index <= 0) return;
+                          await controller.unswipe();
                           if (!context.mounted) {
                             return;
                           }
-                          context.read<ImageDeleteCubit>().remove(
-                            widget.assets[widget.controller.cardIndex!],
-                          );
+                          // context.read<ImageDeleteCubit>().remove(
+                          //   assets[controller.cardIndex!],
+                          // );
                         },
                       ),
                     ),
@@ -118,7 +113,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
                         title: "keep",
                         fullWidth: true,
                         onPressed: () {
-                          widget.controller.swipeRight();
+                          controller.swipeRight();
                         },
                       ),
                     ),
@@ -127,7 +122,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
               ],
             ),
           ],
-        ).fallback(const SizedBox.shrink(), when: widget.assets.isEmpty),
+        ).fallback(const SizedBox.shrink(), when: assets.isEmpty),
       ),
     );
   }

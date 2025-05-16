@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final controller = CustomSwiperController();
+  int deletedAssetsCount = 0;
   @override
   Widget build(BuildContext context) {
     final assets = context.watch<GalleryAssetsCubit>().state.assets;
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage> {
       appBar: HomeAppbar(
         onDelete: (ids) {
           controller.setCardIndex(controller.cardIndex! - ids.length);
+          controller.addDeleted(ids.length);
         },
       ),
       body: AssetSwiper(controller: controller, assets: assets),
