@@ -31,7 +31,7 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 Spacer(),
                 StyledButton.icon(
-                  icon: Pixel.wind,
+                  icon: Pixel.subscriptions,
                   onPressed: () {
                     context.router.push(const CategoriesRoute());
                   },
