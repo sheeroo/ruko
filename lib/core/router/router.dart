@@ -44,6 +44,12 @@ class AppRouter extends RootStackRouter {
           opaque: false,
           transitionsBuilder: fadeTransition,
         ),
+        CustomRoute(
+          page: VideoFullRoute.page,
+          fullscreenDialog: true,
+          opaque: false,
+          transitionsBuilder: fadeTransition,
+        ),
       ],
     ),
   ];

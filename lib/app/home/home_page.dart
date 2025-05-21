@@ -5,6 +5,7 @@ import 'package:image_delete_demo/app/gallery_assets/cubit/gallery_assets_cubit.
 import 'package:image_delete_demo/app/home/home_appbar.dart';
 import 'package:image_delete_demo/app/swiper/custom_controller.dart';
 import 'package:image_delete_demo/app/swiper/swiper.dart';
+import 'package:photo_manager/photo_manager.dart';
 
 @RoutePage()
 class HomePage extends StatefulWidget {
@@ -20,6 +21,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final assets = context.watch<GalleryAssetsCubit>().state.assets;
+    final videos = assets.where((e) => e.type == AssetType.video).toList();
+    print(videos.length);
+    print("skase");
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,

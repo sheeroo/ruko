@@ -69,6 +69,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
                           cardBuilder: (BuildContext context, int index) {
                             final asset =
                                 widget.assets[index % widget.assets.length];
+
                             return ImageItemWidget(
                               entity: asset,
                               index: index,

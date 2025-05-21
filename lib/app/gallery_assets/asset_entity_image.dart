@@ -8,6 +8,7 @@ import 'package:image_delete_demo/core/router/router.gr.dart';
 import 'package:image_delete_demo/core/theme/text_extension.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
+import 'package:pixelarticons/pixel.dart';
 
 class ImageItemWidget extends StatefulWidget {
   const ImageItemWidget({
@@ -34,17 +35,17 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
   void initState() {
     super.initState();
     widget.controller.addListener(() {
-      if (widget.controller.cardIndex == widget.index) {
-        if ((widget.controller.position?.progress ?? 0) > 0.10) {
-          if (!hapticDispatched) {
-            if (!widget.controller.isControlledSwiping) {
-              HapticFeedback.selectionClick();
-            }
-            hapticDispatched = true;
+      if (widget.controller.cardIndex != widget.index) return;
+      final progress = widget.controller.position?.progress ?? 0;
+      if (progress > 0.10) {
+        if (!hapticDispatched) {
+          if (!widget.controller.isControlledSwiping) {
+            HapticFeedback.selectionClick();
           }
-        } else {
-          hapticDispatched = false;
+          hapticDispatched = true;
         }
+      } else {
+        hapticDispatched = false;
       }
     });
   }
@@ -56,6 +57,10 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
       child: GestureDetector(
         onTap: () {
           HapticFeedback.selectionClick();
+          if (widget.entity.type == AssetType.video) {
+            context.router.push(VideoFullRoute(entity: widget.entity));
+            return;
+          }
           context.router.push(
             ImageFullRoute(entity: widget.entity, option: widget.option),
           );
@@ -75,6 +80,7 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
               fit: StackFit.expand,
               children: [
                 Container(color: Colors.black),
+                // if (widget.entity.type != AssetType.video)
                 AssetEntityImage(
                   widget.entity,
                   isOriginal: false,
@@ -82,142 +88,172 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
                   thumbnailFormat: widget.option.format,
                   fit: BoxFit.cover,
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    height: 325,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.black.withValues(alpha: 0),
-                          Colors.black.withValues(alpha: 0.65),
-                        ],
-                        begin: Alignment.center,
-                        end: Alignment.bottomCenter,
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    height: 325,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.black.withValues(alpha: 0),
-                          Colors.black.withValues(alpha: 0.25),
-                        ],
-                        begin: Alignment.center,
-                        end: Alignment.topCenter,
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      spacing: 8,
-                      children: [
-                        Text(
-                              "delete!!",
-                              style: TextTheme.of(
-                                context,
-                              ).displaySmall?.copyWith(fontSize: 18),
-                            )
-                            .animate(
-                              adapter: ChangeNotifierAdapter(
-                                widget.controller,
-                                () {
-                                  if (widget.controller.isControlledSwiping) {
-                                    return 0;
-                                  }
-                                  if (widget.controller.cardIndex ==
-                                      widget.index) {
-                                    if ((widget
-                                                .controller
-                                                .position
-                                                ?.offset
-                                                .dx ??
-                                            0) <
-                                        0) {
-                                      return widget
-                                              .controller
-                                              .position!
-                                              .progress *
-                                          6;
-                                    }
-                                  }
-                                  return 0;
-                                },
-                              ),
-                            )
-                            .fadeIn(),
-                      ],
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      spacing: 8,
-                      children: [
-                        Text(
-                              "keep",
-                              style: TextTheme.of(
-                                context,
-                              ).displaySmall?.copyWith(fontSize: 18),
-                            )
-                            .animate(
-                              adapter: ChangeNotifierAdapter(
-                                widget.controller,
-                                () {
-                                  if (widget.controller.isControlledSwiping) {
-                                    return 0;
-                                  }
-                                  if (widget.controller.cardIndex ==
-                                      widget.index) {
-                                    if ((widget
-                                                .controller
-                                                .position
-                                                ?.offset
-                                                .dx ??
-                                            0) >
-                                        0) {
-                                      return widget
-                                              .controller
-                                              .position!
-                                              .progress *
-                                          6;
-                                    }
-                                  }
-                                  return 0;
-                                },
-                              ),
-                            )
-                            .fadeIn(),
-                      ],
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+
+                if (widget.entity.type == AssetType.video)
+                  Center(
                     child: Container(
-                      padding: EdgeInsets.all(4),
-                      decoration: BoxDecoration(color: Colors.black),
-                      child: Text(
-                        widget.entity.createDateTime.format("dd/MM/yyyy"),
-                      ).bodySmall(fontSize: 10),
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.5),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(Pixel.play, size: 24),
+                    ),
+                  ),
+
+                // if (widget.entity.type == AssetType.video)
+                //   VideoPlayerWidget(
+                //     entity: widget.entity,
+                //     autoPlay:
+                //         (widget.controller.cardIndex == widget.index) ||
+                //         widget.index == 0,
+                //   ),
+                IgnorePointer(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 325,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.black.withValues(alpha: 0),
+                            Colors.black.withValues(alpha: 0.65),
+                          ],
+                          begin: Alignment.center,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                IgnorePointer(
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      height: 325,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.black.withValues(alpha: 0),
+                            Colors.black.withValues(alpha: 0.25),
+                          ],
+                          begin: Alignment.center,
+                          end: Alignment.topCenter,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                IgnorePointer(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 8,
+                        children: [
+                          Text(
+                                "delete!!",
+                                style: TextTheme.of(
+                                  context,
+                                ).displaySmall?.copyWith(fontSize: 18),
+                              )
+                              .animate(
+                                adapter: ChangeNotifierAdapter(
+                                  widget.controller,
+                                  () {
+                                    if (widget.controller.isControlledSwiping) {
+                                      return 0;
+                                    }
+                                    if (widget.controller.cardIndex ==
+                                        widget.index) {
+                                      if ((widget
+                                                  .controller
+                                                  .position
+                                                  ?.offset
+                                                  .dx ??
+                                              0) <
+                                          0) {
+                                        return widget
+                                                .controller
+                                                .position!
+                                                .progress *
+                                            6;
+                                      }
+                                    }
+                                    return 0;
+                                  },
+                                ),
+                              )
+                              .fadeIn(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                IgnorePointer(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 8,
+                        children: [
+                          Text(
+                                "keep",
+                                style: TextTheme.of(
+                                  context,
+                                ).displaySmall?.copyWith(fontSize: 18),
+                              )
+                              .animate(
+                                adapter: ChangeNotifierAdapter(
+                                  widget.controller,
+                                  () {
+                                    if (widget.controller.isControlledSwiping) {
+                                      return 0;
+                                    }
+                                    if (widget.controller.cardIndex ==
+                                        widget.index) {
+                                      if ((widget
+                                                  .controller
+                                                  .position
+                                                  ?.offset
+                                                  .dx ??
+                                              0) >
+                                          0) {
+                                        return widget
+                                                .controller
+                                                .position!
+                                                .progress *
+                                            6;
+                                      }
+                                    }
+                                    return 0;
+                                  },
+                                ),
+                              )
+                              .fadeIn(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                IgnorePointer(
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        padding: EdgeInsets.all(4),
+                        decoration: BoxDecoration(color: Colors.black),
+                        child: Text(
+                          widget.entity.createDateTime.format("dd/MM/yyyy"),
+                        ).bodySmall(fontSize: 10),
+                      ),
                     ),
                   ),
                 ),

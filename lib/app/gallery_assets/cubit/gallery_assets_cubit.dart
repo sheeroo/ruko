@@ -24,9 +24,15 @@ class GalleryAssetsCubit extends Cubit<GalleryAssetsState> {
 
     final paths = await PhotoManager.getAssetPathList(
       onlyAll: true, // Usually gets the main "Recents" or "All Photos" album
-      type: RequestType.image,
+      type: RequestType.common,
       filterOption: filterOptionGroup,
     );
+
+    // final videoPaths = await PhotoManager.getAssetPathList(
+    //   onlyAll: true, // Usually gets the main "Recents" or "All Photos" album
+    //   type: RequestType.video,
+    //   filterOption: filterOptionGroup,
+    // );
 
     if (paths.isNotEmpty) {
       const int loadCount = 20000;

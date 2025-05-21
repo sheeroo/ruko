@@ -15,24 +15,21 @@ class PermissionRequestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          StyledButton.filled(
-            leading: Icon(Pixel.image, color: Colors.white, size: 30),
-            title: 'give gallery access',
-            onPressed: () async {
-              final state = await PhotoManager.requestPermissionExtend();
-              if (state.hasAccess) {
-                if (!context.mounted) return;
-                await context.read<GalleryAssetsCubit>().loadAssets();
-                if (!context.mounted) return;
-                context.router.replaceAll([HomeRoute()]);
-              }
-            },
-          ),
-        ],
-      ).p(all: 12),
+      body: Center(
+        child: StyledButton.filled(
+          leading: Icon(Pixel.image, color: Colors.white, size: 30),
+          title: 'give gallery access',
+          onPressed: () async {
+            final state = await PhotoManager.requestPermissionExtend();
+            if (state.hasAccess) {
+              if (!context.mounted) return;
+              await context.read<GalleryAssetsCubit>().loadAssets();
+              if (!context.mounted) return;
+              context.router.replaceAll([HomeRoute()]);
+            }
+          },
+        ).p(all: 12),
+      ),
     );
   }
 }
