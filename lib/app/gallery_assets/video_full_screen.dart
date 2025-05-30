@@ -21,6 +21,7 @@ class VideoFullPage extends StatelessWidget {
           minScale: 1,
           maxScale: 3,
           heroAnimationTag: entity.id,
+          withDoubleTapZoom: false,
         ),
       ),
     ).blur(64);
