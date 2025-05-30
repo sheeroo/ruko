@@ -18,6 +18,7 @@ class VideoPlayerWidget extends StatefulWidget {
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   VideoPlayerController? _controller;
+  double? _aspectRatio;
 
   @override
   void initState() {
@@ -31,6 +32,9 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     final file = await widget.entity.file;
     _controller = VideoPlayerController.file(file!);
     await _controller!.initialize();
+    setState(() {
+      _aspectRatio = _controller!.value.aspectRatio;
+    });
     if (widget.autoPlay) {
       await _controller!.setLooping(true);
       await _controller!.play();
@@ -59,7 +63,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       },
       child: Center(
         child: AspectRatio(
-          aspectRatio: 1 / 2,
+          aspectRatio: _aspectRatio ?? 16 / 9,
           child: VideoPlayer(_controller!),
         ),
       ),
