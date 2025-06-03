@@ -53,7 +53,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
                             horizontal: true,
                             vertical: false,
                           ),
-                          loop: true,
+                          loop: false,
                           duration: 175.ms,
                           onSwipeEnd: (targetIndex, nextIndex, activity) {
                             if (activity.end != null && activity.end!.dx != 0) {

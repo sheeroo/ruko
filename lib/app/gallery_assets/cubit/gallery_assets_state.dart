@@ -108,8 +108,8 @@ extension AssetCategoryX on List<AssetEntity> {
         );
         final grouped = groupBy(assetsWithLocation, (AssetEntity e) {
           final hash = geoHasher.encode(
-            e.longitude!,
-            e.latitude!,
+            e.longitude ?? 0,
+            e.latitude ?? 0,
             precision: 6,
           );
           return hash;
