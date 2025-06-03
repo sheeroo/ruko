@@ -1,3 +1,4 @@
+import 'package:appinio_social_share/appinio_social_share.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,6 +31,7 @@ class ImageItemWidget extends StatefulWidget {
 
 class _ImageItemWidgetState extends State<ImageItemWidget> {
   bool hapticDispatched = false;
+  final appinioSocialShare = AppinioSocialShare();
 
   @override
   void initState() {

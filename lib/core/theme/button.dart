@@ -178,7 +178,10 @@ class _StyledButtonState extends State<StyledButton> {
           ],
         ),
         child: IconButton(
-          icon: Icon(widget.icon, color: Colors.white),
+          icon:
+              !widget.isLoading
+                  ? Icon(widget.icon, color: Colors.white)
+                  : const CupertinoActivityIndicator(),
           iconSize: 28,
           onPressed:
               widget.isDisabled

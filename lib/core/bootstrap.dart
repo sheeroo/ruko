@@ -8,6 +8,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:image_delete_demo/core/app_info/app_info.dart';
 import 'package:image_delete_demo/core/di/service_locator.dart';
 import 'package:image_delete_demo/core/flavors.dart';
+import 'package:image_delete_demo/core/share/installed_apps_repository.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 
@@ -70,6 +71,7 @@ Future<void> bootstrap(
   await runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
     await setupServiceLocator();
+    sl<InstalledAppsRepository>().loadInstalledApps();
     if (kDebugMode) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
     }

@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:image_delete_demo/app/gallery_assets/image_full_screen.dart';
 import 'package:image_delete_demo/app/gallery_assets/widget_zoom_fullscreen.dart';
 import 'package:image_delete_demo/core/extensions/core_extensions.dart';
 import 'package:image_delete_demo/core/widgets/common/video_player.dart';
@@ -17,7 +19,23 @@ class VideoFullPage extends StatelessWidget {
       backgroundColor: Colors.black.withValues(alpha: 0.75),
       body: SafeArea(
         child: WidgetZoomFullscreen(
-          zoomWidget: VideoPlayerWidget(entity: entity),
+          zoomWidget: Stack(
+            children: [
+              Center(child: VideoPlayerWidget(entity: entity)),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: SafeArea(
+                  child: ShareButtons(entity: entity, isVideo: true)
+                      .p(all: 12)
+                      .animate()
+                      .fadeIn(
+                        duration: Durations.medium3,
+                        curve: Curves.fastOutSlowIn,
+                      ),
+                ),
+              ),
+            ],
+          ),
           minScale: 1,
           maxScale: 3,
           heroAnimationTag: entity.id,

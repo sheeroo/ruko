@@ -57,6 +57,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  appinio_social_share:
+    dependency: "direct main"
+    description:
+      name: appinio_social_share
+      sha256: df12236ed9dd202b6cd7095f7f9c739416726ec5a53b923ea535d745fb5dc938
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.2"
   appinio_swiper:
     dependency: "direct main"
     description:
@@ -981,6 +989,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.10.2"
+  social_share:
+    dependency: "direct main"
+    description:
+      name: social_share
+      sha256: eb19a0f6f5a29c7bb71e5bb1991145eb52472184363b6e2da70695befd8be041
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.1"
+  social_sharing_plus:
+    dependency: "direct main"
+    description:
+      name: social_sharing_plus
+      sha256: d0bd9dc3358cf66a3aac7cce549902360f30bccf44cf6090a708d97cc54ca854
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.3"
   source_gen:
     dependency: transitive
     description:

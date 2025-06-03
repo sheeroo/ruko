@@ -2,6 +2,31 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
+		<key>CFBundleURLTypes</key>
+		<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb955471519885440</string>
+			</array>
+		</dict>
+		</array>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+		<string>instagram-stories</string>
+		<string>facebook-stories</string>
+		<string>facebook</string>
+		<string>instagram</string>
+		<string>twitter</string>
+		<string>whatsapp</string>
+		<string>tg</string>
+		</array>
+		<key>FacebookAppID</key>
+  		<string>955471519885440</string>
+		<key>FacebookClientToken</key>
+		<string>48f977fc6ef6c9dae9b3166675b31787</string>
+		<key>FacebookDisplayName</key>
+		<string>ruko</string>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>

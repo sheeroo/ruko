@@ -95,26 +95,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       },
       child: Column(
         children: [
-          Expanded(
-            child: Center(
-              child: AspectRatio(
-                aspectRatio: _aspectRatio ?? 16 / 9,
-                child: VideoPlayer(_controller!),
-              ),
-            ),
-          ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [
-                  CupertinoColors.black.withValues(alpha: 0.8),
-                  CupertinoColors.black.withValues(alpha: 0.0),
-                ],
-              ),
-            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -159,6 +141,15 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                   ],
                 ),
               ],
+            ),
+          ),
+
+          Expanded(
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: _aspectRatio ?? 16 / 9,
+                child: VideoPlayer(_controller!),
+              ),
             ),
           ),
         ],
