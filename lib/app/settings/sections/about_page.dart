@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 // import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:gap/gap.dart';
-import 'package:image_delete_demo/core/app_info/app_info.dart';
-import 'package:image_delete_demo/core/extensions/core_extensions.dart';
-import 'package:image_delete_demo/core/theme/text_extension.dart';
-import 'package:image_delete_demo/core/widgets/custom_appbar.dart';
+import 'package:ruko/core/app_info/app_info.dart';
+import 'package:ruko/core/extensions/core_extensions.dart';
+import 'package:ruko/core/theme/text_extension.dart';
+import 'package:ruko/core/widgets/custom_appbar.dart';
 // import 'package:mailto/mailto.dart';
 // import 'package:url_launcher/url_launcher.dart';
 

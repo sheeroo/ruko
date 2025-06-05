@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:image_delete_demo/core/modals/scrollable_sheet_page.dart';
-import 'package:image_delete_demo/core/theme/button.dart';
+import 'package:ruko/core/modals/scrollable_sheet_page.dart';
+import 'package:ruko/core/theme/button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gap/gap.dart';
 

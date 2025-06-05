@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:image_delete_demo/core/legal/prirvacy_policy.dart';
-import 'package:image_delete_demo/core/widgets/custom_appbar.dart';
+import 'package:ruko/core/legal/prirvacy_policy.dart';
+import 'package:ruko/core/widgets/custom_appbar.dart';
 
 @RoutePage()
 class PrivacyPolicyPage extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:image_delete_demo/core/router/custom_route_transition.dart';
-import 'package:image_delete_demo/core/router/router.gr.dart';
+import 'package:ruko/core/router/custom_route_transition.dart';
+import 'package:ruko/core/router/router.gr.dart';
 
 export 'router.gr.dart';
 

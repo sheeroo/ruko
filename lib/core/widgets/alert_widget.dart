@@ -1,5 +1,5 @@
-import 'package:image_delete_demo/core/extensions/core_extensions.dart';
-import 'package:image_delete_demo/core/theme/text_extension.dart';
+import 'package:ruko/core/extensions/core_extensions.dart';
+import 'package:ruko/core/theme/text_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 

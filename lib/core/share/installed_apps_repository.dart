@@ -1,5 +1,5 @@
 import 'package:appinio_social_share/appinio_social_share.dart';
-import 'package:image_delete_demo/core/di/service_locator.dart';
+import 'package:ruko/core/di/service_locator.dart';
 
 enum InstalledApps { instagram, facebook, whatsapp, telegram }
 

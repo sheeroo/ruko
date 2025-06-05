@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:image_delete_demo/core/extensions/core_extensions.dart';
-import 'package:image_delete_demo/core/theme/button.dart';
-import 'package:image_delete_demo/core/theme/text_extension.dart';
-import 'package:image_delete_demo/core/widgets/alert_widget.dart';
+import 'package:ruko/core/extensions/core_extensions.dart';
+import 'package:ruko/core/theme/button.dart';
+import 'package:ruko/core/theme/text_extension.dart';
+import 'package:ruko/core/widgets/alert_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:image_delete_demo/core/theme/text_extension.dart';
+import 'package:ruko/core/theme/text_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';

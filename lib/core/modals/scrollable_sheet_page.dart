@@ -1,5 +1,5 @@
-import 'package:image_delete_demo/core/extensions/core_extensions.dart';
-import 'package:image_delete_demo/core/theme/button.dart';
+import 'package:ruko/core/extensions/core_extensions.dart';
+import 'package:ruko/core/theme/button.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_sheets/smooth_sheets.dart';
 

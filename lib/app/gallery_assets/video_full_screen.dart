@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:image_delete_demo/app/gallery_assets/image_full_screen.dart';
-import 'package:image_delete_demo/app/gallery_assets/widget_zoom_fullscreen.dart';
-import 'package:image_delete_demo/core/extensions/core_extensions.dart';
-import 'package:image_delete_demo/core/widgets/common/video_player.dart';
+import 'package:ruko/app/gallery_assets/image_full_screen.dart';
+import 'package:ruko/app/gallery_assets/widget_zoom_fullscreen.dart';
+import 'package:ruko/core/extensions/core_extensions.dart';
+import 'package:ruko/core/widgets/common/video_player.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 @RoutePage()

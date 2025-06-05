@@ -1,4 +1,4 @@
-import 'package:image_delete_demo/core/widgets/common/time_builder.dart';
+import 'package:ruko/core/widgets/common/time_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shaders/flutter_shaders.dart';
 

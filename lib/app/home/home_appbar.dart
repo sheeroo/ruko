@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:image_delete_demo/app/categories/categories_page.dart';
-import 'package:image_delete_demo/app/categories/category_page.dart';
-import 'package:image_delete_demo/core/extensions/core_extensions.dart';
-import 'package:image_delete_demo/core/router/router.gr.dart';
-import 'package:image_delete_demo/core/theme/button.dart';
+import 'package:ruko/app/categories/categories_page.dart';
+import 'package:ruko/app/categories/category_page.dart';
+import 'package:ruko/core/extensions/core_extensions.dart';
+import 'package:ruko/core/router/router.gr.dart';
+import 'package:ruko/core/theme/button.dart';
 
 class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppbar({super.key, this.onDelete});

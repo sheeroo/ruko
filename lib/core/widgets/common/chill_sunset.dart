@@ -1,5 +1,5 @@
-import 'package:image_delete_demo/core/widgets/common/time_builder.dart';
-import 'package:image_delete_demo/core/widgets/glitched_shader.dart';
+import 'package:ruko/core/widgets/common/time_builder.dart';
+import 'package:ruko/core/widgets/glitched_shader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_shaders/flutter_shaders.dart';

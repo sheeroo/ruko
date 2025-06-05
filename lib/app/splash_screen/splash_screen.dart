@@ -4,10 +4,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_delete_demo/app/gallery_assets/cubit/gallery_assets_cubit.dart';
-import 'package:image_delete_demo/core/bootstrap.dart';
-import 'package:image_delete_demo/core/router/router.gr.dart';
-import 'package:image_delete_demo/core/widgets/common/type_write_text.dart';
+import 'package:ruko/app/gallery_assets/cubit/gallery_assets_cubit.dart';
+import 'package:ruko/core/bootstrap.dart';
+import 'package:ruko/core/router/router.gr.dart';
+import 'package:ruko/core/widgets/common/type_write_text.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 @RoutePage()

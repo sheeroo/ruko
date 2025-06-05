@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_delete_demo/app/gallery_assets/asset_entity_image.dart';
-import 'package:image_delete_demo/app/gallery_assets/cubit/gallery_assets_cubit.dart';
-import 'package:image_delete_demo/app/gallery_assets/cubit/image_delete_cubit.dart';
-import 'package:image_delete_demo/app/swiper/custom_controller.dart';
-import 'package:image_delete_demo/core/extensions/core_extensions.dart';
-import 'package:image_delete_demo/core/limiters/throttler.dart';
-import 'package:image_delete_demo/core/theme/button.dart';
-import 'package:image_delete_demo/core/widgets/common/widgets/text_swapper.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:pixelarticons/pixel.dart';
+import 'package:ruko/app/gallery_assets/asset_entity_image.dart';
+import 'package:ruko/app/gallery_assets/cubit/gallery_assets_cubit.dart';
+import 'package:ruko/app/gallery_assets/cubit/image_delete_cubit.dart';
+import 'package:ruko/app/swiper/custom_controller.dart';
+import 'package:ruko/core/extensions/core_extensions.dart';
+import 'package:ruko/core/limiters/throttler.dart';
+import 'package:ruko/core/theme/button.dart';
+import 'package:ruko/core/widgets/common/widgets/text_swapper.dart';
 
 class AssetSwiper extends StatefulWidget {
   const AssetSwiper({
@@ -211,8 +211,9 @@ class _AssetSwiperState extends State<AssetSwiper> {
                               onPressed: () {
                                 throttler.run(() async {
                                   HapticFeedback.selectionClick();
-                                  if (widget.controller.cardIndex == null)
+                                  if (widget.controller.cardIndex == null) {
                                     return;
+                                  }
                                   if (widget.controller.cardIndex! == 0) return;
                                   await widget.controller.unswipe();
                                   if (!context.mounted) {

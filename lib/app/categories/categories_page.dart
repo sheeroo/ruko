@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:image_delete_demo/app/gallery_assets/cubit/gallery_assets_cubit.dart';
-import 'package:image_delete_demo/core/extensions/core_extensions.dart';
-import 'package:image_delete_demo/core/router/router.dart';
-import 'package:image_delete_demo/core/theme/text_extension.dart';
-import 'package:image_delete_demo/core/widgets/custom_appbar.dart';
+import 'package:ruko/app/gallery_assets/cubit/gallery_assets_cubit.dart';
+import 'package:ruko/core/extensions/core_extensions.dart';
+import 'package:ruko/core/router/router.dart';
+import 'package:ruko/core/theme/text_extension.dart';
+import 'package:ruko/core/widgets/custom_appbar.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 

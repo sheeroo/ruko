@@ -5,10 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:image_delete_demo/core/app_info/app_info.dart';
-import 'package:image_delete_demo/core/di/service_locator.dart';
-import 'package:image_delete_demo/core/flavors.dart';
-import 'package:image_delete_demo/core/share/installed_apps_repository.dart';
+import 'package:ruko/core/app_info/app_info.dart';
+import 'package:ruko/core/di/service_locator.dart';
+import 'package:ruko/core/flavors.dart';
+import 'package:ruko/core/share/installed_apps_repository.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 

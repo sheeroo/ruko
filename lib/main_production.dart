@@ -1,5 +1,5 @@
-import 'package:image_delete_demo/app/app.dart';
-import 'package:image_delete_demo/core/bootstrap.dart';
+import 'package:ruko/app/app.dart';
+import 'package:ruko/core/bootstrap.dart';
 
 void main() {
   Bootstrap.production(() async => const App());

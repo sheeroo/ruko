@@ -1,12 +1,13 @@
-name: image_delete_demo
+name: ruko
 description: "A new Flutter project."
 publish_to: 'none'
 
+version: 1.0.0+1
 
 scripts: 
   gen: "dart run build_runner watch"
-
-version: 1.0.0+1
+  build: "flutter build ipa --obfuscate --split-debug-info=debug-info --target=lib/main_production.dart"
+  upload: "xcrun altool --upload-app --type ios -f build/ios/ipa/*.ipa --apiKey NMJ7S85H3B --apiIssuer 1d77f210-1638-4ac0-adf3-1bc67ee9b9ce"
 
 environment:
   sdk: ^3.7.0

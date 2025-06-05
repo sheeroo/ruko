@@ -1,5 +1,5 @@
-import 'package:image_delete_demo/core/router/router.dart';
-import 'package:image_delete_demo/core/theme/theme_data.dart';
+import 'package:ruko/core/router/router.dart';
+import 'package:ruko/core/theme/theme_data.dart';
 import 'package:flutter/material.dart';
 
 final appRouter = AppRouter();

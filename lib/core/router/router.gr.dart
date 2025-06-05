@@ -14,35 +14,27 @@ import 'dart:async' as _i23;
 import 'package:auto_route/auto_route.dart' as _i18;
 import 'package:flutter/cupertino.dart' as _i21;
 import 'package:flutter/material.dart' as _i19;
-import 'package:image_delete_demo/app/categories/categories_page.dart' as _i4;
-import 'package:image_delete_demo/app/categories/categories_swiper_page.dart'
-    as _i5;
-import 'package:image_delete_demo/app/categories/category_page.dart' as _i6;
-import 'package:image_delete_demo/app/gallery_assets/image_full_screen.dart'
-    as _i10;
-import 'package:image_delete_demo/app/gallery_assets/video_full_screen.dart'
-    as _i17;
-import 'package:image_delete_demo/app/home/home_page.dart' as _i9;
-import 'package:image_delete_demo/app/permission_request/permission_request_page.dart'
-    as _i12;
-import 'package:image_delete_demo/app/root/app_root.dart' as _i3;
-import 'package:image_delete_demo/app/settings/page/settings_page.dart' as _i14;
-import 'package:image_delete_demo/app/settings/page/settings_shell_page.dart'
-    as _i15;
-import 'package:image_delete_demo/app/settings/sections/about_page.dart' as _i1;
-import 'package:image_delete_demo/app/settings/sections/privacy_policy_page.dart'
-    as _i13;
-import 'package:image_delete_demo/app/splash_screen/splash_screen.dart' as _i16;
-import 'package:image_delete_demo/core/widgets/alert_widget.dart' as _i20;
-import 'package:image_delete_demo/core/widgets/common/date_time_picker.dart'
-    as _i7;
-import 'package:image_delete_demo/core/widgets/common/widgets/styled_alert_dialog.dart'
-    as _i2;
-import 'package:image_delete_demo/core/widgets/info_modals/error_modal.dart'
-    as _i8;
-import 'package:image_delete_demo/core/widgets/info_modals/info_modal.dart'
-    as _i11;
 import 'package:photo_manager/photo_manager.dart' as _i22;
+import 'package:ruko/app/categories/categories_page.dart' as _i4;
+import 'package:ruko/app/categories/categories_swiper_page.dart' as _i5;
+import 'package:ruko/app/categories/category_page.dart' as _i6;
+import 'package:ruko/app/gallery_assets/image_full_screen.dart' as _i10;
+import 'package:ruko/app/gallery_assets/video_full_screen.dart' as _i17;
+import 'package:ruko/app/home/home_page.dart' as _i9;
+import 'package:ruko/app/permission_request/permission_request_page.dart'
+    as _i12;
+import 'package:ruko/app/root/app_root.dart' as _i3;
+import 'package:ruko/app/settings/page/settings_page.dart' as _i14;
+import 'package:ruko/app/settings/page/settings_shell_page.dart' as _i15;
+import 'package:ruko/app/settings/sections/about_page.dart' as _i1;
+import 'package:ruko/app/settings/sections/privacy_policy_page.dart' as _i13;
+import 'package:ruko/app/splash_screen/splash_screen.dart' as _i16;
+import 'package:ruko/core/widgets/alert_widget.dart' as _i20;
+import 'package:ruko/core/widgets/common/date_time_picker.dart' as _i7;
+import 'package:ruko/core/widgets/common/widgets/styled_alert_dialog.dart'
+    as _i2;
+import 'package:ruko/core/widgets/info_modals/error_modal.dart' as _i8;
+import 'package:ruko/core/widgets/info_modals/info_modal.dart' as _i11;
 
 /// generated route for
 /// [_i1.AboutPage]

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:image_delete_demo/core/extensions/core_extensions.dart';
-import 'package:image_delete_demo/core/widgets/common/context_menu/context_menu.dart';
+import 'package:ruko/core/extensions/core_extensions.dart';
+import 'package:ruko/core/widgets/common/context_menu/context_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 

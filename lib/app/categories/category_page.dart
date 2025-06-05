@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_delete_demo/app/categories/categories_page.dart';
-import 'package:image_delete_demo/app/categories/categories_swiper_page.dart';
-import 'package:image_delete_demo/app/gallery_assets/cubit/gallery_assets_cubit.dart';
-import 'package:image_delete_demo/core/extensions/core_extensions.dart';
-import 'package:image_delete_demo/core/widgets/custom_appbar.dart';
+import 'package:ruko/app/categories/categories_page.dart';
+import 'package:ruko/app/categories/categories_swiper_page.dart';
+import 'package:ruko/app/gallery_assets/cubit/gallery_assets_cubit.dart';
+import 'package:ruko/core/extensions/core_extensions.dart';
+import 'package:ruko/core/widgets/custom_appbar.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:pixelarticons/pixel.dart';
 

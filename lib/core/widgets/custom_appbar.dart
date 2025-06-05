@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_delete_demo/core/extensions/core_extensions.dart';
-import 'package:image_delete_demo/core/theme/text_extension.dart';
+import 'package:ruko/core/extensions/core_extensions.dart';
+import 'package:ruko/core/theme/text_extension.dart';
 import 'package:pixelarticons/pixel.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
