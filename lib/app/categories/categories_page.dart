@@ -11,7 +11,7 @@ import 'package:image_delete_demo/core/widgets/custom_appbar.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 
-enum AssetCategory { day, week, month, screenshots, nearby }
+enum AssetCategory { shuffle, screenshots, nearby, month }
 
 @RoutePage()
 class CategoriesPage extends StatefulWidget {
@@ -101,7 +101,7 @@ class PhotosCard extends StatelessWidget {
         context.router.push(
           CategoriesSwiperRoute(
             ids: assets.map((e) => e.id).toList(),
-            title: "",
+            title: title ?? "",
           ),
         );
       },

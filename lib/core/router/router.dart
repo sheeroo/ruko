@@ -23,11 +23,7 @@ class AppRouter extends RootStackRouter {
           transitionsBuilder: fadeTransition,
         ),
         CustomRoute(
-          page: CalendarRoute.page,
-          transitionsBuilder: fadeTransition,
-        ),
-        CustomRoute(
-          page: MonthSwiperRoute.page,
+          page: CategoryRoute.page,
           transitionsBuilder: fadeTransition,
         ),
         CustomRoute(

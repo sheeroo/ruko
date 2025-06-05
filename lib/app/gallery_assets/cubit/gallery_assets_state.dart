@@ -8,84 +8,18 @@ class GalleryAssetsState with _$GalleryAssetsState {
   }) = _GalleryAssetsState;
 
   const GalleryAssetsState._();
-
-  Map<String, List<AssetEntity>> get groupedByMonth {
-    final grouped = groupBy(assets, (AssetEntity e) {
-      final month = e.createDateTime.format('MMMM');
-      final year = e.createDateTime.format('yyyy');
-      return "$month, $year".toLowerCase();
-    });
-    return grouped;
-  }
-
-  Map<double, List<AssetEntity>> get groupedBySecond {
-    final assetsWithLocation = assets.where(
-      (e) => e.latitude != 0 && e.longitude != 0,
-    );
-    final grouped = groupBy(assetsWithLocation, (AssetEntity e) {
-      final seconds = e.createDateTime.millisecondsSinceEpoch / 1000;
-      final groupAt = seconds - (seconds % 43200);
-      return groupAt;
-    });
-    grouped.removeWhere((key, value) => value.length <= 1);
-    final sorted = Map.fromEntries(
-      grouped.entries.toList()
-        ..sort((a, b) => b.value.length.compareTo(a.value.length)),
-    );
-
-    return sorted;
-  }
 }
 
 extension AssetCategoryX on List<AssetEntity> {
   Map<String, List<AssetEntity>> fromCategory(AssetCategory category) {
     switch (category) {
-      case AssetCategory.day:
-        final assetsWithLocation = where(
-          (e) => e.latitude != 0 && e.longitude != 0,
-        );
-        final grouped = groupBy(assetsWithLocation, (AssetEntity e) {
-          final seconds = e.createDateTime.millisecondsSinceEpoch / 1000;
-          final groupAt = seconds - (seconds % 86400);
-          return groupAt.toString();
-        });
-        grouped.removeWhere((key, value) => value.length <= 1);
-        final sorted = Map.fromEntries(
-          grouped.entries.toList()
-            ..sort((a, b) => b.value.length.compareTo(a.value.length)),
-        );
-
-        return sorted;
-      case AssetCategory.week:
-        final assetsWithLocation = where(
-          (e) => e.latitude != 0 && e.longitude != 0,
-        );
-        final grouped = groupBy(assetsWithLocation, (AssetEntity e) {
-          final seconds = e.createDateTime.millisecondsSinceEpoch / 1000;
-          final groupAt = seconds - (seconds % (86400 * 7));
-          return groupAt.toString();
-        });
-        grouped.removeWhere((key, value) => value.length <= 1);
-        final sorted = Map.fromEntries(
-          grouped.entries.toList()
-            ..sort((a, b) => b.value.length.compareTo(a.value.length)),
-        );
-        return sorted;
       case AssetCategory.month:
-        final assetsWithLocation = where(
-          (e) => e.latitude != 0 && e.longitude != 0,
-        );
-        final grouped = groupBy(assetsWithLocation, (AssetEntity e) {
-          final seconds = e.createDateTime.millisecondsSinceEpoch / 1000;
-          final groupAt = seconds - (seconds % (86400 * 30));
-          return groupAt.toString();
+        final grouped = groupBy(this, (AssetEntity e) {
+          final month = e.createDateTime.format('MMMM');
+          final year = e.createDateTime.format('yyyy');
+          return "$month, $year".toLowerCase();
         });
-        grouped.removeWhere((key, value) => value.length <= 1);
-        final sorted = Map.fromEntries(
-          grouped.entries.toList()
-            ..sort((a, b) => b.value.length.compareTo(a.value.length)),
-        );
-        return sorted;
+        return grouped;
       case AssetCategory.screenshots:
         final assetsWithLocation = where(
           (e) => e.latitude == 0 && e.longitude == 0,
@@ -120,6 +54,12 @@ extension AssetCategoryX on List<AssetEntity> {
             ..sort((a, b) => b.value.length.compareTo(a.value.length)),
         );
         return sorted;
+      case AssetCategory.shuffle:
+        final shuffled = [...toList()]..shuffle();
+        return {'shuffled': shuffled};
+      // throw UnimplementedError(
+      //   'Shuffle cannot be accessed directly from the state because it will change every time it is accessed.',
+      // );
     }
   }
 }

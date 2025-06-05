@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:image_delete_demo/app/categories/categories_page.dart';
+import 'package:image_delete_demo/app/categories/category_page.dart';
 import 'package:image_delete_demo/core/extensions/core_extensions.dart';
 import 'package:image_delete_demo/core/router/router.gr.dart';
 import 'package:image_delete_demo/core/theme/button.dart';
-import 'package:pixelarticons/pixel.dart';
 
 class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppbar({super.key, this.onDelete});
@@ -30,18 +31,14 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
               spacing: 12,
               children: [
                 Spacer(),
-                StyledButton.icon(
-                  icon: Pixel.subscriptions,
-                  onPressed: () {
-                    context.router.push(const CategoriesRoute());
-                  },
-                ),
-                StyledButton.icon(
-                  icon: Pixel.calendar,
-                  onPressed: () {
-                    context.router.push(const CalendarRoute());
-                  },
-                ),
+                ...AssetCategory.values.map(((category) {
+                  return StyledButton.icon(
+                    icon: category.icon,
+                    onPressed: () {
+                      context.router.push(CategoryRoute(category: category));
+                    },
+                  );
+                })),
               ],
             ).p(right: 12),
           ),

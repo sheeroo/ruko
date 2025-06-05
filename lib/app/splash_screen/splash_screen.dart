@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_delete_demo/app/gallery_assets/cubit/gallery_assets_cubit.dart';
 import 'package:image_delete_demo/core/bootstrap.dart';
-import 'package:image_delete_demo/core/extensions/core_extensions.dart';
 import 'package:image_delete_demo/core/router/router.gr.dart';
 import 'package:image_delete_demo/core/widgets/common/type_write_text.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -21,7 +22,9 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   @override
   void initState() {
     super.initState();
-    Bootstrap.instance.initialize();
+    scheduleMicrotask(() async {
+      await Bootstrap.instance.initialize();
+    });
   }
 
   @override
@@ -45,9 +48,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
           },
           texts: [
             AnimatableText(
-              text: DateTime.now().build(
-                (now) => "${now.dayMonth} ${now.getSeasonAndYear}",
-              ),
+              text: "....",
               delay: 0.seconds,
               deleteDelay: 1.seconds,
             ),
