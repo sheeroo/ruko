@@ -1,4 +1,4 @@
-package com.example.image_delete_demo
+package com.sheero.ruko
 
 import io.flutter.embedding.android.FlutterActivity
 

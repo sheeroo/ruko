@@ -58,8 +58,6 @@ dependencies:
   dart_geohash: ^2.1.0
   video_player: ^2.9.5
   appinio_social_share: ^0.3.2
-  social_sharing_plus: ^1.2.3
-  social_share: ^2.3.1
 
 dev_dependencies:
   flutter_test:
