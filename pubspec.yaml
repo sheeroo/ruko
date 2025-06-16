@@ -60,7 +60,7 @@ dependencies:
   appinio_social_share: "^0.3.2"
   widgets_to_image: "^1.0.0"
   simple_shadow: "^0.3.1"
-  flutter_dotenv: ^5.2.1
+  flutter_dotenv: "^5.2.1"
 
 dev_dependencies: 
   flutter_test: 
@@ -75,4 +75,4 @@ dev_dependencies:
 flutter: 
   uses-material-design: true
   assets: 
-    - .env
+    - ".env"
