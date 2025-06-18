@@ -47,3 +47,5 @@ ios/Config.xcconfig
 
 .env
 /upload.sh
+
+/android/build
