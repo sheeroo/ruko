@@ -3,13 +3,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:photo_manager/photo_manager.dart';
+import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
+import 'package:pixelarticons/pixel.dart';
 import 'package:ruko/app/swiper/custom_controller.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/router/router.gr.dart';
 import 'package:ruko/core/theme/text_extension.dart';
-import 'package:photo_manager/photo_manager.dart';
-import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
-import 'package:pixelarticons/pixel.dart';
 
 class ImageItemWidget extends StatefulWidget {
   const ImageItemWidget({
@@ -102,14 +102,6 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
                       child: Icon(Pixel.play, size: 24),
                     ),
                   ),
-
-                // if (widget.entity.type == AssetType.video)
-                //   VideoPlayerWidget(
-                //     entity: widget.entity,
-                //     autoPlay:
-                //         (widget.controller.cardIndex == widget.index) ||
-                //         widget.index == 0,
-                //   ),
                 IgnorePointer(
                   child: Align(
                     alignment: Alignment.bottomCenter,
