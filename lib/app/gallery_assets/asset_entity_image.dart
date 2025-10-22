@@ -82,12 +82,14 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
               fit: StackFit.expand,
               children: [
                 Container(color: Colors.black),
-                // if (widget.entity.type != AssetType.video)
                 AssetEntityImage(
                   widget.entity,
                   isOriginal: false,
                   thumbnailSize: widget.option.size,
                   thumbnailFormat: widget.option.format,
+                  errorBuilder:
+                      (_, __, ___) =>
+                          Center(child: Container(color: Colors.black)),
                   fit: BoxFit.cover,
                 ),
 
