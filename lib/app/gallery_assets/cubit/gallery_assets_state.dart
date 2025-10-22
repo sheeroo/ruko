@@ -57,9 +57,6 @@ extension AssetCategoryX on List<AssetEntity> {
       case AssetCategory.shuffle:
         final shuffled = [...toList()]..shuffle();
         return {'shuffled': shuffled};
-      // throw UnimplementedError(
-      //   'Shuffle cannot be accessed directly from the state because it will change every time it is accessed.',
-      // );
     }
   }
 }

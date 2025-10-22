@@ -2,10 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:dart_geohash/dart_geohash.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:photo_manager/photo_manager.dart';
 import 'package:ruko/app/categories/categories_page.dart';
 import 'package:ruko/core/enums/status.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
-import 'package:photo_manager/photo_manager.dart';
 
 part 'gallery_assets_cubit.freezed.dart';
 part 'gallery_assets_state.dart';
@@ -23,16 +23,10 @@ class GalleryAssetsCubit extends Cubit<GalleryAssetsState> {
     );
 
     final paths = await PhotoManager.getAssetPathList(
-      onlyAll: true, // Usually gets the main "Recents" or "All Photos" album
+      onlyAll: true,
       type: RequestType.common,
       filterOption: filterOptionGroup,
     );
-
-    // final videoPaths = await PhotoManager.getAssetPathList(
-    //   onlyAll: true, // Usually gets the main "Recents" or "All Photos" album
-    //   type: RequestType.video,
-    //   filterOption: filterOptionGroup,
-    // );
 
     if (paths.isNotEmpty) {
       const int loadCount = 20000;

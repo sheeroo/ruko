@@ -1,4 +1,4 @@
-// ignore_for_file: unused_field
+// ignore_for_file: unused_field, deprecated_member_use
 // from apinio widget_zoom
 
 import 'package:flutter/material.dart';
@@ -29,7 +29,8 @@ class _ImageZoomFullscreenState extends State<WidgetZoomFullscreen>
   final TransformationController _transformationController =
       TransformationController();
   late AnimationController _animationController;
-  late double closingTreshold = MediaQuery.of(context).size.height /
+  late double closingTreshold =
+      MediaQuery.of(context).size.height /
       24; //the higher you set the last value the earlier the full screen gets closed
 
   Animation<Matrix4>? _animation;
@@ -77,9 +78,10 @@ class _ImageZoomFullscreenState extends State<WidgetZoomFullscreen>
               onInteractionEnd: _onInteractionEnd,
               child: GestureDetector(
                 // need to have both methods, otherwise the zoom will be triggered before the second tap releases the screen
-                onDoubleTapDown: widget.withDoubleTapZoom
-                    ? (details) => _doubleTapDownDetails = details
-                    : null,
+                onDoubleTapDown:
+                    widget.withDoubleTapZoom
+                        ? (details) => _doubleTapDownDetails = details
+                        : null,
                 onDoubleTap: widget.withDoubleTapZoom ? _zoomInOut : null,
                 child: Hero(
                   tag: widget.heroAnimationTag,
@@ -101,13 +103,15 @@ class _ImageZoomFullscreenState extends State<WidgetZoomFullscreen>
     final double x = -tapPosition.dx * (zoomScale - 1);
     final double y = -tapPosition.dy * (zoomScale - 1);
 
-    final Matrix4 zoomedMatrix = Matrix4.identity()
-      ..translate(x, y)
-      ..scale(zoomScale);
+    final Matrix4 zoomedMatrix =
+        Matrix4.identity()
+          ..translate(x, y)
+          ..scale(zoomScale);
 
-    final Matrix4 widgetMatrix = _transformationController.value.isIdentity()
-        ? zoomedMatrix
-        : Matrix4.identity();
+    final Matrix4 widgetMatrix =
+        _transformationController.value.isIdentity()
+            ? zoomedMatrix
+            : Matrix4.identity();
 
     _animation = Matrix4Tween(
       begin: _transformationController.value,
@@ -115,9 +119,10 @@ class _ImageZoomFullscreenState extends State<WidgetZoomFullscreen>
     ).animate(CurveTween(curve: Curves.easeOut).animate(_animationController));
 
     _animationController.forward(from: 0);
-    _currentScale = _transformationController.value.isIdentity()
-        ? zoomScale
-        : widget.minScale;
+    _currentScale =
+        _transformationController.value.isIdentity()
+            ? zoomScale
+            : widget.minScale;
   }
 
   void _onInteractionStart(ScaleStartDetails details) {

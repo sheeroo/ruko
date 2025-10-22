@@ -80,7 +80,7 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: a5f384db2e9ee84e98494fed8f983d2bd79accff
   FBSDKCoreKit_Basics: d35c775aaf243a2d731dfae7be3a74b1987285ab
   FBSDKShareKit: e7ec3bed8e82dabc04e56f3cf44ef99a1864309e
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   flutter_native_splash: f71420956eb811e6d310720fee915f1d42852e7a
   package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
@@ -89,6 +89,6 @@ SPEC CHECKSUMS:
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
   video_player_avfoundation: 7c6c11d8470e1675df7397027218274b6d2360b3
 
-PODFILE CHECKSUM: 1b3400c743d653c20e9bcedcffe0aade234a00ba
+PODFILE CHECKSUM: 93573d7b697fdb7e679e02158f1564e99d595e31
 
 COCOAPODS: 1.16.2
