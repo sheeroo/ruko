@@ -87,9 +87,14 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
                   isOriginal: false,
                   thumbnailSize: widget.option.size,
                   thumbnailFormat: widget.option.format,
-                  errorBuilder:
-                      (_, __, ___) =>
-                          Center(child: Container(color: Colors.black)),
+                  errorBuilder: (_, __, ___) {
+                    return Center(
+                      child: Container(
+                        color: Colors.black,
+                        child: Text("error loading image!"),
+                      ),
+                    );
+                  },
                   fit: BoxFit.cover,
                 ),
 
