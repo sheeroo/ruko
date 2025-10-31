@@ -1,7 +1,7 @@
 name: "ruko"
 description: "A new Flutter project."
 publish_to: "none"
-version: "1.0.1+4"
+version: "1.0.2+5"
 scripts: 
   gen: "dart run build_runner watch"
   build: "flutter build ipa --obfuscate --split-debug-info=debug-info --target=lib/main_production.dart"
