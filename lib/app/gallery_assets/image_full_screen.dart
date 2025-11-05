@@ -13,6 +13,7 @@ import 'package:ruko/app/gallery_assets/widget_zoom_fullscreen.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/theme/button.dart';
 import 'package:ruko/core/util/social_share.dart';
+import 'package:ruko/core/widgets/custom_appbar.dart';
 
 @RoutePage()
 class ImageFullPage extends StatelessWidget {
@@ -24,7 +25,8 @@ class ImageFullPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black.withValues(alpha: 0.5),
+      appBar: CustomAppbar(),
+      backgroundColor: Colors.black,
       body: WidgetZoomFullscreen(
         zoomWidget: Stack(
           children: [
@@ -32,8 +34,22 @@ class ImageFullPage extends StatelessWidget {
               child: AssetEntityImage(
                 entity,
                 fit: BoxFit.contain,
+                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                  if (frame == null) {
+                    return const SizedBox.shrink();
+                  }
+                  return Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 4,
+                      ),
+                    ),
+                    child: child,
+                  );
+                },
                 thumbnailSize: ThumbnailSize(720, 1560),
-              ).p(all: 4, bottom: 72),
+              ).p(all: 4, bottom: 72).p(horizontal: 8),
             ),
             Align(
               alignment: Alignment.bottomCenter,
@@ -53,7 +69,7 @@ class ImageFullPage extends StatelessWidget {
         maxScale: 3,
         heroAnimationTag: entity.id,
       ),
-    ).blur(64);
+    );
   }
 }
 
@@ -100,28 +116,29 @@ class _ShareButtonsState extends State<ShareButtons> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 32,
-      children: [
-            StyledButton.icon(
-              isLoading: file == null,
-              icon: FeatherIcons.instagram,
-              onPressed: onPressed,
-            ),
-            StyledButton.icon(
-              isLoading: file == null,
-              icon: Pixel.upload,
-              onPressed: () {
-                _share.shareToSystem(file!.path);
-              },
-            ),
-          ]
-          .animate(delay: Durations.medium1, interval: Durations.short1)
-          .fadeIn(duration: Durations.medium3, curve: Curves.fastOutSlowIn)
-          .moveY(
-            duration: Durations.medium3,
-            begin: 40,
-            end: 0,
-            curve: Curves.fastOutSlowIn,
-          ),
+      children:
+          [
+                StyledButton.icon(
+                  isLoading: file == null,
+                  icon: FeatherIcons.instagram,
+                  onPressed: onPressed,
+                ),
+                StyledButton.icon(
+                  isLoading: file == null,
+                  icon: Pixel.upload,
+                  onPressed: () {
+                    _share.shareToSystem(file!.path);
+                  },
+                ),
+              ]
+              .animate(delay: Durations.medium1, interval: Durations.short1)
+              .fadeIn(duration: Durations.medium3, curve: Curves.fastOutSlowIn)
+              .moveY(
+                duration: Durations.medium3,
+                begin: 40,
+                end: 0,
+                curve: Curves.fastOutSlowIn,
+              ),
     );
   }
 }

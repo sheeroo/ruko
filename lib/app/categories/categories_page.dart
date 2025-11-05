@@ -3,15 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:photo_manager/photo_manager.dart';
+import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 import 'package:ruko/app/gallery_assets/cubit/gallery_assets_cubit.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/router/router.dart';
 import 'package:ruko/core/theme/text_extension.dart';
 import 'package:ruko/core/widgets/custom_appbar.dart';
-import 'package:photo_manager/photo_manager.dart';
-import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 
-enum AssetCategory { shuffle, screenshots, nearby, month }
+enum AssetCategory {
+  month,
+  nearby,
+  screenshots,
+  shuffle,
+  videos,
+  reversed,
+}
 
 @RoutePage()
 class CategoriesPage extends StatefulWidget {
@@ -31,13 +38,12 @@ class _CategoriesPageState extends State<CategoriesPage> {
         slivers: [
           SliverToBoxAdapter(child: Gap(12)),
           ...AssetCategory.values.map((category) {
-            final entries =
-                context
-                    .watch<GalleryAssetsCubit>()
-                    .state
-                    .assets
-                    .fromCategory(category)
-                    .entries;
+            final entries = context
+                .watch<GalleryAssetsCubit>()
+                .state
+                .assets
+                .fromCategory(category)
+                .entries;
             return SliverToBoxAdapter(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

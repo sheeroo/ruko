@@ -1,13 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:photo_manager/photo_manager.dart';
+import 'package:pixelarticons/pixel.dart';
 import 'package:ruko/app/categories/categories_page.dart';
 import 'package:ruko/app/categories/categories_swiper_page.dart';
 import 'package:ruko/app/gallery_assets/cubit/gallery_assets_cubit.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/widgets/custom_appbar.dart';
-import 'package:photo_manager/photo_manager.dart';
-import 'package:pixelarticons/pixel.dart';
 
 @RoutePage()
 class CategoryPage extends StatefulWidget {
@@ -39,13 +39,12 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final entries =
-        context
-            .watch<GalleryAssetsCubit>()
-            .state
-            .assets
-            .fromCategory(widget.category)
-            .entries;
+    final entries = context
+        .watch<GalleryAssetsCubit>()
+        .state
+        .assets
+        .fromCategory(widget.category)
+        .entries;
     switch (widget.category) {
       case AssetCategory.month:
       case AssetCategory.nearby:
@@ -87,6 +86,27 @@ class _CategoryPageState extends State<CategoryPage> {
           ids: shuffled.map((e) => e.id).toList(),
           title: widget.category.title,
         );
+      case AssetCategory.videos:
+        return CategoriesSwiperPage(
+          ids: entries
+              .map((e) => e.value)
+              .expand((e) => e)
+              .where((element) => element.type == AssetType.video)
+              .map((e) => e.id)
+              .toList(),
+          title: widget.category.title,
+        );
+      case AssetCategory.reversed:
+        return CategoriesSwiperPage(
+          ids: context
+              .read<GalleryAssetsCubit>()
+              .state
+              .assets
+              .reversed
+              .map((e) => e.id)
+              .toList(),
+          title: widget.category.title,
+        );
     }
   }
 }
@@ -102,6 +122,10 @@ extension AssetCategoryX on AssetCategory {
         return "> nearby";
       case AssetCategory.shuffle:
         return "> shuffled";
+      case AssetCategory.videos:
+        return "> videos";
+      case AssetCategory.reversed:
+        return "> old first";
     }
   }
 
@@ -115,6 +139,10 @@ extension AssetCategoryX on AssetCategory {
         return Pixel.map;
       case AssetCategory.shuffle:
         return Pixel.shuffle;
+      case AssetCategory.videos:
+        return Pixel.video;
+      case AssetCategory.reversed:
+        return Pixel.calendararrowleft;
     }
   }
 }
@@ -131,14 +159,17 @@ extension AssetEntityX on AssetEntity {
         final date = createDateTime.format('dd MMMM yyyy');
         return (week, date);
       case AssetCategory.nearby:
-        final location =
-            latitude != 0 && longitude != 0
-                ? "${latitude?.toStringAsFixed(3)}, ${longitude?.toStringAsFixed(3)}"
-                : "No Location";
+        final location = latitude != 0 && longitude != 0
+            ? "${latitude?.toStringAsFixed(3)}, ${longitude?.toStringAsFixed(3)}"
+            : "No Location";
         return ("Nearby", location);
       case AssetCategory.shuffle:
         final shuffled = createDateTime.format('dd MMMM yyyy');
         return ("Shuffle", shuffled);
+      case AssetCategory.videos:
+        return ("Videos", "");
+      case AssetCategory.reversed:
+        return ("Old First", "");
     }
   }
 }

@@ -16,27 +16,50 @@ class GalleryAssetsCubit extends Cubit<GalleryAssetsState> {
   Future<void> loadAssets() async {
     emit(state.copyWith(status: TaskStatus.running));
     final FilterOptionGroup filterOptionGroup = FilterOptionGroup(
-      imageOption: const FilterOption(
-        sizeConstraint: SizeConstraint(minWidth: 0, minHeight: 0),
-      ),
+      // imageOption: const FilterOption(
+      //   sizeConstraint: SizeConstraint(minWidth: 0, minHeight: 0),
+      // ),
       orders: [const OrderOption(type: OrderOptionType.createDate, asc: false)],
     );
 
     final paths = await PhotoManager.getAssetPathList(
-      onlyAll: true,
-      type: RequestType.common,
+      onlyAll: false,
+      type: RequestType.all,
       filterOption: filterOptionGroup,
     );
 
-    if (paths.isNotEmpty) {
-      const int loadCount = 20000;
-      final assets = await paths[0].getAssetListPaged(page: 0, size: loadCount);
-      emit(state.copyWith(assets: assets, status: TaskStatus.success));
+    List<AssetEntity> allAssets = [];
+    for (final path in paths) {
+      final assets = await path.getAssetListPaged(page: 0, size: 10000);
+      allAssets.addAll(assets);
     }
+    emit(
+      state.copyWith(
+        assets: allAssets,
+        status: TaskStatus.success,
+      ),
+    );
   }
 
   void removeAssets(List<String> ids) {
     final assets = state.assets.where((e) => !ids.contains(e.id)).toList();
     emit(state.copyWith(assets: assets));
+  }
+
+  void toggleFavoriteAsset(AssetEntity entity) {
+    emit(
+      state.copyWith(
+        assets: state.assets.map((e) {
+          if (e.id == entity.id) {
+            PhotoManager.editor.darwin.favoriteAsset(
+              entity: e,
+              favorite: !e.isFavorite,
+            );
+            return e.copyWith(isFavorite: !e.isFavorite);
+          }
+          return e;
+        }).toList(),
+      ),
+    );
   }
 }

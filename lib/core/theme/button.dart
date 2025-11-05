@@ -135,8 +135,9 @@ class _StyledButtonState extends State<StyledButton> {
         if (widget.isLoading) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize:
-                widget.fullWidth ? MainAxisSize.max : MainAxisSize.min,
+            mainAxisSize: widget.fullWidth
+                ? MainAxisSize.max
+                : MainAxisSize.min,
             children: [CupertinoActivityIndicator()],
           );
         }
@@ -178,18 +179,16 @@ class _StyledButtonState extends State<StyledButton> {
           ],
         ),
         child: IconButton(
-          icon:
-              !widget.isLoading
-                  ? Icon(widget.icon, color: Colors.white)
-                  : const CupertinoActivityIndicator(),
+          icon: !widget.isLoading
+              ? Icon(widget.icon, color: Colors.white)
+              : const CupertinoActivityIndicator(),
           iconSize: 28,
-          onPressed:
-              widget.isDisabled
-                  ? null
-                  : () {
-                    HapticFeedback.selectionClick();
-                    widget.onPressed?.call();
-                  },
+          onPressed: widget.isDisabled
+              ? null
+              : () {
+                  HapticFeedback.selectionClick();
+                  widget.onPressed?.call();
+                },
         ),
       );
     }
@@ -207,13 +206,12 @@ class _StyledButtonState extends State<StyledButton> {
           ],
         ),
         child: ElevatedButton(
-          onPressed:
-              widget.isDisabled
-                  ? null
-                  : () {
-                    HapticFeedback.selectionClick();
-                    widget.onPressed?.call();
-                  },
+          onPressed: widget.isDisabled
+              ? null
+              : () {
+                  HapticFeedback.selectionClick();
+                  widget.onPressed?.call();
+                },
           child: Container(
             constraints: const BoxConstraints(minHeight: 52),
             width: widget.fullWidth ? double.infinity : null,
@@ -226,13 +224,12 @@ class _StyledButtonState extends State<StyledButton> {
       disabledColor: disabledColor,
       padding: padding,
       borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
-      onPressed:
-          widget.isDisabled
-              ? null
-              : () {
-                HapticFeedback.selectionClick();
-                widget.onPressed?.call();
-              },
+      onPressed: widget.isDisabled
+          ? null
+          : () {
+              HapticFeedback.selectionClick();
+              widget.onPressed?.call();
+            },
       child: child,
     );
   }

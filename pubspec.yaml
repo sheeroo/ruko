@@ -7,7 +7,7 @@ scripts:
   build: "flutter build ipa --obfuscate --split-debug-info=debug-info --target=lib/main_production.dart"
 
 environment: 
-  sdk: "^3.7.0"
+  sdk: "^3.9.0"
 
 dependencies: 
   flutter: 
@@ -60,6 +60,7 @@ dependencies:
   widgets_to_image: "^1.0.0"
   simple_shadow: "^0.3.1"
   flutter_dotenv: "^5.2.1"
+  flutter_svg: ^2.2.1
 
 dev_dependencies: 
   flutter_test: 

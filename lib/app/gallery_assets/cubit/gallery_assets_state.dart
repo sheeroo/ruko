@@ -57,6 +57,11 @@ extension AssetCategoryX on List<AssetEntity> {
       case AssetCategory.shuffle:
         final shuffled = [...toList()]..shuffle();
         return {'shuffled': shuffled};
+      case AssetCategory.videos:
+        final videos = where((e) => e.type == AssetType.video).toList();
+        return {'videos': videos};
+      case AssetCategory.reversed:
+        return {'reversed': toList().reversed.toList()};
     }
   }
 }
