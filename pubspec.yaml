@@ -1,7 +1,7 @@
 name: "ruko"
 description: "A new Flutter project."
 publish_to: "none"
-version: "1.0.2+5"
+version: "1.0.3+6"
 scripts: 
   gen: "dart run build_runner watch"
   build: "flutter build ipa --obfuscate --split-debug-info=debug-info --target=lib/main_production.dart"
@@ -60,7 +60,7 @@ dependencies:
   widgets_to_image: "^1.0.0"
   simple_shadow: "^0.3.1"
   flutter_dotenv: "^5.2.1"
-  flutter_svg: ^2.2.1
+  flutter_svg: "^2.2.1"
 
 dev_dependencies: 
   flutter_test: 
