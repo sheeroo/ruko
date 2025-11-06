@@ -1,6 +1,7 @@
-import Flutter
-import UIKit
 import FBSDKCoreKit
+import Flutter
+import Photos
+import UIKit
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
@@ -8,10 +9,14 @@ import FBSDKCoreKit
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+
+    let controller: FlutterViewController = window?.rootViewController as! FlutterViewController
+    PhotoUtils.shared.setupMethodChannel(with: controller.binaryMessenger)
+
     GeneratedPluginRegistrant.register(with: self)
     FBSDKCoreKit.ApplicationDelegate.shared.application(
-        application,
-        didFinishLaunchingWithOptions: launchOptions
+      application,
+      didFinishLaunchingWithOptions: launchOptions
     )
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
