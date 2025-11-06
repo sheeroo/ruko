@@ -17,7 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$GalleryAssetsState {
-  List<AssetEntity> get assets => throw _privateConstructorUsedError;
+  List<(AssetEntity, AssetPathEntity)> get keyedAssets =>
+      throw _privateConstructorUsedError;
   TaskStatus get status => throw _privateConstructorUsedError;
 
   /// Create a copy of GalleryAssetsState
@@ -34,7 +35,10 @@ abstract class $GalleryAssetsStateCopyWith<$Res> {
     $Res Function(GalleryAssetsState) then,
   ) = _$GalleryAssetsStateCopyWithImpl<$Res, GalleryAssetsState>;
   @useResult
-  $Res call({List<AssetEntity> assets, TaskStatus status});
+  $Res call({
+    List<(AssetEntity, AssetPathEntity)> keyedAssets,
+    TaskStatus status,
+  });
 }
 
 /// @nodoc
@@ -51,14 +55,14 @@ class _$GalleryAssetsStateCopyWithImpl<$Res, $Val extends GalleryAssetsState>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? assets = null, Object? status = null}) {
+  $Res call({Object? keyedAssets = null, Object? status = null}) {
     return _then(
       _value.copyWith(
-            assets:
-                null == assets
-                    ? _value.assets
-                    : assets // ignore: cast_nullable_to_non_nullable
-                        as List<AssetEntity>,
+            keyedAssets:
+                null == keyedAssets
+                    ? _value.keyedAssets
+                    : keyedAssets // ignore: cast_nullable_to_non_nullable
+                        as List<(AssetEntity, AssetPathEntity)>,
             status:
                 null == status
                     ? _value.status
@@ -79,7 +83,10 @@ abstract class _$$GalleryAssetsStateImplCopyWith<$Res>
   ) = __$$GalleryAssetsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<AssetEntity> assets, TaskStatus status});
+  $Res call({
+    List<(AssetEntity, AssetPathEntity)> keyedAssets,
+    TaskStatus status,
+  });
 }
 
 /// @nodoc
@@ -95,14 +102,14 @@ class __$$GalleryAssetsStateImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? assets = null, Object? status = null}) {
+  $Res call({Object? keyedAssets = null, Object? status = null}) {
     return _then(
       _$GalleryAssetsStateImpl(
-        assets:
-            null == assets
-                ? _value._assets
-                : assets // ignore: cast_nullable_to_non_nullable
-                    as List<AssetEntity>,
+        keyedAssets:
+            null == keyedAssets
+                ? _value._keyedAssets
+                : keyedAssets // ignore: cast_nullable_to_non_nullable
+                    as List<(AssetEntity, AssetPathEntity)>,
         status:
             null == status
                 ? _value.status
@@ -117,18 +124,18 @@ class __$$GalleryAssetsStateImplCopyWithImpl<$Res>
 
 class _$GalleryAssetsStateImpl extends _GalleryAssetsState {
   const _$GalleryAssetsStateImpl({
-    final List<AssetEntity> assets = const [],
+    final List<(AssetEntity, AssetPathEntity)> keyedAssets = const [],
     this.status = TaskStatus.initial,
-  }) : _assets = assets,
+  }) : _keyedAssets = keyedAssets,
        super._();
 
-  final List<AssetEntity> _assets;
+  final List<(AssetEntity, AssetPathEntity)> _keyedAssets;
   @override
   @JsonKey()
-  List<AssetEntity> get assets {
-    if (_assets is EqualUnmodifiableListView) return _assets;
+  List<(AssetEntity, AssetPathEntity)> get keyedAssets {
+    if (_keyedAssets is EqualUnmodifiableListView) return _keyedAssets;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_assets);
+    return EqualUnmodifiableListView(_keyedAssets);
   }
 
   @override
@@ -137,7 +144,7 @@ class _$GalleryAssetsStateImpl extends _GalleryAssetsState {
 
   @override
   String toString() {
-    return 'GalleryAssetsState(assets: $assets, status: $status)';
+    return 'GalleryAssetsState(keyedAssets: $keyedAssets, status: $status)';
   }
 
   @override
@@ -145,14 +152,17 @@ class _$GalleryAssetsStateImpl extends _GalleryAssetsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GalleryAssetsStateImpl &&
-            const DeepCollectionEquality().equals(other._assets, _assets) &&
+            const DeepCollectionEquality().equals(
+              other._keyedAssets,
+              _keyedAssets,
+            ) &&
             (identical(other.status, status) || other.status == status));
   }
 
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    const DeepCollectionEquality().hash(_assets),
+    const DeepCollectionEquality().hash(_keyedAssets),
     status,
   );
 
@@ -170,13 +180,13 @@ class _$GalleryAssetsStateImpl extends _GalleryAssetsState {
 
 abstract class _GalleryAssetsState extends GalleryAssetsState {
   const factory _GalleryAssetsState({
-    final List<AssetEntity> assets,
+    final List<(AssetEntity, AssetPathEntity)> keyedAssets,
     final TaskStatus status,
   }) = _$GalleryAssetsStateImpl;
   const _GalleryAssetsState._() : super._();
 
   @override
-  List<AssetEntity> get assets;
+  List<(AssetEntity, AssetPathEntity)> get keyedAssets;
   @override
   TaskStatus get status;
 

@@ -477,3 +477,16 @@ extension SizedContext on BuildContext {
 extension FileX on File {
   String get name => basename(path);
 }
+
+extension ListX<T> on List<T> {
+  List<T> copyFirstWith(T oldItem, T newItem) {
+    return map((e) => e == oldItem ? newItem : e).toList();
+  }
+
+  List<T> copyMatchWith({
+    required bool Function(T) predicate,
+    required T Function(T) newItem,
+  }) {
+    return map((e) => predicate(e) ? newItem(e) : e).toList();
+  }
+}

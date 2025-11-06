@@ -31,6 +31,10 @@ class AppRouter extends RootStackRouter {
           transitionsBuilder: fadeTransition,
         ),
         CustomRoute(
+          page: AlbumSwiperRoute.page,
+          transitionsBuilder: fadeTransition,
+        ),
+        CustomRoute(
           page: CategoriesRoute.page,
           transitionsBuilder: fadeTransition,
         ),

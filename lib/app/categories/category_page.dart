@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:pixelarticons/pixel.dart';
@@ -7,6 +8,7 @@ import 'package:ruko/app/categories/categories_page.dart';
 import 'package:ruko/app/categories/categories_swiper_page.dart';
 import 'package:ruko/app/gallery_assets/cubit/gallery_assets_cubit.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
+import 'package:ruko/core/router/router.gr.dart';
 import 'package:ruko/core/widgets/custom_appbar.dart';
 
 @RoutePage()
@@ -39,15 +41,15 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final entries = context
-        .watch<GalleryAssetsCubit>()
-        .state
-        .assets
-        .fromCategory(widget.category)
-        .entries;
     switch (widget.category) {
       case AssetCategory.month:
       case AssetCategory.nearby:
+        final entries = context
+            .watch<GalleryAssetsCubit>()
+            .state
+            .assets
+            .fromCategory(widget.category)
+            .entries;
         return Scaffold(
           appBar: CustomAppbar(title: widget.category.title),
           body: GridView.builder(
@@ -68,18 +70,19 @@ class _CategoryPageState extends State<CategoryPage> {
                 subtitle: subtitle,
                 asset: asset,
                 secondary: second,
-                assets: entry.value,
+                length: entry.value.length,
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  context.router.push(
+                    CategoriesSwiperRoute(
+                      ids: entry.value.map((e) => e.id).toList(),
+                      title: title,
+                    ),
+                  );
+                },
               ).p(all: 12);
             },
           ),
-        );
-      case AssetCategory.screenshots:
-        final screenshots =
-            entries.map((e) => e.value).expand((e) => e).toList()
-              ..sort((a, b) => a.createDateTime.compareTo(b.createDateTime));
-        return CategoriesSwiperPage(
-          ids: screenshots.map((e) => e.id).toList(),
-          title: widget.category.title,
         );
       case AssetCategory.shuffle:
         return CategoriesSwiperPage(
@@ -87,6 +90,12 @@ class _CategoryPageState extends State<CategoryPage> {
           title: widget.category.title,
         );
       case AssetCategory.videos:
+        final entries = context
+            .watch<GalleryAssetsCubit>()
+            .state
+            .assets
+            .fromCategory(widget.category)
+            .entries;
         return CategoriesSwiperPage(
           ids: entries
               .map((e) => e.value)
@@ -107,6 +116,39 @@ class _CategoryPageState extends State<CategoryPage> {
               .toList(),
           title: widget.category.title,
         );
+      case AssetCategory.albums:
+        final albums = context.watch<GalleryAssetsCubit>().state.groupedAssets;
+
+        return Scaffold(
+          appBar: CustomAppbar(title: widget.category.title),
+          body: GridView.builder(
+            controller: controller,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
+            itemCount: albums.length,
+            itemBuilder: (context, index) {
+              final album = albums.entries.elementAt(index);
+              final asset = album.value.first;
+              final second = album.value.elementAtOrNull(1);
+
+              final (title, subtitle) = asset.titleAndSubtitle(widget.category);
+
+              return PhotosCard(
+                title: album.key.name,
+                asset: asset,
+                secondary: second,
+                length: album.value.length,
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  context.router.push(
+                    AlbumSwiperRoute(path: album.key, title: title),
+                  );
+                },
+              ).p(all: 12);
+            },
+          ),
+        );
     }
   }
 }
@@ -116,8 +158,6 @@ extension AssetCategoryX on AssetCategory {
     switch (this) {
       case AssetCategory.month:
         return "> months";
-      case AssetCategory.screenshots:
-        return "> screenshots & other";
       case AssetCategory.nearby:
         return "> nearby";
       case AssetCategory.shuffle:
@@ -126,6 +166,8 @@ extension AssetCategoryX on AssetCategory {
         return "> videos";
       case AssetCategory.reversed:
         return "> old first";
+      case AssetCategory.albums:
+        return "> albums";
     }
   }
 
@@ -133,8 +175,6 @@ extension AssetCategoryX on AssetCategory {
     switch (this) {
       case AssetCategory.month:
         return Pixel.calendar;
-      case AssetCategory.screenshots:
-        return Pixel.notedelete;
       case AssetCategory.nearby:
         return Pixel.map;
       case AssetCategory.shuffle:
@@ -143,6 +183,8 @@ extension AssetCategoryX on AssetCategory {
         return Pixel.video;
       case AssetCategory.reversed:
         return Pixel.calendararrowleft;
+      case AssetCategory.albums:
+        return Pixel.folder;
     }
   }
 }
@@ -154,10 +196,6 @@ extension AssetEntityX on AssetEntity {
         final month = createDateTime.format('MMMM');
         final year = createDateTime.format('yyyy');
         return (month, year);
-      case AssetCategory.screenshots:
-        final week = createDateTime.format('EEEE');
-        final date = createDateTime.format('dd MMMM yyyy');
-        return (week, date);
       case AssetCategory.nearby:
         final location = latitude != 0 && longitude != 0
             ? "${latitude?.toStringAsFixed(3)}, ${longitude?.toStringAsFixed(3)}"
@@ -170,6 +208,8 @@ extension AssetEntityX on AssetEntity {
         return ("Videos", "");
       case AssetCategory.reversed:
         return ("Old First", "");
+      case AssetCategory.albums:
+        return ("Albums", "");
     }
   }
 }

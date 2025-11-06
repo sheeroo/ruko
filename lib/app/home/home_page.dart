@@ -19,12 +19,17 @@ class _HomePageState extends State<HomePage> {
   int deletedAssetsCount = 0;
   @override
   Widget build(BuildContext context) {
-    final assets = context.watch<GalleryAssetsCubit>().state.assets;
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
       appBar: HomeAppbar(),
-      body: AssetSwiper(controller: controller, assets: assets),
+      body: BlocBuilder<GalleryAssetsCubit, GalleryAssetsState>(
+        buildWhen: (previous, current) =>
+            previous.assets.length != current.assets.length,
+        builder: (context, state) {
+          return AssetSwiper(controller: controller, assets: state.assets);
+        },
+      ),
     );
   }
 }

@@ -7,14 +7,14 @@ import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 import 'package:ruko/app/gallery_assets/cubit/gallery_assets_cubit.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
-import 'package:ruko/core/router/router.dart';
+import 'package:ruko/core/router/router.gr.dart';
 import 'package:ruko/core/theme/text_extension.dart';
 import 'package:ruko/core/widgets/custom_appbar.dart';
 
 enum AssetCategory {
   month,
   nearby,
-  screenshots,
+  albums,
   shuffle,
   videos,
   reversed,
@@ -65,9 +65,18 @@ class _CategoriesPageState extends State<CategoriesPage> {
                         return PhotosCard(
                           asset: assets[0],
                           secondary: secondary,
-                          assets: assets,
+                          onTap: () {
+                            HapticFeedback.selectionClick();
+                            context.router.push(
+                              CategoriesSwiperRoute(
+                                ids: assets.map((e) => e.id).toList(),
+                                title: month,
+                              ),
+                            );
+                          },
                           title: month,
                           subtitle: year,
+                          length: assets.length,
                         ).p(all: 12);
                       },
                     ),
@@ -88,28 +97,24 @@ class PhotosCard extends StatelessWidget {
     super.key,
     required this.asset,
     required this.secondary,
-    required this.assets,
+    required this.length,
     this.title,
     this.subtitle,
+    this.onTap,
   });
 
   final String? title;
   final String? subtitle;
   final AssetEntity? secondary;
   final AssetEntity asset;
-  final List<AssetEntity> assets;
+  final int length;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        HapticFeedback.selectionClick();
-        context.router.push(
-          CategoriesSwiperRoute(
-            ids: assets.map((e) => e.id).toList(),
-            title: title ?? "",
-          ),
-        );
+        onTap?.call();
       },
       child: Stack(
         fit: StackFit.expand,
@@ -192,7 +197,7 @@ class PhotosCard extends StatelessWidget {
           Align(
             alignment: Alignment.topRight,
             child: Text(
-              "(${assets.length})",
+              "($length)",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -204,8 +209,9 @@ class PhotosCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(title ?? "").titleSmall(fontSize: 14),
-              Text(subtitle ?? "").bodySmall(fontSize: 10, opacity: 0.75),
+              if (title != null) Text(title!).titleSmall(fontSize: 14),
+              if (subtitle != null)
+                Text(subtitle!).bodySmall(fontSize: 10, opacity: 0.75),
             ],
           ).p(horizontal: 6, vertical: 2),
         ],

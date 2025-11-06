@@ -3,10 +3,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 import 'package:pixelarticons/pixel.dart';
+import 'package:ruko/app/gallery_assets/cubit/gallery_assets_cubit.dart';
 import 'package:ruko/app/swiper/custom_controller.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/router/router.gr.dart';
@@ -31,7 +33,6 @@ class ImageItemWidget extends StatefulWidget {
 }
 
 class _ImageItemWidgetState extends State<ImageItemWidget> {
-  late bool isFavorite = widget.entity.isFavorite;
   bool hapticDispatched = false;
   final appinioSocialShare = AppinioSocialShare();
 
@@ -282,22 +283,32 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          HapticFeedback.selectionClick();
-                          setState(() {
-                            isFavorite = !isFavorite;
-                            PhotoManager.editor.darwin.favoriteAsset(
-                              entity: widget.entity,
-                              favorite: isFavorite,
-                            );
-                          });
-                        },
-                        icon: SvgPicture.string(
-                          isFavorite ? filledHeartSvg : emptyHeartSvg,
-                          width: 24,
-                          height: 24,
+                      BlocSelector<
+                        GalleryAssetsCubit,
+                        GalleryAssetsState,
+                        AssetEntity
+                      >(
+                        selector: (state) => state.assets.firstWhere(
+                          (element) => element.id == widget.entity.id,
                         ),
+                        builder: (context, state) {
+                          return IconButton(
+                            onPressed: () {
+                              HapticFeedback.selectionClick();
+
+                              context
+                                  .read<GalleryAssetsCubit>()
+                                  .toggleFavoriteAsset(
+                                    widget.entity,
+                                  );
+                            },
+                            icon: SvgPicture.string(
+                              state.isFavorite ? filledHeartSvg : emptyHeartSvg,
+                              width: 24,
+                              height: 24,
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),

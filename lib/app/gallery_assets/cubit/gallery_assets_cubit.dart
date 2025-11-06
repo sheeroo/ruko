@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:dart_geohash/dart_geohash.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:ruko/app/categories/categories_page.dart';
+import 'package:ruko/app/gallery_assets/get_deletable_assets.dart';
 import 'package:ruko/core/enums/status.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 
@@ -16,9 +19,6 @@ class GalleryAssetsCubit extends Cubit<GalleryAssetsState> {
   Future<void> loadAssets() async {
     emit(state.copyWith(status: TaskStatus.running));
     final FilterOptionGroup filterOptionGroup = FilterOptionGroup(
-      // imageOption: const FilterOption(
-      //   sizeConstraint: SizeConstraint(minWidth: 0, minHeight: 0),
-      // ),
       orders: [const OrderOption(type: OrderOptionType.createDate, asc: false)],
     );
 
@@ -28,37 +28,47 @@ class GalleryAssetsCubit extends Cubit<GalleryAssetsState> {
       filterOption: filterOptionGroup,
     );
 
-    List<AssetEntity> allAssets = [];
+    List<(AssetEntity, AssetPathEntity)> allAssets = [];
     for (final path in paths) {
-      final assets = await path.getAssetListPaged(page: 0, size: 10000);
-      allAssets.addAll(assets);
+      final assets = await path.getAllDeletableAssets();
+      if (assets.isEmpty) continue;
+      allAssets.addAll(assets.map((e) => (e, path)));
     }
+
     emit(
       state.copyWith(
-        assets: allAssets,
+        keyedAssets: allAssets,
         status: TaskStatus.success,
       ),
     );
   }
 
   void removeAssets(List<String> ids) {
-    final assets = state.assets.where((e) => !ids.contains(e.id)).toList();
-    emit(state.copyWith(assets: assets));
+    final assets = state.keyedAssets
+        .where((e) => !ids.contains(e.$1.id))
+        .toList();
+    emit(state.copyWith(keyedAssets: assets));
   }
 
   void toggleFavoriteAsset(AssetEntity entity) {
+    final modifiedAssets = state.keyedAssets.copyMatchWith(
+      predicate: (e) {
+        return e.$1.id == entity.id;
+      },
+      newItem: (e) {
+        if (Platform.isIOS) {
+          PhotoManager.editor.darwin.favoriteAsset(
+            entity: entity,
+            favorite: !e.$1.isFavorite,
+          );
+        }
+        return (e.$1.copyWith(isFavorite: !e.$1.isFavorite), e.$2);
+      },
+    );
+
     emit(
       state.copyWith(
-        assets: state.assets.map((e) {
-          if (e.id == entity.id) {
-            PhotoManager.editor.darwin.favoriteAsset(
-              entity: e,
-              favorite: !e.isFavorite,
-            );
-            return e.copyWith(isFavorite: !e.isFavorite);
-          }
-          return e;
-        }).toList(),
+        keyedAssets: modifiedAssets,
       ),
     );
   }
