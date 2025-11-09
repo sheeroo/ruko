@@ -165,7 +165,7 @@ extension AssetCategoryX on AssetCategory {
       case AssetCategory.videos:
         return "> videos";
       case AssetCategory.reversed:
-        return "> old first";
+        return "> old photos first";
       case AssetCategory.albums:
         return "> albums";
     }

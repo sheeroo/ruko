@@ -91,25 +91,15 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
                   );
                 },
                 child: AssetEntityImage(
+                  key: ValueKey(widget.index),
                   widget.entity,
                   isOriginal: false,
                   thumbnailSize: widget.option.size,
                   thumbnailFormat: widget.option.format,
                   errorBuilder: (_, __, ___) {
-                    return FutureBuilder(
-                      future: widget.entity.thumbnailData,
-                      builder: (context, asyncSnapshot) {
-                        final data = asyncSnapshot.data;
-                        if (data != null) {
-                          return Image.memory(data, fit: BoxFit.cover);
-                        }
-                        return Center(
-                          child: Container(
-                            color: Colors.black,
-                            child: Text("error loading image!"),
-                          ),
-                        );
-                      },
+                    return FallbackImage(
+                      key: ValueKey(widget.index),
+                      thumbnailData: widget.entity.thumbnailData,
                     );
                   },
                   fit: BoxFit.cover,
@@ -317,6 +307,61 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class FallbackImage extends StatefulWidget {
+  const FallbackImage({
+    super.key,
+    required this.thumbnailData,
+  });
+
+  final Future<Uint8List?> thumbnailData;
+
+  @override
+  State<FallbackImage> createState() => _FallbackImageState();
+}
+
+class _FallbackImageState extends State<FallbackImage> {
+  Uint8List? data;
+  bool loading = true;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      setState(() {
+        loading = true;
+      });
+      final loadedData = await widget.thumbnailData;
+
+      if (!mounted) return;
+      setState(() {
+        data = loadedData;
+        loading = false;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (loading) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    if (data != null) {
+      return Image.memory(
+        data!,
+        fit: BoxFit.cover,
+      );
+    }
+    return Center(
+      child: Icon(
+        Pixel.image,
+        size: 48,
+        color: Colors.white,
       ),
     );
   }

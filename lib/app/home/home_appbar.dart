@@ -32,14 +32,18 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
               child: Row(
                 spacing: 12,
                 children: [
-                  ...AssetCategory.values.map(((category) {
-                    return StyledButton.icon(
-                      icon: category.icon,
-                      onPressed: () {
-                        context.router.push(CategoryRoute(category: category));
-                      },
-                    );
-                  })),
+                  ...AssetCategory.values.map(
+                    (category) {
+                      return StyledButton.icon(
+                        icon: category.icon,
+                        onPressed: () {
+                          context.router.push(
+                            CategoryRoute(category: category),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ],
               ).p(left: 12),
             ),
