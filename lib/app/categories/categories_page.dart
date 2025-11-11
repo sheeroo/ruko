@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
-import 'package:ruko/app/gallery_assets/cubit/gallery_assets_cubit.dart';
+import 'package:ruko/app/gallery/cubit/gallery_assets_cubit.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/router/router.gr.dart';
 import 'package:ruko/core/theme/text_extension.dart';

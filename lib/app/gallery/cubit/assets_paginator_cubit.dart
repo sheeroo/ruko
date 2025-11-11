@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:photo_manager/photo_manager.dart';
-import 'package:ruko/app/gallery_assets/get_deletable_assets.dart';
+import 'package:ruko/app/gallery/get_deletable_assets.dart';
 import 'package:ruko/core/paginator/paginator.dart';
 
 part 'assets_paginator_cubit.freezed.dart';

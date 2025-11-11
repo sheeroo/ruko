@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:pixelarticons/pixel.dart';
-import 'package:ruko/app/gallery_assets/cubit/asset_paths_cubit.dart';
+import 'package:ruko/app/gallery/cubit/asset_paths_cubit.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/router/router.gr.dart';
 import 'package:ruko/core/theme/button.dart';

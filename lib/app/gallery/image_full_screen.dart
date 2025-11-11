@@ -9,7 +9,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 import 'package:pixelarticons/pixel.dart';
-import 'package:ruko/app/gallery_assets/widget_zoom_fullscreen.dart';
+import 'package:ruko/app/gallery/widget_zoom_fullscreen.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/theme/button.dart';
 import 'package:ruko/core/util/social_share.dart';

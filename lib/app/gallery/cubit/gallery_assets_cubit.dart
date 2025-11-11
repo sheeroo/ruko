@@ -6,7 +6,7 @@ import 'package:dart_geohash/dart_geohash.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:ruko/app/categories/categories_page.dart';
-import 'package:ruko/app/gallery_assets/get_deletable_assets.dart';
+import 'package:ruko/app/gallery/get_deletable_assets.dart';
 import 'package:ruko/core/enums/status.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 

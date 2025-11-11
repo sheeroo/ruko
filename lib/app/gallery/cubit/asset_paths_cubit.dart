@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:photo_manager/photo_manager.dart';
-import 'package:ruko/app/gallery_assets/filter_options.dart';
+import 'package:ruko/app/gallery/filter_options.dart';
 import 'package:ruko/core/enums/status.dart';
 
 part 'asset_paths_cubit.freezed.dart';

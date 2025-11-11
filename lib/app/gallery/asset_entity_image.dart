@@ -8,7 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 import 'package:pixelarticons/pixel.dart';
-import 'package:ruko/app/gallery_assets/cubit/assets_paginator_cubit.dart';
+import 'package:ruko/app/gallery/cubit/assets_paginator_cubit.dart';
 import 'package:ruko/app/swiper/custom_controller.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/router/router.gr.dart';
