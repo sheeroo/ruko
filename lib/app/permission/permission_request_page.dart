@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ruko/app/gallery_assets/cubit/gallery_assets_cubit.dart';
+import 'package:photo_manager/photo_manager.dart';
+import 'package:pixelarticons/pixel.dart';
+import 'package:ruko/app/gallery_assets/cubit/asset_paths_cubit.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/router/router.gr.dart';
 import 'package:ruko/core/theme/button.dart';
-import 'package:photo_manager/photo_manager.dart';
-import 'package:pixelarticons/pixel.dart';
 
 @RoutePage()
 class PermissionRequestPage extends StatelessWidget {
@@ -20,10 +20,11 @@ class PermissionRequestPage extends StatelessWidget {
           leading: Icon(Pixel.image, color: Colors.white, size: 30),
           title: 'give gallery access',
           onPressed: () async {
-            final state = await PhotoManager.requestPermissionExtend();
-            if (state.hasAccess) {
+            final permissionState =
+                await PhotoManager.requestPermissionExtend();
+            if (permissionState.hasAccess) {
               if (!context.mounted) return;
-              await context.read<GalleryAssetsCubit>().loadAssets();
+              await context.read<AssetPathsCubit>().loadPaths();
               if (!context.mounted) return;
               context.router.replaceAll([HomeRoute()]);
             }

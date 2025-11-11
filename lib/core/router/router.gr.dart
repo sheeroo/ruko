@@ -22,8 +22,7 @@ import 'package:ruko/app/categories/category_page.dart' as _i7;
 import 'package:ruko/app/gallery_assets/image_full_screen.dart' as _i11;
 import 'package:ruko/app/gallery_assets/video_full_screen.dart' as _i18;
 import 'package:ruko/app/home/home_page.dart' as _i10;
-import 'package:ruko/app/permission_request/permission_request_page.dart'
-    as _i13;
+import 'package:ruko/app/permission/permission_request_page.dart' as _i13;
 import 'package:ruko/app/root/app_root.dart' as _i4;
 import 'package:ruko/app/settings/page/settings_page.dart' as _i15;
 import 'package:ruko/app/settings/page/settings_shell_page.dart' as _i16;

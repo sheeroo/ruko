@@ -14,13 +14,21 @@ part 'gallery_assets_cubit.freezed.dart';
 part 'gallery_assets_state.dart';
 
 class GalleryAssetsCubit extends Cubit<GalleryAssetsState> {
-  GalleryAssetsCubit() : super(GalleryAssetsState());
+  GalleryAssetsCubit({
+    FilterOptionGroup? filterOptionGroup,
+  }) : filterOptionGroup =
+           filterOptionGroup ??
+           FilterOptionGroup(
+             orders: [
+               const OrderOption(type: OrderOptionType.createDate, asc: false),
+             ],
+           ),
+       super(GalleryAssetsState());
+
+  final FilterOptionGroup filterOptionGroup;
 
   Future<void> loadAssets() async {
     emit(state.copyWith(status: TaskStatus.running));
-    final FilterOptionGroup filterOptionGroup = FilterOptionGroup(
-      orders: [const OrderOption(type: OrderOptionType.createDate, asc: false)],
-    );
 
     final paths = await PhotoManager.getAssetPathList(
       onlyAll: false,

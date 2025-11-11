@@ -11,10 +11,16 @@ Future<List<String>> getDeletableIds(List<String> ids) async {
 }
 
 extension AssetPathEntityX on AssetPathEntity {
-  Future<List<AssetEntity>> getAllDeletableAssets() async {
+  Future<List<AssetEntity>> getAllDeletableAssets({
+    int? page,
+    int? size,
+  }) async {
     final assetCount = await assetCountAsync;
     if (assetCount == 0) return [];
-    final assets = await getAssetListPaged(page: 0, size: assetCount);
+    final assets = await getAssetListPaged(
+      page: page ?? 0,
+      size: size ?? assetCount,
+    );
     if (isAll) {
       return assets;
     }

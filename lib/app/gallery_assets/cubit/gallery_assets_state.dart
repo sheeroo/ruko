@@ -4,6 +4,7 @@ part of 'gallery_assets_cubit.dart';
 class GalleryAssetsState with _$GalleryAssetsState {
   const factory GalleryAssetsState({
     @Default([]) List<(AssetEntity, AssetPathEntity)> keyedAssets,
+    @Default([]) List<AssetPathEntity> paths,
     @Default(TaskStatus.initial) TaskStatus status,
   }) = _GalleryAssetsState;
 

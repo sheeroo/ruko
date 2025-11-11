@@ -8,7 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 import 'package:pixelarticons/pixel.dart';
-import 'package:ruko/app/gallery_assets/cubit/gallery_assets_cubit.dart';
+import 'package:ruko/app/gallery_assets/cubit/assets_paginator_cubit.dart';
 import 'package:ruko/app/swiper/custom_controller.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/router/router.gr.dart';
@@ -274,8 +274,8 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       BlocSelector<
-                        GalleryAssetsCubit,
-                        GalleryAssetsState,
+                        AssetsPaginatorCubit,
+                        AssetsPaginatorState,
                         AssetEntity
                       >(
                         selector: (state) => state.assets.firstWhere(
@@ -287,10 +287,8 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
                               HapticFeedback.selectionClick();
 
                               context
-                                  .read<GalleryAssetsCubit>()
-                                  .toggleFavoriteAsset(
-                                    widget.entity,
-                                  );
+                                  .read<AssetsPaginatorCubit>()
+                                  .toggleFavoriteAsset(widget.entity.id);
                             },
                             icon: SvgPicture.string(
                               state.isFavorite ? filledHeartSvg : emptyHeartSvg,

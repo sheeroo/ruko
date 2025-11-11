@@ -1,4 +1,4 @@
-part of 'image_delete_cubit.dart';
+part of 'delete_cubit.dart';
 
 @immutable
 class ImageDeleteState {

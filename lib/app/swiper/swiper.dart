@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:pixelarticons/pixel.dart';
 import 'package:ruko/app/gallery_assets/asset_entity_image.dart';
-import 'package:ruko/app/gallery_assets/cubit/gallery_assets_cubit.dart';
-import 'package:ruko/app/gallery_assets/cubit/image_delete_cubit.dart';
+import 'package:ruko/app/gallery_assets/cubit/assets_paginator_cubit.dart';
+import 'package:ruko/app/gallery_assets/cubit/delete_cubit.dart';
 import 'package:ruko/app/swiper/custom_controller.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/limiters/throttler.dart';
@@ -19,10 +19,8 @@ class AssetSwiper extends StatefulWidget {
     super.key,
     required this.assets,
     required this.controller,
-    this.path,
   });
 
-  final AssetPathEntity? path;
   final List<AssetEntity> assets;
   final CustomSwiperController controller;
 
@@ -33,6 +31,8 @@ class AssetSwiper extends StatefulWidget {
 class _AssetSwiperState extends State<AssetSwiper> {
   final throttler = Throttler(225.ms);
   bool _deleting = false;
+
+  int? get cardIndex => widget.controller.cardIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +59,9 @@ class _AssetSwiperState extends State<AssetSwiper> {
                               loop: false,
                               duration: 175.ms,
                               onSwipeEnd: (targetIndex, nextIndex, activity) {
+                                context
+                                    .read<AssetsPaginatorCubit>()
+                                    .indexChanged(nextIndex);
                                 if (activity.end != null &&
                                     activity.end!.dx != 0) {
                                   if (activity.direction ==
@@ -125,15 +128,14 @@ class _AssetSwiperState extends State<AssetSwiper> {
                                               return;
                                             }
                                             context
-                                                .read<GalleryAssetsCubit>()
+                                                .read<AssetsPaginatorCubit>()
                                                 .removeAssets(
                                                   state.entities
                                                       .map((e) => e.id)
                                                       .toList(),
                                                 );
                                             widget.controller.setCardIndex(
-                                              widget.controller.cardIndex! -
-                                                  result.length,
+                                              cardIndex! - result.length,
                                             );
                                             if (result.isNotEmpty &&
                                                 context.mounted) {
@@ -220,28 +222,38 @@ class _AssetSwiperState extends State<AssetSwiper> {
                               onPressed: () {
                                 throttler.run(() async {
                                   HapticFeedback.selectionClick();
-                                  if (widget.controller.cardIndex == null) {
-                                    return;
-                                  }
-                                  if (widget.controller.cardIndex! == 0) return;
+                                  if (cardIndex == null) return;
+                                  if (cardIndex! == 0) return;
                                   await widget.controller.unswipe();
-                                  if (!context.mounted) {
-                                    return;
-                                  }
+                                  if (!context.mounted) return;
+
+                                  // there is a bug if you spam the swipe right button the index can be bigger than the length of the assets
+                                  final safeIndex = cardIndex!.clamp(
+                                    0,
+                                    widget.assets.length - 1,
+                                  );
                                   context.read<ImageDeleteCubit>().remove(
-                                    widget.assets[widget.controller.cardIndex!],
+                                    widget.assets[safeIndex],
                                   );
                                 });
                               },
                             ),
                           ),
-
                           Flexible(
                             child: StyledButton.filled(
                               title: "keep",
                               fullWidth: true,
-                              onPressed: () {
-                                widget.controller.swipeRight();
+                              onPressed: () async {
+                                throttler.run(() {
+                                  if (widget.controller.cardIndex == null) {
+                                    return;
+                                  }
+                                  if (widget.controller.cardIndex! >=
+                                      widget.assets.length) {
+                                    return;
+                                  }
+                                  widget.controller.swipeRight();
+                                });
                               },
                             ),
                           ),

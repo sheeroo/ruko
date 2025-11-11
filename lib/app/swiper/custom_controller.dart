@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:ruko/core/limiters/debouncer.dart';
-import 'package:ruko/core/limiters/throttler.dart';
 
 class CustomSwiperController extends AppinioSwiperController {
   CustomSwiperController() : super();
@@ -17,7 +16,6 @@ class CustomSwiperController extends AppinioSwiperController {
 
   bool get isControlledSwiping => _isControlledSwiping;
   final debouncer = Debouncer(750.ms);
-  final throttler = Throttler(550.ms);
 
   void setControlledSwiping(bool value) async {
     if (value) {

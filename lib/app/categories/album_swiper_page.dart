@@ -35,7 +35,6 @@ class _CategoriesSwipertate extends State<AlbumSwiperPage> {
       body: AssetSwiper(
         controller: controller,
         assets: assets,
-        path: widget.path,
       ),
     );
   }

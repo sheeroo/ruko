@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_manager/photo_manager.dart';
 
-part 'image_delete_state.dart';
+part 'delete_state.dart';
 
 class ImageDeleteCubit extends Cubit<ImageDeleteState> {
   ImageDeleteCubit() : super(ImageDeleteState(entities: {}));

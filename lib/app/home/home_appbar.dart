@@ -1,10 +1,5 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:ruko/app/categories/categories_page.dart';
-import 'package:ruko/app/categories/category_page.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
-import 'package:ruko/core/router/router.gr.dart';
-import 'package:ruko/core/theme/button.dart';
 
 class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppbar({super.key, this.onDelete});
@@ -32,18 +27,18 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
               child: Row(
                 spacing: 12,
                 children: [
-                  ...AssetCategory.values.map(
-                    (category) {
-                      return StyledButton.icon(
-                        icon: category.icon,
-                        onPressed: () {
-                          context.router.push(
-                            CategoryRoute(category: category),
-                          );
-                        },
-                      );
-                    },
-                  ),
+                  // ...AssetCategory.values.map(
+                  //   (category) {
+                  //     return StyledButton.icon(
+                  //       icon: category.icon,
+                  //       onPressed: () {
+                  //         context.router.push(
+                  //           CategoryRoute(category: category),
+                  //         );
+                  //       },
+                  //     );
+                  //   },
+                  // ),
                 ],
               ).p(left: 12),
             ),
