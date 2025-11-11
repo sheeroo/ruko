@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 import 'package:ruko/app/gallery/ui/widgets/asset_entity_image.dart';
+import 'package:ruko/app/gallery/ui/widgets/share_buttons.dart';
 import 'package:ruko/app/gallery/ui/widgets/widget_zoom_fullscreen.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
-import 'package:ruko/core/widgets/common/image_full_screen.dart';
 import 'package:ruko/core/widgets/common/video_player.dart';
 import 'package:ruko/core/widgets/custom_appbar.dart';
 
