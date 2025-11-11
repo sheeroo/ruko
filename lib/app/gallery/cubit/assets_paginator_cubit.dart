@@ -1,19 +1,26 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:photo_manager/photo_manager.dart';
-import 'package:ruko/app/gallery/get_deletable_assets.dart';
+import 'package:ruko/app/gallery/utils/get_deletable_assets.dart';
 import 'package:ruko/core/paginator/paginator.dart';
 
 part 'assets_paginator_cubit.freezed.dart';
 part 'assets_paginator_state.dart';
 
 class AssetsPaginatorCubit extends Cubit<AssetsPaginatorState> {
-  AssetsPaginatorCubit(this.path) : super(const AssetsPaginatorState()) {
+  AssetsPaginatorCubit(
+    this.path, {
+    List<AssetEntity> initialAssets = const [],
+    int? pageSize,
+    this.shuffle = false,
+  }) : pageSize = pageSize ?? 50,
+       super(AssetsPaginatorState(assets: initialAssets)) {
     _setupPaginatorListener();
   }
 
   final AssetPathEntity path;
-  int pageSize = 50;
+  final int pageSize;
+  final bool shuffle;
   late final paginator = AssetPaginator(path: path, pageSize: pageSize);
 
   void _setupPaginatorListener() {
@@ -27,7 +34,10 @@ class AssetsPaginatorCubit extends Cubit<AssetsPaginatorState> {
 
   Future<void> loadNextPage() async {
     if (state.reachedMax) return;
-    final items = await paginator.fetchNextPage();
+    final items = [...await paginator.fetchNextPage()];
+    if (shuffle) {
+      items.shuffle();
+    }
     emit(
       state.copyWith(
         assets: [...state.assets, ...items],

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ruko/core/router/custom_route_transition.dart';
 import 'package:ruko/core/router/router.gr.dart';
+import 'package:ruko/core/theme/modals/modal_sheet_builder.dart';
 
 export 'router.gr.dart';
 
@@ -19,33 +20,44 @@ class AppRouter extends RootStackRouter {
         ),
         CustomRoute(page: HomeRoute.page, transitionsBuilder: fadeTransition),
         CustomRoute(
+          page: GenericSwiperRoute.page,
+          transitionsBuilder: fadeTransition,
+        ),
+        CustomRoute(
           page: PermissionRequestRoute.page,
           transitionsBuilder: fadeTransition,
         ),
         CustomRoute(
-          page: CategoryRoute.page,
+          page: AlbumsRoute.page,
           transitionsBuilder: fadeTransition,
         ),
         CustomRoute(
-          page: CategoriesSwiperRoute.page,
+          page: OldAssetsFirstRoute.page,
           transitionsBuilder: fadeTransition,
         ),
         CustomRoute(
-          page: AlbumSwiperRoute.page,
+          page: ShuffledAssetsRoute.page,
           transitionsBuilder: fadeTransition,
         ),
         CustomRoute(
-          page: CategoriesRoute.page,
+          page: LocationsRoute.page,
           transitionsBuilder: fadeTransition,
         ),
         CustomRoute(
-          page: ImageFullRoute.page,
-          fullscreenDialog: true,
-          opaque: false,
+          page: MonthsRoute.page,
           transitionsBuilder: fadeTransition,
         ),
         CustomRoute(
-          page: VideoFullRoute.page,
+          page: VideosOnlyRoute.page,
+          transitionsBuilder: fadeTransition,
+        ),
+        CustomRoute(
+          page: CategoriesBottomSheetRoute.page,
+          transitionsBuilder: fadeTransition,
+          customRouteBuilder: modalSheetBuilder,
+        ),
+        CustomRoute(
+          page: FSAssetRoute.page,
           fullscreenDialog: true,
           opaque: false,
           transitionsBuilder: fadeTransition,

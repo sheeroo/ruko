@@ -2,76 +2,13 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:appinio_social_share/appinio_social_share.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:photo_manager/photo_manager.dart';
-import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 import 'package:pixelarticons/pixel.dart';
-import 'package:ruko/app/gallery/widget_zoom_fullscreen.dart';
-import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/theme/button.dart';
 import 'package:ruko/core/util/social_share.dart';
-import 'package:ruko/core/widgets/custom_appbar.dart';
-
-@RoutePage()
-class ImageFullPage extends StatelessWidget {
-  const ImageFullPage({super.key, required this.entity, required this.option});
-
-  final AssetEntity entity;
-  final ThumbnailOption option;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppbar(),
-      backgroundColor: Colors.black,
-      body: WidgetZoomFullscreen(
-        zoomWidget: Stack(
-          children: [
-            Center(
-              child: AssetEntityImage(
-                entity,
-                fit: BoxFit.contain,
-                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                  if (frame == null) {
-                    return const SizedBox.shrink();
-                  }
-                  return Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 4,
-                      ),
-                    ),
-                    child: child,
-                  );
-                },
-                thumbnailSize: ThumbnailSize(720, 1560),
-              ).p(all: 4, bottom: 72).p(horizontal: 8),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: SafeArea(
-                child: ShareButtons(entity: entity, isVideo: false)
-                    .p(all: 12)
-                    .animate()
-                    .fadeIn(
-                      duration: Durations.medium3,
-                      curve: Curves.fastOutSlowIn,
-                    ),
-              ),
-            ),
-          ],
-        ),
-        minScale: 1,
-        maxScale: 3,
-        heroAnimationTag: entity.id,
-      ),
-    );
-  }
-}
 
 class ShareButtons extends StatefulWidget {
   const ShareButtons({super.key, required this.entity, required this.isVideo});

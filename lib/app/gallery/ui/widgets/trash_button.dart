@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:pixelarticons/pixel.dart';
 import 'package:ruko/app/gallery/cubit/delete_cubit.dart';
-import 'package:ruko/app/gallery/cubit/gallery_assets_cubit.dart';
 import 'package:ruko/core/theme/button.dart';
 import 'package:ruko/core/widgets/common/widgets/text_swapper.dart';
 
@@ -29,9 +28,6 @@ class TrashButton extends StatelessWidget {
               selectedAssets.map((e) => e.id).toList(),
             );
             if (!context.mounted) return;
-            context.read<GalleryAssetsCubit>().removeAssets(
-              selectedAssets.map((e) => e.id).toList(),
-            );
             onDelete?.call(result);
             if (result.isNotEmpty && context.mounted) {
               context.read<ImageDeleteCubit>().reset();

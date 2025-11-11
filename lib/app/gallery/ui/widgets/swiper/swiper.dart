@@ -5,10 +5,10 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:pixelarticons/pixel.dart';
-import 'package:ruko/app/gallery/asset_entity_image.dart';
 import 'package:ruko/app/gallery/cubit/assets_paginator_cubit.dart';
 import 'package:ruko/app/gallery/cubit/delete_cubit.dart';
-import 'package:ruko/app/swiper/custom_controller.dart';
+import 'package:ruko/app/gallery/ui/widgets/asset_entity_image.dart';
+import 'package:ruko/app/gallery/ui/widgets/swiper/custom_controller.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/limiters/throttler.dart';
 import 'package:ruko/core/theme/button.dart';
@@ -18,21 +18,20 @@ class AssetSwiper extends StatefulWidget {
   const AssetSwiper({
     super.key,
     required this.assets,
-    required this.controller,
   });
 
   final List<AssetEntity> assets;
-  final CustomSwiperController controller;
 
   @override
   State<AssetSwiper> createState() => _AssetSwiperState();
 }
 
 class _AssetSwiperState extends State<AssetSwiper> {
+  final controller = CustomSwiperController();
   final throttler = Throttler(225.ms);
   bool _deleting = false;
 
-  int? get cardIndex => widget.controller.cardIndex;
+  int? get cardIndex => controller.cardIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +50,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
                       Flexible(
                         child:
                             AppinioSwiper(
-                              controller: widget.controller,
+                              controller: controller,
                               swipeOptions: SwipeOptions.symmetric(
                                 horizontal: true,
                                 vertical: false,
@@ -85,7 +84,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
                                   option: ThumbnailOption.ios(
                                     size: ThumbnailSize(720, 1560),
                                   ),
-                                  controller: widget.controller,
+                                  controller: controller,
                                 );
                               },
                               cardCount: widget.assets.length,
@@ -134,7 +133,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
                                                       .map((e) => e.id)
                                                       .toList(),
                                                 );
-                                            widget.controller.setCardIndex(
+                                            controller.setCardIndex(
                                               cardIndex! - result.length,
                                             );
                                             if (result.isNotEmpty &&
@@ -149,7 +148,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
                                             isLoading: _deleting,
                                             fullWidth: true,
                                             onPressed: () {
-                                              widget.controller.swipeLeft();
+                                              controller.swipeLeft();
                                             },
                                           ),
                                         ),
@@ -224,7 +223,7 @@ class _AssetSwiperState extends State<AssetSwiper> {
                                   HapticFeedback.selectionClick();
                                   if (cardIndex == null) return;
                                   if (cardIndex! == 0) return;
-                                  await widget.controller.unswipe();
+                                  await controller.unswipe();
                                   if (!context.mounted) return;
 
                                   // there is a bug if you spam the swipe right button the index can be bigger than the length of the assets
@@ -245,14 +244,14 @@ class _AssetSwiperState extends State<AssetSwiper> {
                               fullWidth: true,
                               onPressed: () async {
                                 throttler.run(() {
-                                  if (widget.controller.cardIndex == null) {
+                                  if (controller.cardIndex == null) {
                                     return;
                                   }
-                                  if (widget.controller.cardIndex! >=
+                                  if (controller.cardIndex! >=
                                       widget.assets.length) {
                                     return;
                                   }
-                                  widget.controller.swipeRight();
+                                  controller.swipeRight();
                                 });
                               },
                             ),

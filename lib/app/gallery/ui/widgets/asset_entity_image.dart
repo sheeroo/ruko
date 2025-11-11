@@ -9,7 +9,7 @@ import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 import 'package:pixelarticons/pixel.dart';
 import 'package:ruko/app/gallery/cubit/assets_paginator_cubit.dart';
-import 'package:ruko/app/swiper/custom_controller.dart';
+import 'package:ruko/app/gallery/ui/widgets/swiper/custom_controller.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/router/router.gr.dart';
 import 'package:ruko/core/theme/text_extension.dart';
@@ -77,14 +77,8 @@ class _ImageItemWidgetState extends State<ImageItemWidget> {
               GestureDetector(
                 onTap: () {
                   HapticFeedback.selectionClick();
-                  if (widget.entity.type == AssetType.video) {
-                    context.router.push(
-                      VideoFullRoute(entity: widget.entity),
-                    );
-                    return;
-                  }
                   context.router.push(
-                    ImageFullRoute(
+                    FSAssetRoute(
                       entity: widget.entity,
                       option: widget.option,
                     ),

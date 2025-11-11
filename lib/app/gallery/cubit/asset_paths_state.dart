@@ -4,12 +4,13 @@ part of 'asset_paths_cubit.dart';
 class AssetPathsState with _$AssetPathsState {
   const factory AssetPathsState({
     @Default([]) List<AssetPathEntity> paths,
+    AssetPathEntity? defaultPath,
+    AssetPathEntity? defaultReversedPath,
+    AssetPathEntity? videosOnlyPath,
     @Default(TaskStatus.initial) TaskStatus status,
   }) = _AssetPathsState;
 
   const AssetPathsState._();
-
-  AssetPathEntity? get defaultPath => paths.firstWhereOrNull((e) => e.isAll);
 
   List<AssetPathEntity> getSecondaryPaths() {
     return paths.where((e) => !e.isAll).toList();

@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:photo_manager/photo_manager.dart';
-import 'package:ruko/app/gallery/filter_options.dart';
+import 'package:ruko/app/gallery/utils/filter_options.dart';
 import 'package:ruko/core/enums/status.dart';
 
 part 'asset_paths_cubit.freezed.dart';
@@ -27,17 +27,26 @@ class AssetPathsCubit extends Cubit<AssetPathsState> {
       type: RequestType.all,
     );
 
+    final defaultReversedPath = await PhotoManager.getAssetPathList(
+      onlyAll: true,
+      filterOption: FilterOptions.createdAtAsc,
+      type: RequestType.all,
+    );
+
+    final videosOnlyPath = await PhotoManager.getAssetPathList(
+      onlyAll: true,
+      filterOption: _filterOptionGroup,
+      type: RequestType.video,
+    );
+
     emit(
       state.copyWith(
-        paths: paths,
+        paths: paths.where((path) => !path.isAll).toList(),
+        defaultPath: paths.firstWhereOrNull((e) => e.isAll),
+        defaultReversedPath: defaultReversedPath.first,
+        videosOnlyPath: videosOnlyPath.first,
         status: TaskStatus.success,
       ),
     );
-  }
-
-  @override
-  void addError(Object error, [StackTrace? stackTrace]) {
-    emit(state.copyWith(status: TaskStatus.error));
-    super.addError(error, stackTrace);
   }
 }

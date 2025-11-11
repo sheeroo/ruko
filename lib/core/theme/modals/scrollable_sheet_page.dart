@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/theme/button.dart';
-import 'package:flutter/material.dart';
 import 'package:smooth_sheets/smooth_sheets.dart';
 
 const _padding = EdgeInsets.only(left: 12, right: 12, top: 0);
@@ -46,8 +46,10 @@ class ScrollableSheetPage extends StatelessWidget {
         child: Container(
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+            color: Colors.black,
+            border: Border(
+              top: BorderSide(color: Colors.white.withValues(alpha: 0.05)),
+            ),
           ),
           child: SheetContentScaffold(
             appbarDraggable: true,
@@ -61,19 +63,18 @@ class ScrollableSheetPage extends StatelessWidget {
               maintainBottomBar: true,
             ),
             body: Padding(padding: _padding, child: child),
-            bottomBar:
-                onButtonPressed != null
-                    ? StickyBottomBarVisibility(
-                      child: SafeArea(
-                        child: StyledButton.filled(
-                          title: buttonText ?? "done",
-                          onPressed: onButtonPressed,
-                          isLoading: isButtonLoading,
-                          isDisabled: isButtonDisabled,
-                        ).p(all: 8),
-                      ),
-                    )
-                    : null,
+            bottomBar: onButtonPressed != null
+                ? StickyBottomBarVisibility(
+                    child: SafeArea(
+                      child: StyledButton.filled(
+                        title: buttonText ?? "done",
+                        onPressed: onButtonPressed,
+                        isLoading: isButtonLoading,
+                        isDisabled: isButtonDisabled,
+                      ).p(all: 8),
+                    ),
+                  )
+                : null,
           ),
         ).blur(32),
       ),
@@ -127,10 +128,7 @@ class DragHandle extends StatelessWidget {
     return Container(
       width: 35,
       height: 4.5,
-      decoration: ShapeDecoration(
-        color: Colors.white.withValues(alpha: 0.5),
-        shape: const StadiumBorder(),
-      ),
+      color: Colors.white,
     );
   }
 }

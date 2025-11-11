@@ -18,6 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AssetPathsState {
   List<AssetPathEntity> get paths => throw _privateConstructorUsedError;
+  AssetPathEntity? get defaultPath => throw _privateConstructorUsedError;
+  AssetPathEntity? get defaultReversedPath =>
+      throw _privateConstructorUsedError;
+  AssetPathEntity? get videosOnlyPath => throw _privateConstructorUsedError;
   TaskStatus get status => throw _privateConstructorUsedError;
 
   /// Create a copy of AssetPathsState
@@ -34,7 +38,13 @@ abstract class $AssetPathsStateCopyWith<$Res> {
     $Res Function(AssetPathsState) then,
   ) = _$AssetPathsStateCopyWithImpl<$Res, AssetPathsState>;
   @useResult
-  $Res call({List<AssetPathEntity> paths, TaskStatus status});
+  $Res call({
+    List<AssetPathEntity> paths,
+    AssetPathEntity? defaultPath,
+    AssetPathEntity? defaultReversedPath,
+    AssetPathEntity? videosOnlyPath,
+    TaskStatus status,
+  });
 }
 
 /// @nodoc
@@ -51,7 +61,13 @@ class _$AssetPathsStateCopyWithImpl<$Res, $Val extends AssetPathsState>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? paths = null, Object? status = null}) {
+  $Res call({
+    Object? paths = null,
+    Object? defaultPath = freezed,
+    Object? defaultReversedPath = freezed,
+    Object? videosOnlyPath = freezed,
+    Object? status = null,
+  }) {
     return _then(
       _value.copyWith(
             paths:
@@ -59,6 +75,21 @@ class _$AssetPathsStateCopyWithImpl<$Res, $Val extends AssetPathsState>
                     ? _value.paths
                     : paths // ignore: cast_nullable_to_non_nullable
                         as List<AssetPathEntity>,
+            defaultPath:
+                freezed == defaultPath
+                    ? _value.defaultPath
+                    : defaultPath // ignore: cast_nullable_to_non_nullable
+                        as AssetPathEntity?,
+            defaultReversedPath:
+                freezed == defaultReversedPath
+                    ? _value.defaultReversedPath
+                    : defaultReversedPath // ignore: cast_nullable_to_non_nullable
+                        as AssetPathEntity?,
+            videosOnlyPath:
+                freezed == videosOnlyPath
+                    ? _value.videosOnlyPath
+                    : videosOnlyPath // ignore: cast_nullable_to_non_nullable
+                        as AssetPathEntity?,
             status:
                 null == status
                     ? _value.status
@@ -79,7 +110,13 @@ abstract class _$$AssetPathsStateImplCopyWith<$Res>
   ) = __$$AssetPathsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<AssetPathEntity> paths, TaskStatus status});
+  $Res call({
+    List<AssetPathEntity> paths,
+    AssetPathEntity? defaultPath,
+    AssetPathEntity? defaultReversedPath,
+    AssetPathEntity? videosOnlyPath,
+    TaskStatus status,
+  });
 }
 
 /// @nodoc
@@ -95,7 +132,13 @@ class __$$AssetPathsStateImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? paths = null, Object? status = null}) {
+  $Res call({
+    Object? paths = null,
+    Object? defaultPath = freezed,
+    Object? defaultReversedPath = freezed,
+    Object? videosOnlyPath = freezed,
+    Object? status = null,
+  }) {
     return _then(
       _$AssetPathsStateImpl(
         paths:
@@ -103,6 +146,21 @@ class __$$AssetPathsStateImplCopyWithImpl<$Res>
                 ? _value._paths
                 : paths // ignore: cast_nullable_to_non_nullable
                     as List<AssetPathEntity>,
+        defaultPath:
+            freezed == defaultPath
+                ? _value.defaultPath
+                : defaultPath // ignore: cast_nullable_to_non_nullable
+                    as AssetPathEntity?,
+        defaultReversedPath:
+            freezed == defaultReversedPath
+                ? _value.defaultReversedPath
+                : defaultReversedPath // ignore: cast_nullable_to_non_nullable
+                    as AssetPathEntity?,
+        videosOnlyPath:
+            freezed == videosOnlyPath
+                ? _value.videosOnlyPath
+                : videosOnlyPath // ignore: cast_nullable_to_non_nullable
+                    as AssetPathEntity?,
         status:
             null == status
                 ? _value.status
@@ -118,6 +176,9 @@ class __$$AssetPathsStateImplCopyWithImpl<$Res>
 class _$AssetPathsStateImpl extends _AssetPathsState {
   const _$AssetPathsStateImpl({
     final List<AssetPathEntity> paths = const [],
+    this.defaultPath,
+    this.defaultReversedPath,
+    this.videosOnlyPath,
     this.status = TaskStatus.initial,
   }) : _paths = paths,
        super._();
@@ -132,12 +193,18 @@ class _$AssetPathsStateImpl extends _AssetPathsState {
   }
 
   @override
+  final AssetPathEntity? defaultPath;
+  @override
+  final AssetPathEntity? defaultReversedPath;
+  @override
+  final AssetPathEntity? videosOnlyPath;
+  @override
   @JsonKey()
   final TaskStatus status;
 
   @override
   String toString() {
-    return 'AssetPathsState(paths: $paths, status: $status)';
+    return 'AssetPathsState(paths: $paths, defaultPath: $defaultPath, defaultReversedPath: $defaultReversedPath, videosOnlyPath: $videosOnlyPath, status: $status)';
   }
 
   @override
@@ -146,6 +213,12 @@ class _$AssetPathsStateImpl extends _AssetPathsState {
         (other.runtimeType == runtimeType &&
             other is _$AssetPathsStateImpl &&
             const DeepCollectionEquality().equals(other._paths, _paths) &&
+            (identical(other.defaultPath, defaultPath) ||
+                other.defaultPath == defaultPath) &&
+            (identical(other.defaultReversedPath, defaultReversedPath) ||
+                other.defaultReversedPath == defaultReversedPath) &&
+            (identical(other.videosOnlyPath, videosOnlyPath) ||
+                other.videosOnlyPath == videosOnlyPath) &&
             (identical(other.status, status) || other.status == status));
   }
 
@@ -153,6 +226,9 @@ class _$AssetPathsStateImpl extends _AssetPathsState {
   int get hashCode => Object.hash(
     runtimeType,
     const DeepCollectionEquality().hash(_paths),
+    defaultPath,
+    defaultReversedPath,
+    videosOnlyPath,
     status,
   );
 
@@ -171,12 +247,21 @@ class _$AssetPathsStateImpl extends _AssetPathsState {
 abstract class _AssetPathsState extends AssetPathsState {
   const factory _AssetPathsState({
     final List<AssetPathEntity> paths,
+    final AssetPathEntity? defaultPath,
+    final AssetPathEntity? defaultReversedPath,
+    final AssetPathEntity? videosOnlyPath,
     final TaskStatus status,
   }) = _$AssetPathsStateImpl;
   const _AssetPathsState._() : super._();
 
   @override
   List<AssetPathEntity> get paths;
+  @override
+  AssetPathEntity? get defaultPath;
+  @override
+  AssetPathEntity? get defaultReversedPath;
+  @override
+  AssetPathEntity? get videosOnlyPath;
   @override
   TaskStatus get status;
 
