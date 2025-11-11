@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pixelarticons/pixel.dart';
 import 'package:ruko/core/router/router.gr.dart';
 import 'package:ruko/core/theme/modals/scrollable_sheet_page.dart';
@@ -21,6 +22,7 @@ class CategoriesBottomSheetPage extends StatelessWidget {
                 leading: Icon(Pixel.calendar),
                 title: const Text("months").bodySmall(),
                 onTap: () {
+                  HapticFeedback.selectionClick();
                   context.router.push(const MonthsRoute());
                 },
               ),
@@ -28,6 +30,7 @@ class CategoriesBottomSheetPage extends StatelessWidget {
                 leading: Icon(Pixel.map),
                 title: const Text("places").bodySmall(),
                 onTap: () {
+                  HapticFeedback.selectionClick();
                   context.router.push(const LocationsRoute());
                 },
               ),
@@ -35,6 +38,7 @@ class CategoriesBottomSheetPage extends StatelessWidget {
                 leading: Icon(Pixel.shuffle),
                 title: const Text("shuffled").bodySmall(),
                 onTap: () {
+                  HapticFeedback.selectionClick();
                   context.router.push(const ShuffledAssetsRoute());
                 },
               ),
@@ -42,6 +46,7 @@ class CategoriesBottomSheetPage extends StatelessWidget {
                 leading: Icon(Pixel.calendararrowleft),
                 title: const Text("oldest first").bodySmall(),
                 onTap: () {
+                  HapticFeedback.selectionClick();
                   context.router.push(const OldAssetsFirstRoute());
                 },
               ),
@@ -49,6 +54,7 @@ class CategoriesBottomSheetPage extends StatelessWidget {
                 leading: Icon(Pixel.group),
                 title: const Text("albums").bodySmall(),
                 onTap: () {
+                  HapticFeedback.selectionClick();
                   context.router.push(const AlbumsRoute());
                 },
               ),
@@ -56,6 +62,7 @@ class CategoriesBottomSheetPage extends StatelessWidget {
                 leading: Icon(Pixel.video),
                 title: const Text("videos only").bodySmall(),
                 onTap: () {
+                  HapticFeedback.selectionClick();
                   context.router.push(const VideosOnlyRoute());
                 },
               ),
