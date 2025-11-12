@@ -37,7 +37,10 @@ class GenericSwiperPage extends StatelessWidget {
         child: BlocBuilder<AssetsPaginatorCubit, AssetsPaginatorState>(
           buildWhen: (prev, next) => prev.assets.length != next.assets.length,
           builder: (context, state) {
-            return AssetSwiper(assets: state.assets);
+            return AssetSwiper(
+              assets: state.assets,
+              paginate: initialAssets.isNotEmpty,
+            );
           },
         ),
       ),

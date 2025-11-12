@@ -18,8 +18,10 @@ class AssetSwiper extends StatefulWidget {
   const AssetSwiper({
     super.key,
     required this.assets,
+    this.paginate = true,
   });
 
+  final bool paginate;
   final List<AssetEntity> assets;
 
   @override
@@ -58,9 +60,11 @@ class _AssetSwiperState extends State<AssetSwiper> {
                               loop: false,
                               duration: 175.ms,
                               onSwipeEnd: (targetIndex, nextIndex, activity) {
-                                context
-                                    .read<AssetsPaginatorCubit>()
-                                    .indexChanged(nextIndex);
+                                if (widget.paginate) {
+                                  context
+                                      .read<AssetsPaginatorCubit>()
+                                      .indexChanged(nextIndex);
+                                }
                                 if (activity.end != null &&
                                     activity.end!.dx != 0) {
                                   if (activity.direction ==
