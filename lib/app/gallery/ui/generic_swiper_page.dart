@@ -39,7 +39,7 @@ class GenericSwiperPage extends StatelessWidget {
           builder: (context, state) {
             return AssetSwiper(
               assets: state.assets,
-              paginate: initialAssets.isNotEmpty,
+              paginate: initialAssets.isEmpty,
             );
           },
         ),
