@@ -36,7 +36,7 @@ class MonthsPageState extends State<MonthsPage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
-      appBar: CustomAppbar(title: "Places"),
+      appBar: CustomAppbar(title: "Months"),
       body: BlocBuilder<AlbumsCubit, AlbumsState>(
         buildWhen: (prev, next) => prev.defaultAlbum != next.defaultAlbum,
         builder: (context, state) {
