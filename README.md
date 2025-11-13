@@ -2,7 +2,12 @@
 
 > **Clean your camera roll in an oddly fun way** 🎯
 
-<div align="center">
+<div align="center" style="background:black">
+
+<img src="demo/screenshot.png" alt="Ruko App" style="height:600px; border-radius: 2rem; margin-top: 5rem; border:2px solid rgba(255, 255, 255, 0.3);">
+
+<br><br>
+
 
 <p>
   <a href="https://flutter.dev"><img src="https://img.shields.io/badge/Flutter-3.3+-blue?logo=flutter" alt="Flutter"></a>
@@ -61,11 +66,9 @@ Ruko helps you clean your camera roll. Inspired by the familiar swipe mechanics 
 
 <div align="center">
 
-![Shuffle Demo](demo/demo.gif)
+<img src="demo/demo.gif" alt="Shuffle Demo" style="height: 650px;">
 
 </div>
-
----
 
 ## 🚀 Getting Started {#getting-started}
 
