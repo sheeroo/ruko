@@ -1,7 +1,7 @@
 name: "ruko"
 description: "A new Flutter project."
 publish_to: "none"
-version: "1.0.3+6"
+version: "1.0.4+8"
 scripts: 
   gen: "dart run build_runner watch"
   build: "flutter build ipa --obfuscate --split-debug-info=debug-info --target=lib/main_production.dart"
@@ -53,7 +53,6 @@ dependencies:
   toastification: "^2.3.0"
   get_it: "^8.0.3"
   flutter_markdown: "^0.7.7+1"
-  widget_zoom: "^0.0.4"
   dart_geohash: "^2.1.0"
   video_player: "^2.9.5"
   appinio_social_share: "^0.3.2"

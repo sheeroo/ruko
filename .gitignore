@@ -49,3 +49,4 @@ ios/Config.xcconfig
 /upload.sh
 
 /android/build
+/debug-info

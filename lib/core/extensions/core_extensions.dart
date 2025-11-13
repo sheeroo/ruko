@@ -61,7 +61,7 @@ extension CoreExtensions2<T> on T {
 extension WidgetExtension on Widget {
   ClipRRect blur(double sigma, {double? borderRadius}) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(borderRadius ?? 12),
+      borderRadius: BorderRadius.circular(borderRadius ?? 0),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
         child: this,

@@ -1,14 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pixelarticons/pixel.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
-import 'package:ruko/core/theme/text_extension.dart';
+import 'package:ruko/core/router/router.gr.dart';
+import 'package:ruko/core/theme/button.dart';
 
-class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppbar({super.key, this.title});
+class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
+  const HomeAppbar({super.key, this.onDelete});
 
-  final String? title;
+  final Function(List<String>)? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
       child: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        backgroundColor: Colors.black.withValues(alpha: 0.85),
+        backgroundColor: Colors.black.withValues(alpha: 0.3),
         flexibleSpace: SizedBox(
           width: double.infinity,
           height: double.infinity,
@@ -29,25 +29,23 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
             child: Row(
               spacing: 12,
               children: [
-                if (title != null) Center(child: Text(title!).bodySmall()),
                 Spacer(),
-                IconButton(
+                StyledButton.icon(
+                  icon: Pixel.folder,
                   onPressed: () {
-                    HapticFeedback.selectionClick();
-                    context.router.maybePop();
+                    context.router.push(const CategoriesBottomSheetRoute());
                   },
-                  icon: Icon(Pixel.close),
                 ),
               ],
-            ).p(horizontal: 12),
+            ).p(right: 12),
           ),
         ),
       ),
-    ).blur(32);
+    );
 
     return widget;
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(55);
+  Size get preferredSize => const Size.fromHeight(75);
 }
