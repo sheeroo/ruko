@@ -16,7 +16,7 @@ dependencies:
   cupertino_icons: "^1.0.8"
   photo_manager: "^3.6.4"
   permission_handler: "^12.0.0+1"
-  google_fonts: "^6.2.1"
+  google_fonts: "^6.3.3"
   flutter_bloc: "^9.1.1"
   appinio_swiper: "^2.1.1"
   photo_manager_image_provider: "^2.2.0"

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:pixelarticons/pixel.dart';
+import 'package:ruko/app/gallery/cubit/albums_cubit.dart';
 import 'package:ruko/app/gallery/cubit/asset_paths_cubit.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
 import 'package:ruko/core/router/router.gr.dart';
@@ -24,7 +25,9 @@ class PermissionRequestPage extends StatelessWidget {
                 await PhotoManager.requestPermissionExtend();
             if (permissionState.hasAccess) {
               if (!context.mounted) return;
+              context.read<AlbumsCubit>().loadAlbums();
               await context.read<AssetPathsCubit>().loadPaths();
+
               if (!context.mounted) return;
               context.router.replaceAll([HomeRoute()]);
             }
