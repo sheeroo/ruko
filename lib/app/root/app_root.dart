@@ -17,7 +17,7 @@ class AppRootPage extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AssetPathsCubit()),
         BlocProvider(
-          create: (context) => AlbumsCubit(),
+          create: (context) => AlbumsCubit()..loadAlbums(),
           lazy: false,
         ),
       ],
