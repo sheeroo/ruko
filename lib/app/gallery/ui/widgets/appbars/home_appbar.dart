@@ -29,6 +29,12 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
             child: Row(
               spacing: 12,
               children: [
+                StyledButton.icon(
+                  icon: Pixel.infobox,
+                  onPressed: () {
+                    context.router.push(const AboutRoute());
+                  },
+                ),
                 Spacer(),
                 StyledButton.icon(
                   icon: Pixel.folder,
@@ -37,7 +43,7 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
                   },
                 ),
               ],
-            ).p(right: 12),
+            ).p(horizontal: 12),
           ),
         ),
       ),

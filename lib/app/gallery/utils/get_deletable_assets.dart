@@ -1,13 +1,29 @@
 import 'package:flutter/services.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:ruko/core/error_logger/error_log.dart';
+import 'package:ruko/core/error_logger/error_logger.dart';
 
 const platform = MethodChannel('photo_utils');
 
 Future<List<String>> getDeletableIds(List<String> ids) async {
-  final List<dynamic> result = await platform.invokeMethod('isDeletable', {
-    'ids': ids,
-  });
-  return result.cast<String>();
+  try {
+    final List<dynamic> result = await platform.invokeMethod('isDeletable', {
+      'ids': ids,
+    });
+    return result.cast<String>();
+  } on PlatformException catch (e, st) {
+    ErrorLogger.instance.capture(
+      message: 'Native photo_utils channel error: ${e.message ?? e.code}',
+      source: ErrorSource.platform,
+      severity: ErrorSeverity.error,
+      error: e,
+      stackTrace: st,
+      context: 'getDeletableIds',
+      metadata: {'code': e.code, 'assetCount': ids.length},
+    );
+    // Fall back to treating all assets as deletable so the app stays usable.
+    return ids;
+  }
 }
 
 extension AssetPathEntityX on AssetPathEntity {

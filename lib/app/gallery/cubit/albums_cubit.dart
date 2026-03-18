@@ -5,6 +5,8 @@ import 'package:photo_manager/photo_manager.dart';
 import 'package:ruko/app/gallery/utils/filter_options.dart';
 import 'package:ruko/app/gallery/utils/get_deletable_assets.dart';
 import 'package:ruko/core/enums/status.dart';
+import 'package:ruko/core/error_logger/error_log.dart';
+import 'package:ruko/core/error_logger/error_logger.dart';
 
 part 'albums_cubit.freezed.dart';
 part 'albums_state.dart';
@@ -15,27 +17,50 @@ class AlbumsCubit extends Cubit<AlbumsState> {
   Future<void> loadAlbums() async {
     emit(state.copyWith(status: TaskStatus.running));
 
-    final paths = await PhotoManager.getAssetPathList(
-      onlyAll: false,
-      type: RequestType.all,
-      filterOption: FilterOptions.createdAtDesc,
-    );
-
-    List<Album> albums = [];
-    for (final path in paths) {
-      final assets = await path.getAllDeletableAssets(page: 0, size: 5);
-      if (assets.isEmpty) continue;
-      final assetCount = await path.assetCountAsync;
-      final album = Album(
-        path: path,
-        previewAssets: assets,
-        assetCount: assetCount,
+    try {
+      final paths = await PhotoManager.getAssetPathList(
+        onlyAll: false,
+        type: RequestType.all,
+        filterOption: FilterOptions.createdAtDesc,
       );
-      albums.add(album);
-    }
 
-    emit(
-      state.copyWith(albums: albums, status: TaskStatus.success),
-    );
+      List<Album> albums = [];
+      for (final path in paths) {
+        try {
+          final assets = await path.getAllDeletableAssets(page: 0, size: 5);
+          if (assets.isEmpty) continue;
+          final assetCount = await path.assetCountAsync;
+          albums.add(
+            Album(
+              path: path,
+              previewAssets: assets,
+              assetCount: assetCount,
+            ),
+          );
+        } catch (e, st) {
+          ErrorLogger.instance.capture(
+            message: 'Failed to load album preview assets.',
+            source: ErrorSource.manual,
+            severity: ErrorSeverity.warning,
+            error: e,
+            stackTrace: st,
+            context: 'AlbumsCubit.loadAlbums',
+            metadata: {'album': path.name},
+          );
+        }
+      }
+
+      emit(state.copyWith(albums: albums, status: TaskStatus.success));
+    } catch (e, st) {
+      ErrorLogger.instance.capture(
+        message: 'Failed to load photo library album list.',
+        source: ErrorSource.manual,
+        severity: ErrorSeverity.error,
+        error: e,
+        stackTrace: st,
+        context: 'AlbumsCubit.loadAlbums',
+      );
+      emit(state.copyWith(status: TaskStatus.error));
+    }
   }
 }

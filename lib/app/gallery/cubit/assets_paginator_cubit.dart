@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:ruko/app/gallery/utils/get_deletable_assets.dart';
+import 'package:ruko/core/error_logger/error_log.dart';
+import 'package:ruko/core/error_logger/error_logger.dart';
 import 'package:ruko/core/paginator/paginator.dart';
 
 part 'assets_paginator_cubit.freezed.dart';
@@ -34,16 +36,28 @@ class AssetsPaginatorCubit extends Cubit<AssetsPaginatorState> {
 
   Future<void> loadNextPage() async {
     if (state.reachedMax) return;
-    final items = [...await paginator.fetchNextPage()];
-    if (shuffle) {
-      items.shuffle();
+    try {
+      final items = [...await paginator.fetchNextPage()];
+      if (shuffle) {
+        items.shuffle();
+      }
+      emit(
+        state.copyWith(
+          assets: [...state.assets, ...items],
+          currentPage: paginator.currentPage,
+        ),
+      );
+    } catch (e, st) {
+      ErrorLogger.instance.capture(
+        message: 'Failed to load next page of assets.',
+        source: ErrorSource.manual,
+        severity: ErrorSeverity.error,
+        error: e,
+        stackTrace: st,
+        context: 'AssetsPaginatorCubit.loadNextPage',
+        metadata: {'album': path.name, 'page': paginator.currentPage},
+      );
     }
-    emit(
-      state.copyWith(
-        assets: [...state.assets, ...items],
-        currentPage: paginator.currentPage,
-      ),
-    );
   }
 
   void removeAssets(List<String> ids) {
@@ -59,17 +73,29 @@ class AssetsPaginatorCubit extends Cubit<AssetsPaginatorState> {
   }
 
   void toggleFavoriteAsset(String id) {
-    final assets = state.assets.map((e) {
-      if (e.id == id) {
-        PhotoManager.editor.darwin.favoriteAsset(
-          entity: e,
-          favorite: !e.isFavorite,
-        );
-        return e.copyWith(isFavorite: !e.isFavorite);
-      }
-      return e;
-    }).toList();
-    emit(state.copyWith(assets: assets));
+    try {
+      final assets = state.assets.map((e) {
+        if (e.id == id) {
+          PhotoManager.editor.darwin.favoriteAsset(
+            entity: e,
+            favorite: !e.isFavorite,
+          );
+          return e.copyWith(isFavorite: !e.isFavorite);
+        }
+        return e;
+      }).toList();
+      emit(state.copyWith(assets: assets));
+    } catch (e, st) {
+      ErrorLogger.instance.capture(
+        message: 'Failed to toggle favorite on asset.',
+        source: ErrorSource.manual,
+        severity: ErrorSeverity.warning,
+        error: e,
+        stackTrace: st,
+        context: 'AssetsPaginatorCubit.toggleFavoriteAsset',
+        metadata: {'assetId': id},
+      );
+    }
   }
 
   @override

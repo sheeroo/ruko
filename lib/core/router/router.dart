@@ -62,6 +62,14 @@ class AppRouter extends RootStackRouter {
           opaque: false,
           transitionsBuilder: fadeTransition,
         ),
+        CustomRoute(
+          page: AboutRoute.page,
+          transitionsBuilder: fadeTransition,
+        ),
+        CustomRoute(
+          page: ErrorLoggerRoute.page,
+          transitionsBuilder: fadeTransition,
+        ),
       ],
     ),
   ];

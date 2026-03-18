@@ -1,100 +1,103 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ruko/core/app_info/app_info.dart';
+import 'package:ruko/core/error_logger/error_log.dart';
+import 'package:ruko/core/error_logger/error_logger.dart';
 import 'package:ruko/core/extensions/core_extensions.dart';
+import 'package:ruko/core/router/router.gr.dart';
 import 'package:ruko/core/theme/text_extension.dart';
 import 'package:ruko/core/widgets/custom_appbar.dart';
-// import 'package:mailto/mailto.dart';
-// import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
-class AboutPage extends StatelessWidget {
+class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
+
+  @override
+  State<AboutPage> createState() => _AboutPageState();
+}
+
+class _AboutPageState extends State<AboutPage> {
+  int _versionTapCount = 0;
+  static const int _tapsRequired = 7;
+
+  void _onVersionTap() {
+    HapticFeedback.selectionClick();
+    try {
+      throw Exception('Test exception from AboutPage version tap');
+    } catch (ex, stack) {
+      ErrorLogger.instance.capture(
+        message: ex.toString(),
+        source: ErrorSource.flutter,
+        severity: ErrorSeverity.error,
+        error: ex,
+        stackTrace: stack,
+        context: 'AboutPage version tap',
+      );
+    }
+    setState(() => _versionTapCount++);
+
+    if (_versionTapCount >= _tapsRequired) {
+      _versionTapCount = 0;
+      context.router.push(const ErrorLoggerRoute());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppbar(title: 'about drift.'),
+      appBar: const CustomAppbar(title: 'ruko.'),
       extendBodyBehindAppBar: true,
       extendBody: true,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
-            spacing: 16,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 24,
             children: [
               const AboutItem(
-                title: 'what is whoami?',
+                title: 'what is ruko?',
                 subtitle:
-                    'whoami is a private journaling app that helps you document life as seen through your eyes. each entry has a photo, a track and your thoughts to help you capture the moment.',
+                    'ruko turns cleaning your camera roll into a game. swipe right to keep, swipe left to delete. no more endless scrolling through thousands of photos — just fast, satisfying decisions.',
               ),
               const AboutItem(
-                title: 'how was it developed?',
+                title: 'how does it work?',
                 subtitle:
-                    'the app was developed using the strict principles of VDD (Vibes Driven Development). A methodology invented under the influence of sleep deprivation, the crushing fear of death and an unknown internal urge.',
+                    'your photos are loaded directly from your device and shown as swipeable cards. nothing ever leaves your phone. ruko never uploads, syncs or shares your media.',
               ),
               const AboutItem(
                 title: 'is it free?',
                 subtitle:
-                    'the app is and will remain free to use. there are not hidden fees, ads or subscriptions.',
+                    'yes, and it will stay free. no ads, no subscriptions, no hidden fees.',
               ),
               const AboutItem(
-                title: 'about your data',
+                title: 'your data',
                 subtitle:
-                    'as of now your data is stored in a secure database. the app does not collect any personal information. the app does not track you. the app does not share your data with any third party services. the app does not have any analytics. the app does not have any ads. the app does not have any tracking.',
+                    'ruko only reads photos you already have on your device. it collects zero personal information, has no analytics and communicates with no external servers.',
               ),
-              const AboutItem(
-                title: 'are my entries encrypted?',
-                subtitle:
-                    'as of now, the entries are not encrypted. the app is in its early stages and encryption is a feature that will be added in the future.',
+              GestureDetector(
+                onTap: _onVersionTap,
+                behavior: HitTestBehavior.opaque,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('> version').bodySmall(fontSize: 11),
+                    const Gap(10),
+                    Text(
+                      '${AppInfo.instance.packageInfo.version}+${AppInfo.instance.packageInfo.buildNumber}',
+                      style: GoogleFonts.pressStart2p(
+                        fontSize: 10,
+                        color: Colors.white.withValues(alpha: 0.45),
+                        height: 2.2,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              AboutItem(
-                title: 'version',
-                subtitle:
-                    '${AppInfo.instance.packageInfo.version}+${AppInfo.instance.packageInfo.buildNumber}',
-              ),
-              const Gap(0),
-
-              // Row(
-              //   spacing: 8,
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     IconButton(
-              //       onPressed: () {
-              //         HapticFeedback.selectionClick();
-              //         launchUrl(
-              //           RemoteConfigRepository.instance.data.instagram.toUri,
-              //           mode: LaunchMode.externalApplication,
-              //         );
-              //       },
-              //       icon: const Icon(FeatherIcons.instagram),
-              //     ),
-              //     IconButton(
-              //       onPressed: () {
-              //         HapticFeedback.selectionClick();
-              //         launchUrl(
-              //           Mailto(
-              //             to: [RemoteConfigRepository.instance.data.mail],
-              //           ).toString().toUri,
-              //         );
-              //       },
-              //       icon: const Icon(FeatherIcons.mail),
-              //     ),
-              //     IconButton(
-              //       onPressed: () {
-              //         HapticFeedback.selectionClick();
-              //         launchUrl(
-              //           RemoteConfigRepository.instance.data.github.toUri,
-              //         );
-              //       },
-              //       icon: const Icon(FeatherIcons.github),
-              //     ),
-              //   ],
-              // ),
             ],
-          ).p(all: 16),
+          ).p(all: 20),
         ),
       ),
     );
@@ -112,16 +115,15 @@ class AboutItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("> $title").titleSmall(),
-        const Gap(12),
-        Container(
-          padding: const EdgeInsets.all(16.0),
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.0),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.15)),
+        Text('> $title').bodySmall(fontSize: 11),
+        const Gap(10),
+        Text(
+          subtitle,
+          style: GoogleFonts.pressStart2p(
+            fontSize: 10,
+            color: Colors.white.withValues(alpha: 0.45),
+            height: 2.2,
           ),
-          child: Text(subtitle).bodySmall(fontSize: 14, opacity: 0.9),
         ),
       ],
     );
