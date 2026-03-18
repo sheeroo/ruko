@@ -14,7 +14,25 @@ part 'albums_state.dart';
 class AlbumsCubit extends Cubit<AlbumsState> {
   AlbumsCubit() : super(const AlbumsState());
 
+  Future<bool> hasRestrictedPermission() async {
+    final permissionState = await PhotoManager.getPermissionState(
+      requestOption: const PermissionRequestOption(
+        iosAccessLevel: IosAccessLevel.readWrite,
+      ),
+    );
+    return !permissionState.hasAccess;
+  }
+
   Future<void> loadAlbums() async {
+    if (await hasRestrictedPermission()) {
+      ErrorLogger.instance.capture(
+        message: 'Insufficient permissions to access photo library.',
+        source: ErrorSource.manual,
+        severity: ErrorSeverity.warning,
+        context: 'AlbumsCubit.loadAlbums',
+      );
+      return;
+    }
     emit(state.copyWith(status: TaskStatus.running));
 
     try {
